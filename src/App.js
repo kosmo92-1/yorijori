@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import {Routes,Route} from 'react-router-dom'
 import Main from "./views/Main";
 import Map from "./views/Map";
-import Login from "./views/Login";
 import SignIn from "./views/SignIn"
 
 import "./scss/main.scss";
