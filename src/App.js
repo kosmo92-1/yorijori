@@ -4,6 +4,7 @@ import {Routes,Route} from 'react-router-dom'
 import Main from "./views/Main";
 import Map from "./views/Map";
 import Login from "./views/Login";
+import SignIn from "./views/SignIn"
 
 import "./scss/main.scss";
 
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main/>} exact/>
           <Route path="/map" element={<Map/>} exact/>
-          <Route path="/login" element={<Login/>} exact/>
+          <Route path="/login" element={<SignIn/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>
