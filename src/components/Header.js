@@ -5,7 +5,7 @@ function Header(props) {
         <header className="header">
             <div className="inner-header">
                 <h1 className="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="63.74" height="78.52" viewBox="0 0 63.74 78.52">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" width="63.74" height="78.52" viewBox="0 0 63.74 78.52">
                         <g id="logo" transform="translate(-155.848 -171.997)">
                             <g id="Group_14" data-name="Group 14" transform="translate(157.252 172.234)">
                                 <path id="Path_5" data-name="Path 5" d="M196.886,179.447A23.921,23.921,0,0,0,189.131,175a25.171,25.171,0,0,1,7.115,4.189c6.91,5.421,2.043,11.935-.015,15.919s-9.822,7.218-14.745,3.859c-3.434-2.342-5.573-3.175-6.528-5.365.794,2.807,3.036,3.569,6.862,6.2,4.987,3.428,12.885.08,14.991-4.017S203.883,184.985,196.886,179.447Z" transform="translate(-172.215 -174.401)" opacity="0.3"/>
@@ -27,7 +27,7 @@ function Header(props) {
                             </g>
                         </g>
                     </g>
-                </svg>
+                </svg> */}
                 </h1>
                 <nav>
                     <ul>
