@@ -1,3 +1,12 @@
+@use "../abstracts/variables" as v;
+
+#root {
+    height: 100%;
+}
+.wrapper {
+    height: 100%;
+}
+
 /* --------------------------------------------------------------------------------------------------------------
     Layout
 ----------------------------------------------------------------------------------------------------------------*/
@@ -7,11 +16,126 @@
 /* --------------------------------------------------------------------------------------------------------------
     Header
 ----------------------------------------------------------------------------------------------------------------*/
-.header {
+#header {
+    height: 100px;
+    padding: 0 100px;
     .inner-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         max-width: 1280px;
+        height: 100%;
+        margin: 0 auto;
+        .logo {
+            svg {
+                max-width: 45px;
+            }
+        }
+        nav {
+            ul {
+                font-size: 0.875rem;
+                li {
+                    float: left;
+                    &:not(:last-child) {
+                        padding-right: 70px;
+                    }
+                    a {
+                        position: relative;
+                        color: #222;
+                        transition: 0.3s;
+                        &::after {
+                            content: "";
+                            position: absolute;
+                        }
+                        &:hover,
+                        &:focus {
+                            &::after {
+                                bottom: -8px;
+                                left: 0;
+                                width: 100%;
+                                height: 2px;
+                                background: v.$color-orange;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------------------------------------
+    Footer
+----------------------------------------------------------------------------------------------------------------*/
+#footer {
+    width: 100%;
+    height: 300px;
+    padding: 50px;
+    background: v.$color-sage;
+    ul {
+        li {
+            position: relative;
+            float: left;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            a {
+                color: transparent;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                transform: translate(-50%, -50%);
+            }
+            &:first-child {
+                margin-right: 10px;
+                &::after {
+                    background: url(v.$img-icon + "ico-instagram.png") center no-repeat;
+                }
+            }
+            &:last-child {
+                &::after {
+                    background: url(v.$img-icon + "ico-facebook.png") center no-repeat;
+                }
+            }
+        }
+    }
+    h4 {
+        padding: 25px 0 20px;
+        color: #222;
+    }
+    address {
+        padding-bottom: 20px;
+        font-size: 0.875rem;
+        color: #474747;
+        p {
+            span {
+                &:not(:last-child) {
+                    position: relative;
+                    padding-right: 20px;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        right: 10px;
+                        width: 1px;
+                        height: 8px;
+                        background: #eee;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+    }
+    p {
+        font-size: 0.875rem;
+        color: #474747;
+        text-transform: uppercase;
     }
 }
