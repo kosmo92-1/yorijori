@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Map(props) {
+
+//장바구니
+function Basket(props) {
+    
+
     return (
         <div>
             
@@ -8,4 +12,4 @@ function Map(props) {
     );
 }
 
-export default Map;
+export default Basket;
