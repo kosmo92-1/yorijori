@@ -2,7 +2,7 @@ import React from 'react';
 
 function Header(props) {
     return (
-        <header className="header">
+        <header id="header">
             <div className="inner-header">
                 <h1 className="logo">
                     <svg xmlns="http://www.w3.org/2000/svg" width="63.74" height="78.52" viewBox="0 0 63.74 78.52">
@@ -30,10 +30,10 @@ function Header(props) {
                 </svg>
                 </h1>
                 <nav>
-                    <ul>
-                        <li>마이페이지</li>
-                        <li>장바구니</li>
-                        <li>로그인</li>
+                    <ul className="clearfix">
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">장바구니</a></li>
+                        <li><a href="#">로그인</a></li>
                     </ul>
                 </nav>
             </div>

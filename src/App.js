@@ -9,6 +9,7 @@ import "./scss/main.scss";
 import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
 import Kind from "./views/kind/Kind";
+import SignUp from "./views/SignUp";
 
 function App() {
   return (
@@ -18,10 +19,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Main/>} exact/>
           <Route path="/map" element={<Map/>} exact/>
+          {/* <Route path="/login" element={<SignIn/>} exact/> */}
           <Route path="/login" element={<SignIn/>} exact/>
           <Route path="/price" element={<PriceInfo/> }exact/>
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
+          <Route path="/signup" element={<SignUp/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>
