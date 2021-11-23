@@ -10,8 +10,14 @@ import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
 import Kind from "./views/kind/Kind";
 import SignUp from "./views/SignUp";
+import KindList from "./views/kind/KindList";
 
 function App() {
+  function debug() {
+    console.log("hello")
+  }
+
+
   return (
     <div className="wrapper">
       <Header></Header>
@@ -25,6 +31,7 @@ function App() {
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
           <Route path="/signup" element={<SignUp/>} exact/>
+          <Route path="/kindlist" element={<KindList/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>
