@@ -8,7 +8,7 @@ import SignIn from "./views/SignIn"
 import "./scss/main.scss";
 import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
-import Kind from "./views/Kind";
+import Kind from "./views/kind/Kind";
 
 function App() {
   return (
