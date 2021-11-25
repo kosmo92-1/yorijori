@@ -10,6 +10,7 @@ import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
 import Kind from "./views/Kind";
 import SignUp from "./views/SignUp";
+import Mypage from "views/Mypage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
           <Route path="/signup" element={<SignUp/>} exact/>
+          <Route path="/mypage" element={<Mypage/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-// import { Form } from "react-bootstrap";
+import React, { useRef, useState, useEffect } from "react";
+import { Link, useNavigate, useLocation, useParams }from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -7,234 +7,265 @@ import {
   Row,
   Col,
   Label,
-  Checkboxes,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Button,
   Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form
+  Form,
 } from "reactstrap";
-import DaumPostcode from 'react-daum-postcode';
 import DaumPost from "components/DaumPost";
+import axios,{ post } from "axios";
 
-
-function SignUp(props) {
-  const [member_id, setMember_id] = useState("");
-  const [member_pw, setMember_pw] = useState("");
-  const [confirmPw, setConfirmPw] = useState("");
-  const [member_name, setMember_name] = useState("");
-  const [member_tel, setMember_tel] = useState("");
-  const [member_basic_address, setMember_basic_address] = useState("");
-  const [member_detail_address, setMember_detail_address] = useState("");
-  const [member_type, setMember_type] = useState("");
+function SignUp() {
+  const [formData, setFormData] = useState({
+    "member_photo": null,
+    "member_id": "",
+    "member_name": "",
+    "member_pw": "",
+    "confirmPw": "",
+    "member_tel": "",
+    "member_basic_address": "",
+    "member_detail_address": "",
+    "member_type":"",
+    "member_agree":"",
+  });
+  const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
-  const [agreeEvent,setAgreeEvent] = useState("");
-  const {adminCode} = "q1w2e3"; 
-  const [liveDemo, setLiveDemo] = React.useState(false);
-  
+  const [adminCode] =useState("q1w2e3");
+  const [addressModal, setAddressModal] = React.useState(false);
+  const [adminModal, setAdminModal] = React.useState(false);
+  const history = useNavigate();
 
+  // 파일 저장
+  const saveFileImage = (e) => {
+    let profile=URL.createObjectURL(e.target.files[0])
+    setMember_photo(profile);
 
-    const onIdHandler = (event) => {
-    setMember_id(event.currentTarget.value);
+    setFormData({
+      ...formData,
+      member_photo: e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
+    });
   };
-  const onNameHandler = (event) => {
-    setMember_name(event.currentTarget.value);
+//미리보기 스타일
+  const imagestyle = {
+    height: "150px",
+    width: "150px",
+    borderRadius: "50%",
   };
-
-  const onPasswordHandler = (event) => {
-    setMember_pw(event.currentTarget.value);
-  };
-
-  const onConfirmPasswordHandler = (event) => {
-    setConfirmPw(event.currentTarget.value);
-  };
-
-  const onTelHandler = (event) => {
-    const { value } = event.target
-    const onlyNumber = value.replace(/[^0-9]/g, '')
-    if(onlyNumber>9&&onlyNumber<12){
-        setMember_tel(onlyNumber);
-    }else{
-        alert("번호를 확인해주세요")
-    }
-  };
-
- 
-
-//   const onChange(e: React.ChangeEvent<HTMLInputElement>) {
-//     const { value } = e.target
-//     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
-//     const onlyNumber = value.replace(/[^0-9]/g, '')
-//     setInputs(onlyNumber)
-//   }
-  const onBasicaddressHandler = (event) => {
-      
-    setMember_basic_address(event.currentTarget.value);
+  const handleValueChange = (event) => {
+    // API 요청에 날릴 Form state에 정보를 추가합니다.
     
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+    console.log(formData);
   };
-  const onDetailaddressHandler = (event) => {
-    setMember_detail_address(event.currentTarget.value);
+ 
+  const registerSubmit = (event) => {
+    // 회원가입버튼을 누르면 동작합니다.
+    event.preventDefault();
+    var checkID = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var checkPW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/
+    var checkName = /^[가-힣a-zA-Z]{2,20}$/
+    var checkTel = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
+    var checkAddress= /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣|-]{2,20}$/
+    //아이디 입력제한
+    if(formData.member_id=== ""){
+      alert("아이디를 입력해주세요")
+      return;
+    }
+    if (!checkID.test(formData.member_id)) {
+      alert("아이디로 올바른 메일을 입력해 주시기 바랍니다.")
+      return;
+    } 
+    //비밀번호 입력제한
+    if(formData.member_pw=== ""){
+      alert("비밀번호를 입력해주세요")
+      return;
+    } 
+    if(formData.confirmPw=== ""){
+      alert("비밀번호확인을 입력해주세요")
+      return;
+    }
+    if (!checkPW.test(formData.member_pw)) {
+      alert("비밀번호는  8 ~ 10자 영문, 숫자 조합이여야 합니다.")
+      return;
+    } 
+    if (formData.member_pw !== formData.confirmPw) {
+      // 비밀번호가 서로 다른지 체크하는 validation 코드입니다.
+      alert("비밀번호를 다시 확인 해주세요");
+      return;
+    }
+    //이름 입력제한
+    if(formData.member_name=== ""){
+      alert("이름을 입력해주세요")
+      return;
+    }
+    if (!checkName.test(formData.member_name)) {
+      alert("이름을 확인해 주세요")
+      return;
+    } 
+    //번호 입력제한
+    if(formData.member_tel=== ""){
+      alert("번호를 입력해주세요")
+      return;
+    }
+    if (!checkTel.test(formData.member_tel)) {
+      alert("-과 공백을 제외한 휴대전화 번호를 입력해주세요")
+      return;
+    } 
+    //주소 입력제한
+    if(formData.member_basic_address=== ""){
+      alert("주소를 입력해 주세요.")
+      return;
+    }
+    
+    if(formData.member_detail_address=== ""){
+      alert("상세주소를 입력해 주세요.")
+      return;
+    }
+    
+    if (!checkAddress.test(formData.member_detail_address)) {
+      alert("상세주소를 확인해주세요")
+      return;
+    } 
+
+    const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
+    reqFormData.append("member_photo", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+    reqFormData.append("member_id", formData.member_id);
+    reqFormData.append("member_name", formData.member_name);
+    reqFormData.append("member_pw", formData.member_pw);
+    reqFormData.append("member_tel", formData.member_tel);
+    reqFormData.append("member_basic_address", formData.member_basic_address);
+    reqFormData.append("member_detail_address", formData.member_detail_address);
+    reqFormData.append("member_type", formData.member_type);
+    reqFormData.append("agreeEvent", formData.agreeEvent);
+    
+    const config = {
+      headers: {
+        "content-type": "application/json", // 헤더설정
+      },
+    };
+
+    fetch("http://localhost:3001/api/register", {
+      method: "POST",
+      body: reqFormData,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success === true) {
+          // api서버에서, true가 오면, 회원가입 축하메세지가 나오며, 기본 슬라이드1페이지로 넘어갑니다.
+          alert(json.msg);
+          history.push("/");
+        }
+      });
   };
+
+   
   const onMembertypeHandler = (event) => {
-    setMember_type(event.currentTarget.value);
+    formData.member_type="1";
   };
   const onUserCodeHandler = (event) => {
     setUserCode(event.currentTarget.value);
   };
   const onAgreeEventHandler = (event) => {
-    setAgreeEvent("1");
+    formData.member_agree="1";
+  };
+//주소 API에서 주소 받아와서 저장
+  const getData = (fullAddress) => {
+    console.log(fullAddress);
+    formData.member_basic_address = fullAddress;
+    setAddressModal(false);
+    
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (member_pw !== confirmPw) {
-      return alert("비밀번호와 비밀번호확인은 같아야 합니다.");
+  //관리자 유무 검사 
+  const adminCheck = (e) => {
+    if (userCode === adminCode) {
+      onMembertypeHandler();
+      setAdminModal(false);
+    } else {
+      return alert("관리자코드를 확인해주세요");
+      
     }
   };
-  const adminCheck = (e) =>{
-    e.preventDefault();
-    if (userCode === adminCode) {
-        setMember_type("1");
-        
-      }else {
-        return alert("관리자코드를 확인해주세요");
-      }
-  }
-//   const modalClose = (e) =>{
-        // setLiveDemo(false)
-//   }
   
-  //파일 미리볼 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState("");
-  // 파일 저장
-  const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
-  };
-  const imagestyle = {
-    height: "150px",  
-      width: "150px",
-      borderRadius:"50%"
-      };
 
   const [idCheck, setIdCheck] = useState(false);
   const [checkError, setCheckError] = useState("");
   const [error, setError] = useState("");
 
   return (
-      
     <Container>
-      <Modal isOpen={liveDemo} toggle={() => setLiveDemo(false)}>
+      <Modal isOpen={addressModal} toggle={() => setAddressModal(false)}
+      >
         <div className="modal-header">
           <h5 className="modal-title" id="exampleModalLiveLabel">
-           주소찾기
+            주소찾기
           </h5>
           <button
             aria-label="Close"
             className="close"
             data-dismiss="modal"
             type="button"
-            onClick={() => setLiveDemo(false)}
+            onClick={() => setAddressModal(false)}
           >
             <span aria-hidden={true}>×</span>
           </button>
         </div>
         <div className="modal-body">
-          <DaumPost  onComplete={(res)=>{alert(res)}} />
+          <DaumPost autoClose getData={getData} />
         </div>
-       
-        
       </Modal>
+
+      <Modal
+        isOpen={adminModal}
+        className="modal-sm"
+        modalClassName="bd-example-modal-sm"
+        toggle={() => setAdminModal(false)}
+      >
+        <div className="modal-header">
+          <h4 className="modal-title" id="mySmallModalLabel">
+            관리자 전환
+          </h4>
+          <button
+            aria-label="Close"
+            className="close"
+            data-dismiss="modal"
+            type="button"
+            onClick={() => setAdminModal(false)}
+          >
+            <span aria-hidden={true}>×</span>
+          </button>
+        </div>
+        <div className="modal-body">
+          <Form onSubmit= {registerSubmit}>
+            <FormGroup>
+              <Input
+                type="text"
+                id="userInputAdmincode"
+                name="userCode"
+                placeholder="관리자 코드를 입력해주세요"
+                onChange={onUserCodeHandler}
+              />
+            </FormGroup>
+          </Form>
+        </div>
+        <div className="modal-footer">
+        <Button onClick={adminCheck}>코드 확인</Button>
+        </div>
+      </Modal>
+
       <Form>
         <FormGroup>
-          <Label for="emailInput">아이디*</Label>
-          <Input
-            id="emailInput"
-            type="email"
-            placeholder="이메일을 입력해 주세요"
-            value={member_id}
-            onChange={onIdHandler}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="pwInput">비밀번호*</Label>
-          <Input
-            id="pwInput"
-            type="password"
-            placeholder="6자리 이상 입력해 주세요"
-            value={member_pw}
-            onChange={onPasswordHandler}
-          />
-          <Label for="pwInput2">비밀번호확인*</Label>
-          <Input
-            id="pwInput2"
-            type="password"
-            placeholder="비밀번호와 같게 입력해주세요"
-            value={confirmPw}
-            onChange={onConfirmPasswordHandler}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="nameInput">이름*</Label>
-          <Input
-            id="nameInput"
-            type="text"
-            placeholder="이름을 입력해주세요"
-            value={member_name}
-            onChange={onNameHandler}
-          ></Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="tellInput">전화번호*</Label>
-          <Input
-            id="tellInput"
-            type="text"
-            placeholder="-를 제외한 번호를 입력해 주세요"
-            value={member_tel}
-            onChange={onTelHandler}
-          ></Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="address_basic">주소*</Label>
-          <Input
-            id="address_basic"
-            type="text"
-            value={member_basic_address}
-            onChange={onBasicaddressHandler}
-          ></Input>
-          <Button color="primary" type="button" onClick={() => setLiveDemo(true)}>
-       주소찾기
-      </Button>
-          <Input
-            id="address_detail"
-            type="text"
-            placeholder="상세주소*"
-            value={member_detail_address}
-            onChange={onDetailaddressHandler}
-          ></Input>
-        </FormGroup>
-          <FormGroup check inline>
-            <Input type="checkbox" onChange={onAgreeEventHandler}/>
-            <Label check>이벤트, 프로모션 메일 수신동의</Label>
-          </FormGroup><br/>
-          <FormGroup>
-    
-          </FormGroup>
-      </Form>
-
-      <Row>
         <h3>프로필이미지</h3>
         <div>
-          {fileImage && (
+          {member_photo && (
             <img
               alt="sample"
               className="img-rounded img-responsive"
-              src={fileImage}
+              src={member_photo}
               style={imagestyle}
+              onChange={handleValueChange}
             />
           )}
           <div style={{ alignItems: "center", justifyContent: "center" }}>
@@ -245,17 +276,122 @@ function SignUp(props) {
               onChange={saveFileImage}
             />
           </div>
-        </div>
-      </Row>
+                </div>
+        </FormGroup>
+        <FormGroup>
+          <Label for="emailInput">아이디*</Label>
+          <Input
+            name="member_id"
+            type="email"
+            placeholder="이메일 형식으로 공백 없이 입력해주세요"
+            onChange={handleValueChange}
+            value={formData.member_id}
+          />
+          <Button  
+          color="primary"
+          type="button">
+            확인
+          </Button>
+        </FormGroup>
+        <FormGroup>
+          <Label for="pwInput">비밀번호*</Label>
+          <Input
+            className="member_pw registerInput"
+            name="member_pw"
+            type="password"
+            placeholder="비밀번호는 8~20자 영문 숫자 특수문자의 조합으로 이루어져야 합니다."
+            onChange={handleValueChange}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="pwInput2">비밀번호확인*</Label>
+          <Input
+            className="confirmPw registerInput"
+            type="password"
+            placeholder="비밀번호와 같게 입력해주세요"
+            onChange={handleValueChange}
+            name="confirmPw"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="nameInput">이름*</Label>
+          <Input
+          name="member_name"
+           className="member_name registerInput"
+            type="text"
+            placeholder="이름을 입력해주세요"
+            onChange={handleValueChange}
+            value={formData.member_name}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="tellInput">휴대전화번호*</Label>
+          <Input
+            name="member_tel"
+            className="member_tel registerInput"
+            type="text"
+            placeholder="-과 공백을 제외한 휴대전화번호를 입력해 주세요"
+            value={formData.member_tel}
+            onChange={handleValueChange}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="address_basic">주소*</Label>
+          <Input
+           className="member_basic_address registerInput"
+            name="member_basic_address"
+            type="text"
+            value={formData.member_basic_address}
+            placeholder="주소 찾기 버튼을 클릭해주세요"
+            readOnly
+            onChange={handleValueChange}
+          ></Input>
+          <Button
+            color="primary"
+            type="button"
+            onClick={() => setAddressModal(true)}
+          >
+            주소찾기
+          </Button>
+          <Input
+           className="member_detail_address registerInput"
+            type="text"
+            placeholder="상세주소*"
+            name="member_detail_address"
+            value={formData.member_detail_address}
+            onChange={handleValueChange}
+          ></Input>
+        </FormGroup>
+        <FormGroup check inline>
+          <Label check>
+            <Input type="checkbox" onChange={onAgreeEventHandler} /> 이벤트,
+            프로모션 메일 수신동의
+            <span className="form-check-sign">
+              <span className="check"></span>
+            </span>
+          </Label>
+        </FormGroup>
+        <br />
+        <FormGroup>
+          <Button
+            className="btn-round"
+            color="primary"
+            onClick={() => setAdminModal(true)}
+          >
+            관리자 전환
+          </Button>
+        </FormGroup>
+      </Form>
+
+    
 
       <div>
-        <Button active block type="submit" onSubmit={onSubmit}>
-          회원가입
+        <Button active block type="button"
+                onClick={registerSubmit} 
+                className="registerButton">
+        회원 가입
         </Button>
       </div>
-
-
-      
     </Container>
     //
   );
