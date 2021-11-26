@@ -1,0 +1,81 @@
+장바구니 관련 요청, 응답(추후 업데이트 예정 ex) 중복 등록 방지)
+
+
+-- 장바구니 등록
+Post : http://localhost:9003/yorijori/insertBasket.do
+
+{
+    "member_id": "test1",
+    "recipe_id": "2"
+}
+
+-- 장바구니 삭제
+Post: http://localhost:9003/yorijori/deleteBasket.do
+
+{
+    "basket_id":"1"
+}
+
+-- 장바구니 조회
+Post: http://localhost:9003/yorijori/getBasketList.do
+
+{
+    "member_id": "test1"
+}
+
+-- 장바구니 조회 리턴 값
+
+{
+    "basketList": [
+        {
+            "recipe_title": "레시피이름",
+            "recipe_thumbnail": "썸네일 없음",
+            "recipe_id": 2,
+            "basket_id": 2,
+            "recipe_time": "걸리는 시간",
+            "recipe_difficulty": "?",
+            "recipe_quentity": "많음",
+            "basket_regdate": 1637685356000
+        },
+        {
+            "recipe_title": "맛있어요",
+            "recipe_thumbnail": "썸네일.jpg",
+            "recipe_id": 1,
+            "basket_id": 1,
+            "recipe_time": "3분",
+            "recipe_difficulty": "high",
+            "recipe_quentity": "4인분",
+            "basket_regdate": 1637666980000
+        }
+    ],
+    "basketIngredients": {
+        "2": [
+            {
+                "ing_icon": "none",
+                "kind_id": "ing_4",
+                "ing_name": "설탕",
+                "ing_id": 4
+            },
+            {
+                "ing_icon": "none",
+                "kind_id": "ing_4",
+                "ing_name": "소금",
+                "ing_id": 3
+            }
+        ],
+        "1": [
+            {
+                "ing_icon": "none",
+                "kind_id": "ing_3",
+                "ing_name": "사과",
+                "ing_id": 1
+            },
+            {
+                "ing_icon": "none",
+                "kind_id": "ing_4",
+                "ing_name": "소금",
+                "ing_id": 3
+            }
+        ]
+    }
+}
