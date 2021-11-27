@@ -8,11 +8,17 @@ import SignIn from "./views/SignIn"
 import "./scss/main.scss";
 import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
-import Kind from "./views/Kind";
+import Kind from "./views/kind/Kind";
 import SignUp from "./views/SignUp";
 import Mypage from "views/Mypage";
+import KindList from "./views/kind/KindList";
 
 function App() {
+  function debug() {
+    console.log("hello")
+  }
+
+
   return (
     <div className="wrapper">
       <Header></Header>
@@ -27,6 +33,7 @@ function App() {
           <Route path="/kind" element={<Kind/>} exact/>
           <Route path="/signup" element={<SignUp/>} exact/>
           <Route path="/mypage" element={<Mypage/>} exact/>
+          <Route path="/kindlist" element={<KindList/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>
