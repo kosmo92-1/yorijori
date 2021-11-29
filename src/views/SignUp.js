@@ -140,25 +140,26 @@ function SignUp() {
     reqFormData.append("member_type", formData.member_type);
     reqFormData.append("agreeEvent", formData.agreeEvent);
     
-    const config = {
-      headers: {
-        "content-type": "application/json", // 헤더설정
-      },
-    };
+    const insertMember = () =>{
+      axios.post('/insertMember.do', reqFormData,{
+          headers:{
+              // json으로 형식을 지정해줍니다.
+              "Content-type":"multipart/form-data"
+          },
 
-    fetch("http://localhost:3001/api/register", {
-      method: "POST",
-      body: reqFormData,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success === true) {
-          // api서버에서, true가 오면, 회원가입 축하메세지가 나오며, 기본 슬라이드1페이지로 넘어갑니다.
-          alert(json.msg);
-          history.push("/");
-        }
-      });
-  };
+        })
+       // post 보내고 나서 실행
+       .then(res => {alert('성공')
+       console.log(res)
+      })
+       .catch(err =>{alert('실패')
+       console.log(formData)
+      })
+    }
+    insertMember();
+      };
+
+   
 
    
   const onMembertypeHandler = (event) => {

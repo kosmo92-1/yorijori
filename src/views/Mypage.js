@@ -40,8 +40,6 @@ function Mypage() {
     
         // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
   useEffect(() => {
-    if (location.state) {
-      // 회원수정페인지 확인하는 if문
       fetch(
         `http://localhost:3001/api/user/update/${location.state.idx}`,
         {
@@ -70,7 +68,6 @@ function Mypage() {
           });
         });
 
-    }
   }, []);
 
       // 파일 저장
