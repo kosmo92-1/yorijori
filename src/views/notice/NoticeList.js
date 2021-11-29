@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Pagination, PaginationItem, PaginationLink, Table } from 'reactstrap';
+import {PaginationItem, PaginationLink, Table } from 'reactstrap';
 import {} from "react-router-dom"
 import { useNavigate } from "react-router" 
 
 function NoticeList(props) {
     const [noticeList, setNoticeList] = useState({
-        list:[{notice_id:0,notice_head:"",notice_title:"",notice_content:"",notice_regdate:""}]
+        list:[{notice_id:0,notice_head:"",notice_title:"",notice_content:"",notice_regdate:""}],
+        "pageMaker":{"totalCount":16,"startPage":1,"endPage":2,"prev":false,"next":false,"displayPageNum":10,"cri":{"page":1,"pageNum":10,"rowStart":1,"rowEnd":10,"pageStart":0}}
     })
     const noticeComponent = noticeList.list.map((item)=>(<tr><td>{item.notice_id}</td><td>{item.notice_head}</td><td onClick={()=>actionRead(item.notice_id)}>{item.notice_title}</td></tr>))
 
@@ -32,43 +33,10 @@ function NoticeList(props) {
                     <tr><th>#</th><th>유형</th><th>제목</th></tr>
                 </thead>
                 <tbody>
-                {noticeComponent}
-
+                    {noticeComponent}
                 </tbody>
             </Table>
-            <nav aria-label="Page navigation example">
-                <Pagination>
-                <PaginationItem>
-                    <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                    Previous
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                    1
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                    2
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                    3
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                    Next
-                    </PaginationLink>
-                </PaginationItem>
-                </Pagination>
-            </nav>
-
         </div>
     );
 }
-
-
 export default NoticeList;
