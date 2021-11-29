@@ -24,12 +24,12 @@ function SignUp() {
     "member_tel": "",
     "member_basic_address": "",
     "member_detail_address": "",
-    "member_type":"",
+    "member_type":"0",
     "member_agree":"",
   });
   const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
-  const [adminCode] =useState("q1w2e3");
+  const [adminCode,setAdminCode] =useState("q1w2e3");
   const [addressModal, setAddressModal] = React.useState(false);
   const [adminModal, setAdminModal] = React.useState(false);
   const history = useNavigate();
@@ -130,8 +130,9 @@ function SignUp() {
     } 
 
     const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
-    reqFormData.append("member_photo", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+    reqFormData.append("file", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
     reqFormData.append("member_id", formData.member_id);
+    reqFormData.append("member_email", formData.member_id);
     reqFormData.append("member_name", formData.member_name);
     reqFormData.append("member_pw", formData.member_pw);
     reqFormData.append("member_tel", formData.member_tel);
@@ -140,26 +141,20 @@ function SignUp() {
     reqFormData.append("member_type", formData.member_type);
     reqFormData.append("agreeEvent", formData.agreeEvent);
     
-    const insertMember = () =>{
-      axios.post('/insertMember.do', reqFormData,{
-          headers:{
-              // json으로 형식을 지정해줍니다.
-              "Content-type":"multipart/form-data"
-          },
-
-        })
-       // post 보내고 나서 실행
-       .then(res => {alert('성공')
-       console.log(res)
+    axios.post('/insertMember.do', reqFormData,{
+        headers:{
+            // json으로 형식을 지정해줍니다.
+            "Content-type":"multipart/form-data"
+        },
       })
-       .catch(err =>{alert('실패')
-       console.log(formData)
-      })
-    }
-    insertMember();
-      };
-
-   
+      // post 보내고 나서 실행
+      .then(res => {alert('성공')
+      console.log(res)
+    })
+      .catch(err =>{alert('실패')
+      console.log(formData)
+    })
+  };
 
    
   const onMembertypeHandler = (event) => {
