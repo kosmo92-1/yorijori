@@ -7,9 +7,8 @@ function ReadNotice(props) {
     const {notice_id} = useParams();
     
     const [readNotice, setReadNotice] = useState({
-        "read":{"notice_id":2,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632251000}
+        "read":{"notice_id":2,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632251000},
     })
-    
     
     useEffect(()=>{
         axios.get('/readNotice.do?notice_id='+notice_id)

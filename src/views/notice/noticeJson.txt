@@ -47,4 +47,18 @@ GET : http://localhost:9003/yorijori/listNotice.do
 
 {"list":[{"notice_id":16,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636832000},{"notice_id":15,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636832000},{"notice_id":14,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636832000},{"notice_id":13,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636831000},{"notice_id":12,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636830000},{"notice_id":11,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636829000},{"notice_id":10,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637636829000},{"notice_id":9,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635418000},{"notice_id":8,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635418000},{"notice_id":7,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635417000},{"notice_id":6,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635417000},{"notice_id":5,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635416000},{"notice_id":4,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637635416000},{"notice_id":3,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632784000},{"notice_id":2,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632251000},{"notice_id":1,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632242000}],
 
-"pageMaker":{"totalCount":16,"startPage":1,"endPage":2,"prev":false,"next":false,"displayPageNum":10,"cri":{"page":1,"pageNum":10,"rowStart":1,"rowEnd":10,"pageStart":0}}}
+"pageMaker":{
+    "totalCount":16, --총게시글개수
+    "startPage":1,시작페이지
+    "endPage":2, 끝페이지
+    "prev":false,"next":false,
+    "displayPageNum":10,한페이지당보여줄게시글개수
+    "cri":{
+        "page":1,
+        "pageNum":10,
+        "rowStart":1,
+        "rowEnd":10,
+        "pageStart":0
+        }
+    }
+}
