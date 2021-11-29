@@ -110,7 +110,7 @@ function SignUp() {
       return;
     }
     if (!checkTel.test(formData.member_tel)) {
-      alert("-과 공백을 제외한 휴대전화 번호를 입력해주세요")
+      alert("번호를 확인해주세요")
       return;
     } 
     //주소 입력제한
