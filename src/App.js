@@ -19,12 +19,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Main/>} exact/>
           <Route path="/recipes" element={<Recipes />} exact/>
-          <Route path="/map" element={<Map/>} exact/>
-          {/* <Route path="/login" element={<SignIn/>} exact/> */}
           <Route path="/login" element={<SignIn/>} exact/>
-          <Route path="/price" element={<PriceInfo/> }exact/>
-          <Route path="/reply" element={<Reply/> }exact/>
-          <Route path="/kind" element={<Kind/>} exact/>
+          {/* <Route path="/map" element={<Map/>} exact/> */}
+          {/* <Route path="/price" element={<PriceInfo/> } exact/> */}
+          {/* <Route path="/reply" element={<Reply/> } exact/> */}
+          {/* <Route path="/kind" element={<Kind/>} exact/> */}
         </Routes>
       </div>
       <Footer></Footer>
