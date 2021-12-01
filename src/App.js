@@ -9,6 +9,7 @@ import "./scss/main.scss";
 import PriceInfo from "./views/maps/PriceInfo";
 import Reply from "./views/Reply";
 import Kind from "./views/Kind";
+import Recipes from "views/Recipes";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <div className="contents">
         <Routes>
           <Route path="/" element={<Main/>} exact/>
+          <Route path="/recipes" element={<Recipes />} exact/>
           <Route path="/map" element={<Map/>} exact/>
           {/* <Route path="/login" element={<SignIn/>} exact/> */}
           <Route path="/login" element={<SignIn/>} exact/>
