@@ -12,7 +12,7 @@ import {
   Form,
 } from "reactstrap";
 import DaumPost from "components/DaumPost";
-import axios,{ post } from "axios";
+import axios from "axios";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -25,11 +25,11 @@ function SignUp() {
     "member_basic_address": "",
     "member_detail_address": "",
     "member_type":"0",
-    "member_agree":"",
+    "member_agree":"0",
   });
   const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
-  const [adminCode,setAdminCode] =useState("q1w2e3");
+  const [adminCode] =useState("q1w2e3");
   const [addressModal, setAddressModal] = React.useState(false);
   const [adminModal, setAdminModal] = React.useState(false);
   const history = useNavigate();
@@ -92,7 +92,7 @@ function SignUp() {
     } 
     if (formData.member_pw !== formData.confirmPw) {
       // 비밀번호가 서로 다른지 체크하는 validation 코드입니다.
-      alert("비밀번호를 다시 확인 해주세요");
+      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
       return;
     }
     //이름 입력제한
@@ -148,8 +148,14 @@ function SignUp() {
         },
       })
       // post 보내고 나서 실행
-      .then(res => {alert('성공')
-      console.log(res)
+      .then(res => {
+      if(res==="overlap"){
+        alert("이미 가입된 아이디입니다.")
+      }else{
+        alert('성공')
+        console.log(res)
+        document.location.href = '/signin'
+      }
     })
       .catch(err =>{alert('실패')
       console.log(formData)
@@ -283,11 +289,11 @@ function SignUp() {
             onChange={handleValueChange}
             value={formData.member_id}
           />
-          <Button  
+          {/* <Button  
           color="primary"
           type="button">
             확인
-          </Button>
+          </Button> */}
         </FormGroup>
         <FormGroup>
           <Label for="pwInput">비밀번호*</Label>

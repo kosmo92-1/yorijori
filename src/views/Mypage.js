@@ -1,3 +1,4 @@
+import axios, {data} from 'axios';
 import DaumPost from 'components/DaumPost';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -32,20 +33,15 @@ function Mypage() {
       });
       const [member_photo, setMember_photo] = useState(null);
       const [userCode, setUserCode] = useState("");
-      const [adminCode] =useState("q1w2e3");
+      const [adminCode] ="q1w2e3";
       const [addressModal, setAddressModal] = React.useState(false);
       const [adminModal, setAdminModal] = React.useState(false);
       const [dropModal, setDropModal] = React.useState(false);
       const history = useNavigate();
-    
         // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
   useEffect(() => {
-      fetch(
-        `http://localhost:3001/api/user/update/${location.state.idx}`,
-        {
-          method: "GET",
-        }
-      )
+    axios.get('/getMember.do')
+    // 값을가져와 넣어줍니다.
         .then((data) => data.json())
         .then((json) => {
           setTempFormData({
@@ -66,8 +62,9 @@ function Mypage() {
             userMail: json[0][3],
             userPhone: json[0][4],
           });
+        
         });
-
+        
   }, []);
 
       // 파일 저장
@@ -128,7 +125,7 @@ function Mypage() {
         } 
         if (tempFormData.member_pw !== tempFormData.confirmPw) {
           // 비밀번호가 서로 다른지 체크하는 validation 코드입니다.
-          alert("비밀번호를 다시 확인 해주세요");
+          alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
           return;
         }
         //이름 입력제한
@@ -146,7 +143,7 @@ function Mypage() {
           return;
         }
         if (!checkTel.test(tempFormData.member_tel)) {
-          alert("-과 공백을 제외한 휴대전화 번호를 입력해주세요")
+          alert("번호를 확인해 주세요.")
           return;
         } 
         //주소 입력제한
@@ -168,6 +165,7 @@ function Mypage() {
         const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
         reqFormData.append("member_photo", tempFormData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
         reqFormData.append("member_id", tempFormData.member_id);
+        reqFormData.append("member_email", formData.member_id);
         reqFormData.append("member_name", tempFormData.member_name);
         reqFormData.append("member_pw", tempFormData.member_pw);
         reqFormData.append("member_tel", tempFormData.member_tel);
@@ -175,24 +173,23 @@ function Mypage() {
         reqFormData.append("member_detail_address", tempFormData.member_detail_address);
         reqFormData.append("member_type", tempFormData.member_type);
         reqFormData.append("agreeEvent", tempFormData.agreeEvent);
-        
-        const config = {
-          headers: {
-            "content-type": "application/json", // 헤더설정
-          },
-        };
-    
-        post(
-            `http://localhost:3001/api/user/update/${location.state.idx}`,
-            reqFormData,
-            config
-          ).then((res) => {
-            if (res.data.success === true) {
-              alert(res.data.msg);
-              history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
-            }
-          });
-        };
+         
+    axios.post('/insertMember.do', reqFormData,{
+      headers:{
+          // json으로 형식을 지정해줍니다.
+          "Content-type":"multipart/form-data"
+      },
+    })
+    // post 보내고 나서 실행
+    .then(res => {alert('성공')
+    console.log(res)
+    history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
+  })
+    .catch(err =>{alert('실패')
+    console.log(formData)
+  })
+};
+      
     
        
       const onMembertypeHandler = (event) => {

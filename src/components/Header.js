@@ -3,6 +3,8 @@ import React from 'react';
 function Header(props) {
     return (
         <header id="header">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>Kakao.init("e03625b4bd41a78b915468e4933296bc");</script>
             <div className="inner-header">
                 <h1 className="logo">
                     <svg xmlns="http://www.w3.org/2000/svg" width="63.74" height="78.52" viewBox="0 0 63.74 78.52">

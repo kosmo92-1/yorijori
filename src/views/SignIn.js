@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
- 
-function Login() {
+import { Form } from 'reactstrap';
+import { useNavigate } from 'react-router';
+import Kakao from 'components/Kakko';
+function SignIn() {
     // 함수형 컴포넌트에서 state를 사용하기위해 useState 사용
     const [inputId, setInputId] = useState('')
     const [inputPw, setInputPw] = useState('')
- 
+    const navigate = useNavigate();
     // input 태그에 value={값} 선언하면 readonly같은 효과가 나타나므로
     // onChange로 변화가 있을때마다 id의 값을 변경해줍니다.
     const handleInputId = (e) => {
@@ -60,12 +62,8 @@ function Login() {
         // 실패시 실행
         .catch()
     }
-    // ?? 아직잘모르겠어요
-     useEffect(() => {
-         axios.get('/user_inform/login')
-         .then(res => console.log(res))
-         .catch()
-     },[])
+    
+    
  
     return(
         <div>
@@ -77,10 +75,13 @@ function Login() {
                 <input type='password' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
             </div>
             <div>
-                <button type='button' onClick={onClickLogin}>Login</button>
+                <button type='button' onClick={onClickLogin}>로그인</button>
+                <button type='button' onClick={()=>navigate('/signup')}>회원가입</button>
+                <button type='button' onClick={()=>navigate('/signup')}>아이디/비밀번호 찾기</button>
+                {/* <Kakao/> */}
             </div>
         </div>
     )
 }
  
-export default Login;
+export default SignIn;
