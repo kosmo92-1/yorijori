@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import Logo from './shared/Logo';
 
 
 function Header(props) {
     let listener = null;
-    const [scrollState, setScrollState] = useState("top");
+    // const [scrollState, setScrollState] = useState("top");
     
-    useEffect(() => {
-        listener = document.addEventListener("scroll", e => {
-            var scrolled = document.scrollingElement.scrollTop;
-            if (scrolled >= 100) {
-                if (scrollState !== "scrolling") {
-                    setScrollState("scrolling")
-                } else {
-                    if (scrollState !== "top") {
-                        setScrollState("top")
-                    }
-                }
-            }
-        })
-    }, [scrollState])
+    // useEffect(() => {
+    //     listener = document.addEventListener("scroll", e => {
+    //         var scrolled = document.scrollingElement.scrollTop;
+    //         if (scrolled >= 100) {
+    //             if (scrollState !== "scrolling") {
+    //                 setScrollState("scrolling")
+    //             } else {
+    //                 if (scrollState !== "top") {
+    //                     setScrollState("top")
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }, [scrollState])
 
     return (
         <header id="header">
@@ -31,6 +31,7 @@ function Header(props) {
                     <ul className="clearfix">
                         <li><a href="#">마이페이지</a></li>
                         <li><a href="#">장바구니</a></li>
+                        {/* TODO : 값에 따라 로그인 로그아웃 변경 */}
                         <li><a href="#">로그인</a></li>
                     </ul>
                 </nav>

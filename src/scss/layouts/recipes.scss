@@ -1,0 +1,83 @@
+@use "../abstracts/variables" as v;
+
+.sec-banner {
+    img {
+        width: 100%;
+    }
+}
+.sec-filter {
+    width: 100%;
+    margin-top: 50px;
+    .search-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+        background: v.$color-spanishbistre;
+        > div {
+            position: relative;
+            input {
+                width: 400px;
+                height: 40px;
+                padding-left: 20px;
+                border-radius: 40px;
+                font-size: 0.875rem;
+            }
+            label {
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                color: #c7c7c7;
+                transform: translateY(-50%);
+                i {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .list-filter {
+        padding: 50px 0;
+        background: #e3e3e3;
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            li {
+                width: 130px;
+                height: 130px;
+                border-radius: 50%;
+                background: #fff;
+                text-align: center;
+                line-height: 130px;
+                &:not(:last-child) {
+                    margin-right: 40px;
+                }
+            }
+        }
+    }
+}
+.sec-recipes {
+    margin-top: 50px;
+    .recipes {
+        display: flex;
+        flex-wrap: wrap;
+        .recipe {
+            width: 50%;
+            &:nth-child(2n) {
+                margin-bottom: 20px;
+            }
+            > div {
+                display: flex;
+                figure {
+                    width: 310px;
+                    img {
+                        width: 100%;
+                    }
+                }
+                > div {
+                    width: calc(100% - 310px);
+                }
+            }
+        }
+    }
+}

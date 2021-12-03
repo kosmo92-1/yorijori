@@ -2,9 +2,12 @@ import React from 'react';
 
 function RecipeDetail(props) {
     return (
-        <div>
+        <main>
+            {/* TODO : IMG 영역 */}
+            <div></div>
             
-        </div>
+            
+        </main>
     );
 }
 
