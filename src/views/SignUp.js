@@ -149,8 +149,10 @@ function SignUp() {
       })
       // post 보내고 나서 실행
       .then(res => {
-      if(res==="overlap"){
+      if(res.data ==="overlap"){
         alert("이미 가입된 아이디입니다.")
+        console.log(res)
+        return;
       }else{
         alert('성공')
         console.log(res)
@@ -258,6 +260,14 @@ function SignUp() {
       </Modal>
 
       <Form>
+        <FormGroup>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+        </FormGroup>
         <FormGroup>
         <h3>프로필이미지</h3>
         <div>

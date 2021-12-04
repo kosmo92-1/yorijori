@@ -44,6 +44,8 @@ function Mypage() {
     // 값을가져와 넣어줍니다.
         .then((data) => data.json())
         .then((json) => {
+          alert("hi")
+          console.log(data)
           setTempFormData({
             profile: json[0][5],
             userId: json[0][6],
@@ -174,7 +176,7 @@ function Mypage() {
         reqFormData.append("member_type", tempFormData.member_type);
         reqFormData.append("agreeEvent", tempFormData.agreeEvent);
          
-    axios.post('/insertMember.do', reqFormData,{
+    axios.post('/update.do', reqFormData,{
       headers:{
           // json으로 형식을 지정해줍니다.
           "Content-type":"multipart/form-data"
