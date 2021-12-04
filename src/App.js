@@ -1,10 +1,10 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Testcompo from "./components/Testcompo";
 import {Routes,Route} from 'react-router-dom'
 import Main from "./views/Main";
 import Map from "./views/maps/Map";
 import SignIn from "./views/SignIn"
-
 import "./scss/main.scss";
 import Reply from "./views/Reply";
 import Kind from "./views/kind/Kind";
@@ -44,6 +44,7 @@ function App() {
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
           <Route path="/readnotice/:notice_id" element={<ReadNotice/>}exact/>
           <Route path="/recipelist" element={<RecipeList/>} exact/>
+          <Route path="/test" element={<Testcompo/>} exact/>
         </Routes>
       </div>
       <Footer></Footer>
