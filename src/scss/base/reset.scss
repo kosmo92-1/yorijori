@@ -675,3 +675,9 @@ select {
     clear: both;
   }
 }
+
+.text-trunc {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
