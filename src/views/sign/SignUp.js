@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import DaumPost from "components/DaumPost";
 import axios from "axios";
-
 function SignUp() {
   const [formData, setFormData] = useState({
     "member_photo": null,
@@ -200,7 +199,7 @@ function SignUp() {
 
   return (
     <Container>
-      <Modal isOpen={addressModal} toggle={() => setAddressModal(false)}
+      <Modal className="addressModal" isOpen={addressModal} toggle={() => setAddressModal(false)}
       >
         <div className="modal-header">
           <h5 className="modal-title" id="exampleModalLiveLabel">
@@ -255,18 +254,12 @@ function SignUp() {
           </Form>
         </div>
         <div className="modal-footer">
-        <Button onClick={adminCheck}>코드 확인</Button>
+        <Button className="adminBtn" onClick={adminCheck}>코드 확인</Button>
         </div>
       </Modal>
 
       <Form>
         <FormGroup>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
         </FormGroup>
         <FormGroup>
         <h3>프로필이미지</h3>
@@ -299,11 +292,6 @@ function SignUp() {
             onChange={handleValueChange}
             value={formData.member_id}
           />
-          {/* <Button  
-          color="primary"
-          type="button">
-            확인
-          </Button> */}
         </FormGroup>
         <FormGroup>
           <Label for="pwInput">비밀번호*</Label>
@@ -361,6 +349,7 @@ function SignUp() {
           <Button
             color="primary"
             type="button"
+            className="addressSearchBtn"
             onClick={() => setAddressModal(true)}
           >
             주소찾기

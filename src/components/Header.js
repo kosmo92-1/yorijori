@@ -32,7 +32,7 @@ function Header(props) {
                         <li><a href="/mypage">마이페이지</a></li>
                         <li><a href="#">장바구니</a></li>
                         {/* TODO : 값에 따라 로그인 로그아웃 변경 */}
-                        <li><a href="#">로그인</a></li>
+                        <li><a href="/login">로그인</a></li>
                     </ul>
                 </nav>
             </div>

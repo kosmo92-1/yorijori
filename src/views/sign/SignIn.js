@@ -2,13 +2,29 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, Form, FormGroup, Input, Modal } from "reactstrap";
 import { useNavigate } from "react-router";
-import Kakao from "components/Kakko";
+import e from "cors";
 
 function SignIn() {
   const [findPwModal, setFindPwModal] = React.useState(false);
   // 함수형 컴포넌트에서 state를 사용하기위해 useState 사용
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+  const [inputData, setInputData] = useState({
+    "inputName": "",
+    "inputTel": "",
+    // "inputEmail":"",
+    // "cerNum":"",
+  });
+  const handleValueChange = (event) => {
+    // API 요청에 날릴 Form state에 정보를 추가합니다.
+    
+    setInputData({
+      ...inputData,
+      [event.target.name]: event.target.value,
+    });
+    console.log(inputData);
+  };
+
   const navigate = useNavigate();
   // input 태그에 value={값} 선언하면 readonly같은 효과가 나타나므로
   // onChange로 변화가 있을때마다 id의 값을 변경해줍니다.
@@ -20,7 +36,8 @@ function SignIn() {
     setInputPw(e.target.value);
   };
   //로그인 함수
-  const onClickLogin = () => {
+  const onClickLogin = (e) => {
+    e.preventDefault();
     console.log("click login");
     console.log("ID : ", inputId);
     console.log("PW : ", inputPw);
@@ -59,38 +76,77 @@ function SignIn() {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           console.log("======================", "로그인 성공");
           sessionStorage.setItem("user_id", inputId);
+          sessionStorage.setItem("user_pw", inputPw);
+
           alert("로그인 성공");
         }
         // 작업 완료 되면 페이지 이동(새로고침)
-        // document.location.href = '/mypage'
+        document.location.href = '/mypage'
       })
       // 실패시 실행
       .catch();
-      alert("실패");
+      // alert("실패")
   };
-  const { Kakao } = window;
-  const kakaoLoginClickHandler = () => {
-    Kakao.Auth.login({
-      success: function (authObj) {
-        fetch("${KAKAO_LOGIN_API_URL}", {
-          method: "POST",
-          body: JSON.stringify({
-            access_token: authObj.access_token,
-          }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            localStorage.setItem("Kakao_token", res.access_token);
-            if (res.access_token) {
-              alert("성공");
-            }
-          });
-      },
-      fail: function (err) {
-        alert(JSON.stringify(err));
-      },
-    });
+
+  const onFindId = (e) => {
+    e.preventDefault();
+    const idCheckJson ={
+      member_name:inputData.inputName,
+      member_tel:inputData.inputTel,
+  }
+    // json처럼 선언해줍니다.
+    // axio를 이용해 post로 전송하며
+    console.log(idCheckJson);
+    console.log(inputData);
+    axios.post("/findId.do", idCheckJson, {
+        headers: {
+          // json으로 형식을 지정해줍니다.
+          "Content-type":"application/json"
+        },
+      })
+      // post 보내고 나서 실행
+      .then((res) => {
+        console.log(res);
+        if (res === "noSearch") {
+          alert("입력하신 정보와 일치하는 아이디가 존재하지 않습니다.");
+        }else {
+          alert("고객님의 아이디는 = " + res +" 입니다.");
+          setFindPwModal(false);
+        }
+      })
+      // 실패시 실행
+      .catch();
+      console.log()
+      alert("실패")
   };
+
+
+
+
+  // const { Kakao } = window;
+  // const kakaoLoginClickHandler = () => {
+  //   Kakao.Auth.login({
+  //     success: function (authObj) {
+  //       fetch("${KAKAO_LOGIN_API_URL}", {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           access_token: authObj.access_token,
+  //         }),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((res) => {
+  //           localStorage.setItem("Kakao_token", res.access_token);
+  //           if (res.access_token) {
+  //             alert("성공");
+  //           }
+  //         });
+  //     },
+  //     fail: function (err) {
+  //       alert(JSON.stringify(err));
+  //     },
+  //   });
+  // };
+
   const [activeIndex, setActiveIndex]=useState(0);
 
     const tabClickHandler=(index)=>{
@@ -100,45 +156,45 @@ function SignIn() {
     const tabContArr=[
         {
             tabTitle:(
-                <li className={activeIndex===0 ? "is-active" : ""} onClick={()=>tabClickHandler(0)}>  <Button>아이디 찾기</Button> </li>
+                <Button className={activeIndex===0 ? "is-active" : ""} onClick={()=>tabClickHandler(0)}>아이디 찾기</Button>
             ),
             tabCont:(
                 <Form name="idForm">
                 <FormGroup>
                   <Input
                     type="text"
-                    id="InputName"
-                    name="InputName"
+                    id="inputName"
+                    name="inputName"
                     placeholder="이름을 입력해 주세요."
-                    // onChange={}
+                    onChange={handleValueChange}
                   />
                   </FormGroup>
                   <FormGroup>
                   <Input
                     type="text"
-                    id="InputTel"
-                    name="InputTel"
+                    id="inputTel"
+                    name="inputTel"
                     placeholder="전화번호를 입력해주세요."
-                    // onChange={}
+                    onChange={handleValueChange}
                   />
                 </FormGroup>
-                <Button>확인</Button>
+                <Button onClick={onFindId}>확인</Button>
               </Form>
             )
         },
         {
             tabTitle:(
-                <li className={activeIndex===1 ? "is-active" : ""} onClick={()=>tabClickHandler(1)}>  <Button>비밀번호 찾기</Button> </li>
+                  <Button className={activeIndex===1 ? "is-active" : ""} onClick={()=>tabClickHandler(1)}>비밀번호 찾기</Button> 
             ),
             tabCont:(
                 <Form name="pwForm">
                 <FormGroup>
                   <Input
                     type="text"
-                    id="InputEmail"
-                    name="InputEmail"
+                    id="inputEmail"
+                    name="inputEmail"
                     placeholder="가입한 메일 주소를 입력해 주세요."
-                    // onChange={}
+                    onChange={handleValueChange}
                   />
                   <Button>인증번호 발송</Button>
                 </FormGroup>
@@ -148,7 +204,7 @@ function SignIn() {
                     id="cerNum"
                     name="cerNum"
                     placeholder="인증번호를 입력해주세요."
-                    // onChange={}
+                    onChange={handleValueChange}
                   />
                   <Button>인증번호 확인</Button>
                 </FormGroup>
@@ -159,7 +215,7 @@ function SignIn() {
 
   
   return (
-    <Container>
+    <Container className="login">
       <Modal
         isOpen={findPwModal}
         className="modal-m"
@@ -185,14 +241,8 @@ function SignIn() {
         </div>
       </Modal>
 
-      <Form onSubmit={onClickLogin}>
+      <Form >
         <FormGroup>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
         </FormGroup>
         <FormGroup>
           <Input
@@ -213,26 +263,21 @@ function SignIn() {
           ></Input>
         </FormGroup>
         <FormGroup>
-          <Button type="submit" onClick={onClickLogin}>
+          <Button block type="submit" onClick={onClickLogin}>
             로그인
           </Button>
         </FormGroup>
 
         <FormGroup>
-          <Button onClick={() => navigate("/signup")}>회원가입</Button>
+          <Button block onClick={() => navigate("/signup")}>회원가입</Button>
         </FormGroup>
 
         <FormGroup>
-          <Button onClick={() => setFindPwModal(true)}>
+          <Button block onClick={() => setFindPwModal(true)}>
             아이디/비밀번호찾기
           </Button>
         </FormGroup>
         <FormGroup>
-          <Button
-            fill
-            className="btn kakao"
-            onClick={kakaoLoginClickHandler}
-          ></Button>
         </FormGroup>
         <FormGroup></FormGroup>
         <FormGroup></FormGroup>
