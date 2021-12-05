@@ -1,12 +1,13 @@
 import React,{useEffect} from 'react';
 /*global kakao*/ 
-function Map(props) {
+function Map(address) {
     useEffect(()=>{
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(37.36990223828836, 126.80971744285071), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            level: 5 // 지도의 확대 레벨
         };  
+        
     
         // 지도를 생성합니다    
         var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -63,7 +64,7 @@ function Map(props) {
     
         return (
             <div>
-                <div id="map" style={{width:"500px", height:"400px"}}></div> 
+                <div id="map" style={{width:"50em", height:"40em"}}></div> 
             </div>
         );
 

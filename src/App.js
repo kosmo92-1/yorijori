@@ -18,6 +18,7 @@ import ReadNotice from "views/notice/ReadNotice";
 import RecipeList from "views/recipe/RecipeList";
 import RecipeDetail from "views/RecipeDetail";
 import Map from "views/maps/Map";
+import MartMap from "views/maps/MartMap";
 
 function App() {
   function debug() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/readnotice/:notice_id" element={<ReadNotice/>}exact/>
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/test" element={<Testcompo/>} exact/>
+          <Route path="/mart" element={<MartMap/>}exact/>
         </Routes>
       </div>
       <Footer></Footer>

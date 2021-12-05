@@ -30,6 +30,8 @@ function Header(props) {
                 <nav>
                     <ul className="clearfix">
                         <li><a href="/mypage">마이페이지</a></li>
+                        <li><a href="/mart">주변마트보기</a></li>
+                        <li><a href="#">공지사항</a></li>
                         <li><a href="#">장바구니</a></li>
                         {/* TODO : 값에 따라 로그인 로그아웃 변경 */}
                         <li><a href="/login">로그인</a></li>

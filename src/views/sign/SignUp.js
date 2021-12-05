@@ -26,6 +26,7 @@ function SignUp() {
     "member_type":"0",
     "member_agree":"0",
   });
+  
   const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
   const [adminCode] =useState("q1w2e3");
