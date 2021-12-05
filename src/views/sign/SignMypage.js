@@ -1,14 +1,16 @@
+import axios, {data} from 'axios';
 import DaumPost from 'components/DaumPost';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Button, Col, Container, Form, FormGroup, Input, Label, Modal } from "reactstrap"
+import { Button, Col, Container, Form, FormGroup, Input, Label, Modal, Row } from "reactstrap"
 import { post } from 'request';
 function Mypage() {
     const location = useLocation();
     const [tempFormData, setTempFormData] = useState({
         "member_photo": null,
         "member_id": "",
+        "member_email": "",
         "member_name": "",
         "member_pw": "",
         "confirmPw": "",
@@ -18,57 +20,39 @@ function Mypage() {
         "member_type":"",
         "member_agree":"",
       });
-      const [formData, setFormData] = useState({
-        "member_photo": null,
-        "member_id": "",
-        "member_name": "",
-        "member_pw": "",
-        "confirmPw": "",
-        "member_tel": "",
-        "member_basic_address": "",
-        "member_detail_address": "",
-        "member_type":"",
-        "member_agree":"",
-      });
+     
       const [member_photo, setMember_photo] = useState(null);
+      const [adminCode] ="q1w2e3";
       const [userCode, setUserCode] = useState("");
-      const [adminCode] =useState("q1w2e3");
       const [addressModal, setAddressModal] = React.useState(false);
       const [adminModal, setAdminModal] = React.useState(false);
       const [dropModal, setDropModal] = React.useState(false);
       const history = useNavigate();
-    
-        // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
-  useEffect(() => {
-      fetch(
-        `http://localhost:3001/api/user/update/${location.state.idx}`,
-        {
-          method: "GET",
-        }
-      )
-        .then((data) => data.json())
-        .then((json) => {
-          setTempFormData({
-            profile: json[0][5],
-            userId: json[0][6],
-            userName: json[0][1],
-            userPassword: json[0][2],
-            userPassword2: json[0][2],
-            userMail: json[0][3],
-            userPhone: json[0][4],
-          });
-          setFormData({
-            profile: json[0][5],
-            userId: json[0][6],
-            userName: json[0][1],
-            userPassword: json[0][2],
-            userPassword2: json[0][2],
-            userMail: json[0][3],
-            userPhone: json[0][4],
-          });
-        });
 
-  }, []);
+
+      // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
+      useEffect(()=>{
+        // if(`${sessionStorage.getItem("user_id")}`!== null){
+          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
+          .then((res)=>{
+            console.log(res.data)
+            // console.log(res.data.member_basic_address)
+            setTempFormData({
+          "member_id": res.data.member_id,
+          "member_name": res.data.member_name,
+          "member_email": res.data.member_email,
+          "member_tel": res.data.member_tel,
+          "member_basic_address": res.data.member_basic_address,
+          "member_detail_address": res.data.member_detail_address,
+          "member_type":res.data.member_type,
+          // "member_agree":res.data.member_agree,
+            })
+          })
+      //   }else{
+      //     alert("로그인 ㄱ")
+      //     document.location.href = '/login'
+      // }
+      },[])
 
       // 파일 저장
       const saveFileImage = (e) => {
@@ -109,10 +93,10 @@ function Mypage() {
           alert("아이디를 입력해주세요")
           return;
         }
-        if (!checkID.test(tempFormData.member_id)) {
-          alert("아이디로 올바른 메일을 입력해 주시기 바랍니다.")
-          return;
-        } 
+        // if (!checkID.test(tempFormData.member_id)) {
+        //   alert("아이디로 올바른 메일을 입력해 주시기 바랍니다.")
+        //   return;
+        // } 
         //비밀번호 입력제한
         if(tempFormData.member_pw=== ""){
           alert("비밀번호를 입력해주세요")
@@ -128,7 +112,7 @@ function Mypage() {
         } 
         if (tempFormData.member_pw !== tempFormData.confirmPw) {
           // 비밀번호가 서로 다른지 체크하는 validation 코드입니다.
-          alert("비밀번호를 다시 확인 해주세요");
+          alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
           return;
         }
         //이름 입력제한
@@ -146,7 +130,7 @@ function Mypage() {
           return;
         }
         if (!checkTel.test(tempFormData.member_tel)) {
-          alert("-과 공백을 제외한 휴대전화 번호를 입력해주세요")
+          alert("번호를 확인해 주세요.")
           return;
         } 
         //주소 입력제한
@@ -166,8 +150,9 @@ function Mypage() {
         } 
     
         const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
-        reqFormData.append("member_photo", tempFormData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+        reqFormData.append("file", tempFormData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
         reqFormData.append("member_id", tempFormData.member_id);
+        reqFormData.append("member_email", tempFormData.member_id);
         reqFormData.append("member_name", tempFormData.member_name);
         reqFormData.append("member_pw", tempFormData.member_pw);
         reqFormData.append("member_tel", tempFormData.member_tel);
@@ -175,24 +160,23 @@ function Mypage() {
         reqFormData.append("member_detail_address", tempFormData.member_detail_address);
         reqFormData.append("member_type", tempFormData.member_type);
         reqFormData.append("agreeEvent", tempFormData.agreeEvent);
-        
-        const config = {
-          headers: {
-            "content-type": "application/json", // 헤더설정
-          },
-        };
-    
-        post(
-            `http://localhost:3001/api/user/update/${location.state.idx}`,
-            reqFormData,
-            config
-          ).then((res) => {
-            if (res.data.success === true) {
-              alert(res.data.msg);
-              history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
-            }
-          });
-        };
+         
+    axios.post('/updateMember.do', reqFormData,{
+      headers:{
+          "Content-type":"multipart/form-data"
+      },
+    })
+    // post 보내고 나서 실행
+    .then(res => {
+    alert('성공')
+    console.log(res)
+    history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
+  })
+    // .catch(err =>{alert('실패')
+    // console.log(tempFormData)
+  // })
+};
+      
     
        
       const onMembertypeHandler = (event) => {
@@ -217,32 +201,66 @@ function Mypage() {
         if (userCode === adminCode) {
           onMembertypeHandler();
           setAdminModal(false);
-        } else {
+        }else {
+          console.log(userCode)
+          console.log(adminCode)
           return alert("관리자코드를 확인해주세요");
           
         }
       };
+
+      const logout = () => {
+          sessionStorage.clear();
+          alert("로그아웃 성공")
+          console.log(sessionStorage)
+          document.location.href = '/login'
+      }
+      
+      const onDropId = () => {
+        const dropJson ={
+          member_id:`${sessionStorage.getItem("user_id")}`,
+          member_pw:`${sessionStorage.getItem("user_pw")}`,
+      }
+      console.log(dropJson)
+        axios.post('/deleteMember.do', dropJson, {
+          headers:{
+          // json으로 형식을 지정해줍니다.
+          "Content-type":"application/json"
+      },
+    }).then(res => {
+          alert('성공')
+          console.log(sessionStorage)
+          document.location.href = '/login'
+        })
+          .catch(err =>{alert('실패')
+          console.log( `${sessionStorage.getItem("user_id")},${sessionStorage.getItem("user_pw")}`)
+        })
+      }
       
     
     return (
         <Container>
-            <Col >
-            <Button>회원정보수정</Button>
-            <Button>
+          <Row>
+            <Col xs="2" className="sideBar">
+            <Button block>회원정보수정</Button>
+            <Button block>
             {/* <Link> */}
             My Channel
             {/* </Link> */}
             </Button> 
-            <Button >
+            <Button block>
                  {/* <Link> */}
                  공지사항
                  {/* </Link> */}
             </Button>
-            <Button
+            <Button block
                 onClick={() => setDropModal(true)}
             >회원탈퇴</Button>
+             <Button block
+                onClick= {logout}
+            >로그아웃</Button>
             </Col>
-            <Col>
+            <Col xs="10">
             <Modal isOpen={addressModal} toggle={() => setAddressModal(false)}
       >
         <div className="modal-header">
@@ -304,7 +322,7 @@ function Mypage() {
 
       <Modal
         isOpen={dropModal}
-        className="modal-sm"
+        className="modal-sm-dropModal"
         modalClassName="bd-dropModal-sm"
         toggle={() => setDropModal(false)}
       >
@@ -314,8 +332,8 @@ function Mypage() {
           </h5>
         </div>
         <div className="modal-body">
-        <Button >확인</Button>
-        <Button onClick={() => setDropModal(false)}>취소</Button>
+        <Button className="dropOK" onClick={onDropId}>확인</Button>
+        <Button className="dropNO" onClick={() => setDropModal(false)}>취소</Button>
         </div>
       </Modal>
 
@@ -349,13 +367,9 @@ function Mypage() {
             type="email"
             placeholder="이메일 형식으로 공백 없이 입력해주세요"
             onChange={handleValueChange}
-            value={formData.member_id}
+            value={tempFormData.member_id}
+            readOnly
           />
-          <Button  
-          color="primary"
-          type="button">
-            확인
-          </Button>
         </FormGroup>
         <FormGroup>
           <Label for="pwInput">비밀번호*</Label>
@@ -385,7 +399,7 @@ function Mypage() {
             type="text"
             placeholder="이름을 입력해주세요"
             onChange={handleValueChange}
-            value={formData.member_name}
+            value={tempFormData.member_name}
           ></Input>
         </FormGroup>
         <FormGroup>
@@ -395,7 +409,7 @@ function Mypage() {
             className="member_tel registerInput"
             type="text"
             placeholder="-과 공백을 제외한 휴대전화번호를 입력해 주세요"
-            value={formData.member_tel}
+            value={tempFormData.member_tel}
             onChange={handleValueChange}
           ></Input>
         </FormGroup>
@@ -405,7 +419,7 @@ function Mypage() {
            className="member_basic_address registerInput"
             name="member_basic_address"
             type="text"
-            value={formData.member_basic_address}
+            value={tempFormData.member_basic_address}
             placeholder="주소 찾기 버튼을 클릭해주세요"
             readOnly
             onChange={handleValueChange}
@@ -422,7 +436,7 @@ function Mypage() {
             type="text"
             placeholder="상세주소*"
             name="member_detail_address"
-            value={formData.member_detail_address}
+            value={tempFormData.member_detail_address}
             onChange={handleValueChange}
           ></Input>
         </FormGroup>
@@ -457,6 +471,7 @@ function Mypage() {
         </Button>
       </div>
             </Col>
+            </Row>
         </Container>
         );
 }

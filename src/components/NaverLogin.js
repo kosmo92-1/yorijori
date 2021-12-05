@@ -25,7 +25,7 @@ class NaverLogin extends Component {
             naverLogin.getLoginStatus((status) => {
                 if(status){
                     console.log("Naver 로그인 상태", naverLogin.user);
-                    const { }
+                    const {email, }
                 }
             })
         }

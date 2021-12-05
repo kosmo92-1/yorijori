@@ -1,0 +1,84 @@
+@use "../abstracts/variables" as v;
+
+.addressModal{
+    .modal-header{
+        padding: 10px;
+        .modal-title{
+            font-size: x-large;
+            vertical-align: middle;
+            position: relative;
+            display: inline-block;
+            font-weight: bolder;
+        }
+        .close{
+            span{
+                display: inline-block;
+                position: relative;
+                top: -5px;
+                font-size: xx-large;
+            }
+        }
+    }
+}
+.modal-sm{
+    .modal-title{
+        font-size: x-large;
+        vertical-align: middle;
+        position: relative;
+        display: inline-block;
+        font-weight: bolder;
+        right: -20px;
+    }
+    .close{
+        span{
+            display: inline-block;
+            position: relative;
+            top: -15px;
+            font-size: xx-large;
+        }
+    }
+    .adminBtn{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        right: 105px;
+    }
+}
+.addressSearchBtn{
+    float: right;
+    display: inline-block;
+    position: relative;
+    top: -40px;
+}
+
+.modal-sm-dropModal{
+    .modal-body{
+        text-align: center;
+        .dropOK{
+            margin-right: 30px;
+        }
+    }
+    
+}
+
+.sideBar{
+    margin-top: 100px;
+    Button{
+        margin-bottom: 15px;
+    }
+}
+//로그인페이지
+.login{
+    margin-top: 300px;
+    width: 600px;
+    height: 800px;
+}
+
+//아이디찾기 
+
+.modal-header{
+    button{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}

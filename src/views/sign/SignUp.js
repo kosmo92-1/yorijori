@@ -28,11 +28,12 @@ function SignUp(props) {
     "member_type":"0",
     "member_agree":"",
     "member_idKey":member_idKey,
+    "member_agree":"0",
   });
   
   const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
-  const [adminCode,setAdminCode] =useState("q1w2e3");
+  const [adminCode] =useState("q1w2e3");
   const [addressModal, setAddressModal] = React.useState(false);
   const [adminModal, setAdminModal] = React.useState(false);
   const history = useNavigate();
@@ -95,7 +96,7 @@ function SignUp(props) {
     } 
     if (formData.member_pw !== formData.confirmPw) {
       // 비밀번호가 서로 다른지 체크하는 validation 코드입니다.
-      alert("비밀번호를 다시 확인 해주세요");
+      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
       return;
     }
     //이름 입력제한
@@ -113,7 +114,7 @@ function SignUp(props) {
       return;
     }
     if (!checkTel.test(formData.member_tel)) {
-      alert("-과 공백을 제외한 휴대전화 번호를 입력해주세요")
+      alert("번호를 확인해주세요")
       return;
     } 
     //주소 입력제한
@@ -151,8 +152,16 @@ function SignUp(props) {
         },
       })
       // post 보내고 나서 실행
-      .then(res => {alert('성공')
-      console.log(res)
+      .then(res => {
+      if(res.data ==="overlap"){
+        alert("이미 가입된 아이디입니다.")
+        console.log(res)
+        return;
+      }else{
+        alert('성공')
+        console.log(res)
+        document.location.href = '/signin'
+      }
     })
       .catch(err =>{alert('실패')
       console.log(formData)
@@ -195,7 +204,7 @@ function SignUp(props) {
 
   return (
     <Container>
-      <Modal isOpen={addressModal} toggle={() => setAddressModal(false)}
+      <Modal className="addressModal" isOpen={addressModal} toggle={() => setAddressModal(false)}
       >
         <div className="modal-header">
           <h5 className="modal-title" id="exampleModalLiveLabel">
@@ -250,11 +259,13 @@ function SignUp(props) {
           </Form>
         </div>
         <div className="modal-footer">
-        <Button onClick={adminCheck}>코드 확인</Button>
+        <Button className="adminBtn" onClick={adminCheck}>코드 확인</Button>
         </div>
       </Modal>
 
       <Form>
+        <FormGroup>
+        </FormGroup>
         <FormGroup>
         <h3>프로필이미지</h3>
         <div>
@@ -286,11 +297,6 @@ function SignUp(props) {
             onChange={handleValueChange}
             value={formData.member_id}
           />
-          <Button  
-          color="primary"
-          type="button">
-            확인
-          </Button>
         </FormGroup>
         <FormGroup>
           <Label for="pwInput">비밀번호*</Label>
@@ -348,6 +354,7 @@ function SignUp(props) {
           <Button
             color="primary"
             type="button"
+            className="addressSearchBtn"
             onClick={() => setAddressModal(true)}
           >
             주소찾기
