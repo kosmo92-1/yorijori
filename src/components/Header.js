@@ -29,7 +29,7 @@ function Header(props) {
                 </h1>
                 <nav>
                     <ul className="clearfix">
-                        <li><a href="#">주변마트보기</a></li>
+                        <li><a href="/mart">주변마트보기</a></li>
                         <li><a href="#">마이페이지</a></li>
                         <li><a href="#">공지사항</a></li>
                         <li><a href="#">장바구니</a></li>

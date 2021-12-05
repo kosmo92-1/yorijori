@@ -17,6 +17,7 @@ import InsertNotice from "views/notice/InsertNotice";
 import ReadNotice from "views/notice/ReadNotice";
 import RecipeList from "views/recipe/RecipeList";
 import RecipeDetail from "views/RecipeDetail";
+import MartMap from "views/maps/MartMap";
 
 function App() {
   function debug() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/notice" element={<NoticeList/>} exact/>
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
           <Route path="/readnotice/:notice_id" element={<ReadNotice/>}exact/>
+          <Route path="/mart" element={<MartMap/>}exact/>
         </Routes>
       </div>
       <Footer></Footer>
