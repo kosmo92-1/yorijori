@@ -36,7 +36,7 @@ function App() {
           <Route path="/login" element={<SignIn/>} exact/>
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
-          <Route path="/signup" element={<SignUp/>} exact/>
+          <Route path="/signup/:member_email/:member_name/:member_idKey" element={<SignUp/>} exact/>
           {/* <Route path="/mypage" element={<Mypage/>} exact/> */}
           <Route path="/kindlist" element={<KindList/>} exact/>
           <Route path="/basketrlist" element={<BasketRecipeList/>} exact/>

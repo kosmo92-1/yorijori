@@ -14,11 +14,12 @@ import {
 import DaumPost from "components/DaumPost";
 import axios,{ post } from "axios";
 
-function SignUp() {
+function SignUp(props) {
+  const {member_email,member_name,member_idKey} = useParams();
   const [formData, setFormData] = useState({
     "member_photo": null,
-    "member_id": "",
-    "member_name": "",
+    "member_id": member_email,
+    "member_name": member_name,
     "member_pw": "",
     "confirmPw": "",
     "member_tel": "",
@@ -26,6 +27,7 @@ function SignUp() {
     "member_detail_address": "",
     "member_type":"0",
     "member_agree":"",
+    "member_idKey":member_idKey,
   });
   
   const [member_photo, setMember_photo] = useState(null);
