@@ -25,14 +25,14 @@ function SignUp(props) {
     "member_tel": "",
     "member_basic_address": "",
     "member_detail_address": "",
-    "member_type":"0",
+    "member_type":"",
     "member_agree":"",
-    "member_idKey":member_idKey,
-    "member_agree":"0",
+    "member_idKey":"",
   });
   
   const [member_photo, setMember_photo] = useState(null);
   const [userCode, setUserCode] = useState("");
+  const [portChange, setPortChange] = useState("");
   const [adminCode] =useState("q1w2e3");
   const [addressModal, setAddressModal] = React.useState(false);
   const [adminModal, setAdminModal] = React.useState(false);
@@ -63,7 +63,49 @@ function SignUp(props) {
     });
     console.log(formData);
   };
- 
+  
+  const defaultSetting = (event) => {
+    formData.member_type="0";
+    formData.member_agree="0";
+    formData.member_idKey="0";
+    setPortChange("0");
+    console.log(formData.member_type)
+    console.log(formData.member_agree)
+    console.log(formData.member_idKey)
+    console.log(portChange)
+
+  };
+
+  useEffect(()=>{
+    defaultSetting()
+      if(`${sessionStorage.getItem("social_id")}` === "null"){
+       console.log("소셜 없음")
+      }else if(`${sessionStorage.getItem("social_state")}` === "1"){
+        setPortChange("1");
+        console.log("카카오일때 포트"+portChange)
+        console.log(`${sessionStorage.getItem("social_id")}`)
+        setFormData({
+          "member_id": `${sessionStorage.getItem("social_id")}`,
+          "member_email": `${sessionStorage.getItem("social_id")}`,
+          "member_name": `${sessionStorage.getItem("social_name")}`,
+          "member_photo": `${sessionStorage.getItem("social_photo")}`,
+          "member_idKey": `${sessionStorage.getItem("member_idKey")}`,
+        })
+        setMember_photo(`${sessionStorage.getItem("social_photo")}`);
+      }else if(`${sessionStorage.getItem("social_state")}` === "2"){
+        setPortChange("0");
+        console.log("소셜일때 포트"+portChange)
+        console.log(`${sessionStorage.getItem("social_id")}`)
+        setFormData({
+          "member_id": `${sessionStorage.getItem("social_id")}`,
+          "member_email": `${sessionStorage.getItem("social_id")}`,
+          "member_name": `${sessionStorage.getItem("social_name")}`,
+          "member_idKey": `${sessionStorage.getItem("member_idKey")}`,
+          "member_type": "0",
+        })
+      }
+  
+  },[])
   const registerSubmit = (event) => {
     // 회원가입버튼을 누르면 동작합니다.
     event.preventDefault();
@@ -132,23 +174,26 @@ function SignUp(props) {
       alert("상세주소를 확인해주세요")
       return;
     } 
-
-    const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
-    reqFormData.append("file", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
-    reqFormData.append("member_id", formData.member_id);
-    reqFormData.append("member_email", formData.member_id);
-    reqFormData.append("member_name", formData.member_name);
-    reqFormData.append("member_pw", formData.member_pw);
-    reqFormData.append("member_tel", formData.member_tel);
-    reqFormData.append("member_basic_address", formData.member_basic_address);
-    reqFormData.append("member_detail_address", formData.member_detail_address);
-    reqFormData.append("member_type", formData.member_type);
-    reqFormData.append("agreeEvent", formData.agreeEvent);
-    
+    if(portChange==="0"){
+      const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
+      console.log(formData.member_idKey)
+      reqFormData.append("file", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+      // reqFormData.append("member_photo", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+      reqFormData.append("member_id", formData.member_id);
+      reqFormData.append("member_email", formData.member_id);
+      reqFormData.append("member_name", formData.member_name);
+      reqFormData.append("member_pw", formData.member_pw);
+      reqFormData.append("member_tel", formData.member_tel);
+      reqFormData.append("member_basic_address", formData.member_basic_address);
+      reqFormData.append("member_detail_address", formData.member_detail_address);
+      reqFormData.append("member_type", formData.member_type);
+      // reqFormData.append("agreeEvent", formData.agreeEvent);
+      reqFormData.append("member_idKey", formData.member_idKey);
+      console.log(reqFormData)
     axios.post('/insertMember.do', reqFormData,{
         headers:{
             // json으로 형식을 지정해줍니다.
-            "Content-type":"multipart/form-data"
+            "Content-type": "multipart/form-data"
         },
       })
       // post 보내고 나서 실행
@@ -160,12 +205,51 @@ function SignUp(props) {
       }else{
         alert('성공')
         console.log(res)
-        document.location.href = '/signin'
+        document.location.href = '/login'
       }
     })
       .catch(err =>{alert('실패')
       console.log(formData)
     })
+    }else{
+      const reqFormData = new FormData(); // 파일이 업로드되는 폼이기때문에, multipart/form-data로 전송해야합니다.
+      console.log(formData.member_idKey)
+      // reqFormData.append("file", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+      reqFormData.append("member_photo", formData.member_photo); // 입력한정보들을 폼데이터에 넣어줍니다.
+      reqFormData.append("member_id", formData.member_id);
+      reqFormData.append("member_email", formData.member_id);
+      reqFormData.append("member_name", formData.member_name);
+      reqFormData.append("member_pw", formData.member_pw);
+      reqFormData.append("member_tel", formData.member_tel);
+      reqFormData.append("member_basic_address", formData.member_basic_address);
+      reqFormData.append("member_detail_address", formData.member_detail_address);
+      reqFormData.append("member_type", formData.member_type);
+      // reqFormData.append("agreeEvent", formData.agreeEvent);
+      reqFormData.append("member_idKey", formData.member_idKey);
+      console.log(reqFormData)
+    axios.post('/insertMember.do', reqFormData,{
+        headers:{
+            // json으로 형식을 지정해줍니다.
+            "Content-type": "multipart/form-data"
+        },
+      })
+      // post 보내고 나서 실행
+      .then(res => {
+      if(res.data ==="overlap"){
+        alert("이미 가입된 아이디입니다.")
+        console.log(res)
+        return;
+      }else{
+        alert('성공')
+        console.log(res)
+        document.location.href = '/login'
+      }
+    })
+      .catch(err =>{alert('실패')
+      console.log(formData)
+    })
+    }
+
   };
 
    
@@ -177,6 +261,8 @@ function SignUp(props) {
   };
   const onAgreeEventHandler = (event) => {
     formData.member_agree="1";
+    // formData.member_idKey="1";
+
   };
 //주소 API에서 주소 받아와서 저장
   const getData = (fullAddress) => {

@@ -1,15 +1,16 @@
+import axios from 'axios';
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 
 // OAuth Web Client ID 입력
 const clientId = "484081369858-1qnhfmimv79fju54msugicfmb4au07kp.apps.googleusercontent.com";
-
+  //구글로그인 성공 시
+ 
 
 export default function GoogleButton({ onSocial }){
     const onSuccess = async(response) => {
         // 로그인으로 보내기
     	console.log(response);
-    
         const { googleId, profileObj : { email, name } } = response;
         
         await onSocial({
@@ -21,7 +22,6 @@ export default function GoogleButton({ onSocial }){
             
         });
     }
-
     const onFailure = (error) => {
         console.log(error);
         alert('로그인 실패')
