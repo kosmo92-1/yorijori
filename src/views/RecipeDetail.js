@@ -1,16 +1,113 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 function RecipeDetail(props) {
+    const {recipe_id} = useParams();
+    const [recipeDetail, setRecipeDetail] = useState({
+        ingredient: [
+            {
+                "ing_id": 0,
+                "kind_id": "",
+                "ing_name": "",
+                "ing_icon": "",
+                "ing_regdate": 0
+            }
+        ],
+        recipe: {
+            "recipe_id": 0,
+            "member_id": "",
+            "kind_id": "",
+            "recipe_title": "",
+            "recipe_ing": "",
+            "recipe_content": "",
+            "recipe_time": "",
+            "recipe_regdate": 0,
+            "recipe_thumbnail": "",
+            "recipe_viewcount": 0,
+            "recipe_quentity": "",
+            "recipe_difficulty": "",
+            "recipe_recommend": 0
+        }
+    })
+
+    const [kindList, setKindList] = useState(
+        [
+            {
+                "kind_id": "",
+                "kind_name": ""
+            }
+        ]
+    )
+    // var kindList = [
+    //     {
+    //         "kind_id": "",
+    //         "kind_name": ""
+    //     },
+    // ]
+
+    useEffect(() => {
+        axios({
+            method: "get",
+            url: '/getRecipe.do?recipe_id=' + recipe_id,
+        })
+        .then((res) => {
+            // console.log(res.data)
+            setRecipeDetail(res.data)
+        })
+        .then(
+            axios({
+                method: "get",
+                url: '/getKindList.do'
+            })
+            .then((res) => {
+                setKindList(res.data)
+                
+                
+                })
+            )
+            .catch((err) => {
+                alert(err)
+            })
+        .catch((err) => {
+            alert(err)
+        })
+    }, [recipe_id])
+
+    const _date = new Date(recipeDetail.recipe.recipe_regdate);
+    const date = _date.toLocaleDateString()
+    
+    const kindList2 = kindList.find(el => el = recipeDetail.recipe.kind_id);
+    // console.log(kindList2.kind_name);
+    // console.log(kindList2);
+    
     return (
         <main>
-            {/* TODO : IMG 영역 */}
-            <div></div>
-            
-            <div className="desc">
-                <h3>블루베리 케이크</h3>
-                <p>언제 어디서 먹어도 맛있는 치킨! 어떤 치킨이든 간편하게 먹을 수는 있지만, 입맛에 딱 맞는 치킨은 찾기 어렵죠? 오래 기다릴 것 없이 간편하게 집에서 즐길 수 있는 순살치킨! 고메 크리스피 양념치킨은 고온의 오븐에서 겉은 바삭하게, 속은 촉촉하게 튀겨내었습니다. 부먹찍먹 모두 가능한 매콤달콤 양념 소스가 들어 있어 자유롭게 즐길 수도 있구요. 매콤달콤 양념소스를 치즈와 생크림에 넣어 부드러운 로제 크림치킨으로 즐기는 레시피를 소개합니다!</p>
+            <div>
+                <h3>{recipeDetail.recipe.recipe_title}</h3>
+                <p>
+                    <span>{recipeDetail.recipe.member_id}</span>
+                    <span>{recipeDetail.recipe.kind_id}</span>
+                    <span>{date}</span>
+                </p>
+                <img src={recipeDetail.recipe.recipe_thumbnail} alt={recipeDetail.recipe.recipe_title}></img>
+                <p>
+                    <span>{recipeDetail.recipe.recipe_quentity},</span>
+                    <span>
+                        {
+                        recipeDetail.ingredient.map((data) => <span key={data.ing_id}>{data.ing_name},</span>)
+                        }
+                    </span>
+                </p>
+                <p>
+                    {recipeDetail.recipe.recipe_content}
+                </p>
+                <p>
+                    {/* {find_kind_name()} */}
+                </p>
             </div>
-            <div className=""></div>
+            
+            
         </main>
     );
 }

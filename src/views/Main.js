@@ -1,23 +1,65 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-
-import banner from '../assets/images/banner.png';
-import RecommendRecipeCard from 'components/RecommendRecipeCard';
-import FeedRecipeCard from '../components/FeedRecipeCard';
 import axios from 'axios';
+import RecommendRecipeCard from 'components/RecommendRecipeCard';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import banner from '../assets/images/banner.png';
+import FeedRecipeCard from '../components/FeedRecipeCard';
 
 var recipes = [...Array(6).keys()];
 
 function Main() {
+    const [recipeList, setRecipeList] = useState({
+        getlist: [
+            {
+                "recipe_id": 0,
+                "member_id": "",
+                "kind_id": "",
+                "recipe_title": "",
+                "recipe_ing": "",
+                "recipe_content": "",
+                "recipe_time": "",
+                "recipe_regdate": 0,
+                "recipe_thumbnail": "",
+                "recipe_viewcount": 0,
+                "recipe_quentity": "",
+                "recipe_difficulty": "",
+                "recipe_recommend": 0
+            }
+        ],
+        "pageMaker": {
+            "totalCount": 0,
+            "startPage": 0,
+            "endPage": 0,
+            "prev": false,
+            "next": false,
+            "displayPageNum": 0,
+            "cri": {
+                "page": 0,
+                "pageNum": 0,
+                "rowStart": 0,
+                "rowEnd": 0,
+                "searchType": "",
+                "keyword": "",
+                "pageStart": 0
+            }
+        }
+    })
 
     useEffect(() => {
-        const fetchRecipes = async () => {
-            const res = await axios.get("listRecipe.do");
-            console.log(res);
-        }
-        fetchRecipes();
-    })
+        var page = 1;
+        var pageNum = 6;
+        axios({
+            method: "get",
+            url: "/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
+        })
+        .then((res) => {
+            // console.log(res.data)
+            setRecipeList(res.data)
+        })
+        .catch((err) => {
+            alert(err)
+        })
+    }, [])
 
     return (
         <main id="main">
@@ -31,11 +73,11 @@ function Main() {
                         Feed
                         <Link to={`recipes`}>더 보기</Link>
                     </h3>
-                    <div>
+                    {/* <div>
                         {
-                            recipes.map(el => <FeedRecipeCard value={el} key={el}></FeedRecipeCard>)
+                            recipeList.getlist.map((feedCard) => <FeedRecipeCard key={feedCard.recipe_id} value={feedCard}></FeedRecipeCard>)
                         }
-                    </div>
+                    </div> */}
                 </section>
                 <section>
                     <h3>
@@ -44,7 +86,7 @@ function Main() {
                     </h3>
                     <div>
                         {
-                            recipes.map(el => <RecommendRecipeCard value={el} key={el}></RecommendRecipeCard>)
+                            recipeList.getlist.map((rcCard) => <RecommendRecipeCard key={rcCard.recipe_id} value={rcCard}></RecommendRecipeCard>)
                         }
                     </div>
                 </section>
