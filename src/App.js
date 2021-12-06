@@ -35,12 +35,11 @@ function App() {
           <Route path="/" element={<Main/>} exact/>
           <Route path="/map" element={<Map/>} exact/>
           <Route path="/recipes" element={<RecipeList/>} exact/>
-          <Route path="/recipe-detail" element={<RecipeDetail />} exact />
+          <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           <Route path="/login" element={<SignIn/>} exact/>
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
           <Route path="/signup/:member_email/:member_name/:member_idKey" element={<SignUp/>} exact/>
-          {/* <Route path="/mypage" element={<Mypage/>} exact/> */}
           <Route path="/signup" element={<SignUp/>} exact/>
           <Route path="/mypage" element={<SignMypage/>} exact/>
           <Route path="/kindlist" element={<KindList/>} exact/>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 // 종류 등록
 function InsertRecipe(props) {
@@ -74,19 +75,77 @@ function InsertRecipe(props) {
         .catch(err =>{alert('실패')})
     }
     return (
-      <div>
-          <input type="text" onChange={handleMember_id} value={member_id} placeholder="Member_id"/>
-          <input type="text" onChange={handleKindId} value={kind_id} placeholder="kind_id"/>
-          <input type="text" onChange={handleRecipe_title} value={recipe_title} placeholder="recipe_title"/>
-          <input type="text" onChange={handleRecipe_ing} value={recipe_ing} placeholder="recipe_ing"/>
-          <input type="text" onChange={handleRecipe_content} value={recipe_content} placeholder="recipe_content"/>
-          <input type="text" onChange={handleRecipe_time} value={recipe_time} placeholder="recipe_time"/>
-          {/* value 빼야함 */}
-          <input type="file" onChange={handleFile}/>
-          <input type="text" onChange={handleRecipe_quentity} value={recipe_quentity} placeholder="recipe_quentity"/>
-          <input type="text" onChange={handleRecipe_difficulty} value={recipe_difficulty} placeholder="recipe_difficulty"/>
-          <button onClick={sendAction}>보내기</button>
-      </div>
+        <main>
+            <h2 className="sr-only">레시피 작성 페이지</h2>
+            <form>
+                <div className="form-row">
+                    <fieldset disabled>
+                        <FormGroup className="col-md-6">
+                            <Label>아이디</Label>
+                            <Input type="text" onChange={handleMember_id} value={member_id} />
+                        </FormGroup>
+                    </fieldset>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="selectbox col-md-6">
+                        <Label>분류</Label>
+                        {/* <Input type="select" onChange={handleKindId} value={kind_id}>
+                            <option>한식</option>
+                            <option>양식</option>
+                            <option>중식</option>
+                            <option>일식</option>
+                            <option>분식</option>
+                            <option>채식</option>
+                        </Input> */}
+                        <Input type="text" onChange={handleKindId} value={kind_id}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>제목</Label>
+                        <Input type="text" onChange={handleRecipe_title} value={recipe_title}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>재료</Label>
+                        <Input type="text" onChange={handleRecipe_ing} value={recipe_ing}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>내용</Label>
+                        <Input type="textarea" onChange={handleRecipe_content} value={recipe_content}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>소요시간</Label>
+                        <Input type="text" onChange={handleRecipe_time} value={recipe_time}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        {/* VALUE 제거 */}
+                        <Input type="file" onChange={handleFile}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>기준 양</Label>
+                        <Input type="text" onChange={handleRecipe_quentity} value={recipe_quentity}></Input>
+                    </FormGroup>
+                </div>
+                <div className="form-row">
+                    <FormGroup className="col-md-6">
+                        <Label>난이도</Label>
+                        {/* TODO : change radiobtn */}
+                        <Input type="text" onChange={handleRecipe_difficulty} value={recipe_difficulty}></Input>
+                    </FormGroup>
+                </div>
+                <Button color="primary" onClick={sendAction}>보내기</Button>
+            </form>
+      </main>
     );
 }
 export default InsertRecipe;

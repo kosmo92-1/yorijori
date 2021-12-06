@@ -25,6 +25,24 @@
     }
 }
 
+.arrow {
+    display: inline-block;
+    padding: 18px;
+    border: solid v.$color-spanishbistre;
+    border-width: 0 3px 3px 0;
+    font-size: 0;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 5px 4px 5px -4px rgba($color: #000, $alpha: 0.6);
+    }
+    &.right {
+        transform: rotate(-45deg);
+    }
+    &.left {
+        transform: rotate(135deg);
+    }
+}
+
 /* --------------------------------------------------------------------------------------------------------------
     Layout
 ----------------------------------------------------------------------------------------------------------------*/
