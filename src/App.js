@@ -1,6 +1,5 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Testcompo from "./components/Testcompo";
 import {Routes,Route} from 'react-router-dom'
 import Main from "./views/Main";
 import SignIn from "./views/sign/SignIn"
@@ -51,7 +50,6 @@ function App() {
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
           <Route path="/readnotice/:notice_id" element={<ReadNotice/>}exact/>
           <Route path="/recipelist" element={<RecipeList/>} exact/>
-          <Route path="/test" element={<Testcompo/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
           <Route path="/subscribe" element={<SubscribeList/>}exact/>
           <Route path="/channel/:channel_id" element={<ChannelList/>}exact/>

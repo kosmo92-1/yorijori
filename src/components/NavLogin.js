@@ -1,11 +1,12 @@
 import React from 'react';
 import NaverLogin from 'react-login-by-naver';
 
+
 function NavLogin(props) {
     return (
         <NaverLogin
-        clientId="N5dHewuN7tsjr0GEhoED"
-        callbackUrl="http://192.168.56.1:3000/"
+        clientId="KXolaFgogTY_yqxrrZFK"
+        callbackUrl="http://192.168.0.91:3000/"
         render={(props) => 
             <div onClick={props.onClick}>Naver Login</div>}
         onSuccess={(result) => {

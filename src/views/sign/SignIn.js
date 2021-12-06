@@ -4,6 +4,10 @@ import { Button, Container, Form, FormGroup, Input, Modal } from "reactstrap";
 import { useNavigate } from "react-router";
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from 'components/KakaoLogin';
+import NavLogin from "components/NavLogin";
+import FabookLogin from "components/FabookLogin";
+
+
 
 function SignIn() {
   const [findPwModal, setFindPwModal] = React.useState(false);
@@ -13,8 +17,8 @@ function SignIn() {
   const [inputData, setInputData] = useState({
     "inputName": "",
     "inputTel": "",
-    // "inputEmail":"",
-    // "cerNum":"",
+    "inputEmail":"",
+    "cerNum":"",
   });
   const handleValueChange = (event) => {
     // API 요청에 날릴 Form state에 정보를 추가합니다.
@@ -74,16 +78,67 @@ function SignIn() {
             console.log('======================','로그인 성공')
             sessionStorage.setItem('member_idKey', res.data.socialIdKey)
             alert('로그인 성공')
-            document.location.href = '/mypage'
+            document.location.href = '/'
         }
     })
     // 실패시 실행
     .catch()
 }
+const _clickSnsLoginNaver = (e) => {
+	let naverid = e.id; // 네이버에서 제공한 ID
+};
+const loginNaver = (res) =>{
+  console.log(res)
+  console.log(res.profileObj.email)
+  console.log(res.profileObj.name)
+  console.log(res.profileObj.googleId)
+  sessionStorage.setItem('social_id', res.profileObj.email)
+  sessionStorage.setItem('social_name',res.profileObj.name)
+  sessionStorage.setItem('member_idKey',res.profileObj.googleId)
+  sessionStorage.setItem('social_state',"2")
+  // 메일 주소, DB 비교 컴포넌트 props 메일주소 
+  const loginInfo={
+      "member_email":res.profileObj.email,
+      "member_name":res.profileObj.name,
+      "member_idKey":res.profileObj.googleId,
+  }
+  
+  // axios를 이용해 post로 전송하며
+  axios.post('/socialLogin.do', loginInfo, {
+      headers:{
+          // json으로 형식을 지정함.
+          "Content-type":"application/json"
+      }
+  })
+   // post 보내고 나서 실행
+  .then(res => {
+      console.log(res)
+      console.log('res.data.socialIdKey :: ', res.data.socialIdKey)
+      console.log('res.data.chk :: ', res.data.chk)
+      if (res.data.chk === 0){
+          console.log('======================',res.data.msg)
+          
+          alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
+          document.location.href = '/signup'
+      } else if(res.data.chk === 1) {
+          console.log('======================','로그인 성공')
+          sessionStorage.setItem('member_idKey', res.data.socialIdKey)
+          alert('로그인 성공')
+          document.location.href = '/'
+      }
+  })
+  // 실패시 실행
+  .catch()
+}
 
   const loginkakao = (res) =>{
       console.log(res)
   }
+  const loginFaBook = (res) =>{
+    console.log(res)
+}
+
+
   //로그인 함수
   const onClickLogin = (e) => {
     e.preventDefault();
@@ -130,7 +185,7 @@ function SignIn() {
           alert("로그인 성공");
         }
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = '/mypage'
+        document.location.href = '/'
       })
       // 실패시 실행
       .catch();
@@ -163,6 +218,32 @@ function SignIn() {
           alert("고객님의 아이디는 = " + res.data +" 입니다.");
           setFindPwModal(false);
         }
+      })
+      // 실패시 실행
+      .catch();
+  };
+  const onSendMail = (e) => {
+    e.preventDefault();
+    const sendMailJson ={
+      "member_name":inputData.inputName,
+      "member_id":inputData.inputEmail,
+      "member_email":inputData.inputEmail,
+  }
+    // json처럼 선언해줍니다.
+    // axio를 이용해 post로 전송하며
+    console.log(sendMailJson);
+    console.log(inputData);
+    axios.post("/findPw.do", sendMailJson, {
+        headers: {
+          // json으로 형식을 지정해줍니다.
+          "Content-type":"application/json"
+        },
+      })
+      // post 보내고 나서 실행
+      .then((res) => {
+        console.log(res);
+        alert("임시비밀 번호가 발급 되었습니다.")
+      
       })
       // 실패시 실행
       .catch();
@@ -209,7 +290,16 @@ function SignIn() {
             ),
             tabCont:(
                 <Form name="pwForm">
-                <FormGroup>
+                  <FormGroup>
+                  <Input
+                    type="text"
+                    id="inputName"
+                    name="inputName"
+                    placeholder="이름을 입력해 주세요."
+                    onChange={handleValueChange}
+                  />
+                </FormGroup>
+                  <FormGroup>
                   <Input
                     type="text"
                     id="inputEmail"
@@ -217,17 +307,7 @@ function SignIn() {
                     placeholder="가입한 메일 주소를 입력해 주세요."
                     onChange={handleValueChange}
                   />
-                  <Button>인증번호 발송</Button>
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    type="text"
-                    id="cerNum"
-                    name="cerNum"
-                    placeholder="인증번호를 입력해주세요."
-                    onChange={handleValueChange}
-                  />
-                  <Button>인증번호 확인</Button>
+                  <Button onClick={onSendMail}>인증번호 발송</Button>
                 </FormGroup>
               </Form>
             )
@@ -304,7 +384,12 @@ function SignIn() {
         <FormGroup>
         <KakaoLogin onSuccess={loginkakao} />
         </FormGroup>
-        <FormGroup></FormGroup>
+        <FormGroup>
+          <NavLogin onSuccess={loginNaver}/>
+        </FormGroup>
+        <FormGroup>
+            <FabookLogin onSuccess={loginFaBook}/>
+        </FormGroup>
       </Form>
     </Container>
   );

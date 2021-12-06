@@ -19,6 +19,7 @@ function Mypage() {
         "member_detail_address": "",
         "member_type":"",
         "member_agree":"",
+        "member_idKey":"",
       });
      
       const [member_photo, setMember_photo] = useState(null);
@@ -32,8 +33,8 @@ function Mypage() {
 
       // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
       useEffect(()=>{
-        if(`${sessionStorage.getItem("user_id")}`!== null){
-          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
+        if(`${sessionStorage.getItem("social_id")}`!== null){
+          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("social_id")}`)
           .then((res)=>{
             console.log(res.data)
             // console.log(res.data.member_basic_address)
@@ -45,8 +46,13 @@ function Mypage() {
           "member_basic_address": res.data.member_basic_address,
           "member_detail_address": res.data.member_detail_address,
           "member_type":res.data.member_type,
+          "member_idKey":res.data.member_idKey,
+          // "member_photo":res.data.member_photo,
           // "member_agree":res.data.member_agree,
             })
+            if( sessionStorage.getItem('social_state') === 1){
+              setMember_photo(res.data.member_photo);
+            }
           })
         }else{
           alert("로그인 ㄱ")
@@ -89,10 +95,10 @@ function Mypage() {
         var checkTel = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
         var checkAddress= /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣|-]{2,20}$/
         //아이디 입력제한
-        if(tempFormData.member_photo==null){
-          alert("프로필사진을 확인해주세요")
-          return;
-        }
+        // if(tempFormData.member_photo==null){
+        //   alert("프로필사진을 확인해주세요")
+        //   return;
+        // }
         if(tempFormData.member_id=== ""){
           alert("아이디를 입력해주세요")
           return;
@@ -163,6 +169,7 @@ function Mypage() {
         reqFormData.append("member_basic_address", tempFormData.member_basic_address);
         reqFormData.append("member_detail_address", tempFormData.member_detail_address);
         reqFormData.append("member_type", tempFormData.member_type);
+        reqFormData.append("member_idKey", tempFormData.member_idKey);
         reqFormData.append("agreeEvent", tempFormData.agreeEvent);
          
     axios.post('/updateMember.do', reqFormData,{
