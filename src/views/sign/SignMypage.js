@@ -33,7 +33,10 @@ function Mypage() {
 
       // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
       useEffect(()=>{
-        if(`${sessionStorage.getItem("social_id")}`!== null){
+        if(`${sessionStorage.getItem("social_id")}`!== null
+        //  && `${sessionStorage.getItem("user_id")}` === null
+         ){
+          console.log("12");
           axios.get(`/getMember.do?member_id=${sessionStorage.getItem("social_id")}`)
           .then((res)=>{
             console.log(res.data)
@@ -49,14 +52,39 @@ function Mypage() {
           "member_idKey":res.data.member_idKey,
           // "member_photo":res.data.member_photo,
           // "member_agree":res.data.member_agree,
-            })
-            if( sessionStorage.getItem('social_state') === 1){
+        })
+              sessionStorage.setItem('user_pw',res.data.member_pw);
+              sessionStorage.setItem('user_id',res.data.member_id);
+            if( sessionStorage.getItem('social_state') === "1"){
+              console.log("카카오사진")
               setMember_photo(res.data.member_photo);
             }
           })
-        }else{
-          alert("로그인 ㄱ")
-          document.location.href = '/login'
+        }else if(
+          // `${sessionStorage.getItem("social_id")}`=== null && 
+          `${sessionStorage.getItem("user_id")}` !== null
+        ){
+          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
+          .then((res)=>{
+            console.log(res.data)
+            // console.log(res.data.member_basic_address)
+            setTempFormData({
+          "member_id": res.data.member_id,
+          "member_name": res.data.member_name,
+          "member_email": res.data.member_email,
+          "member_tel": res.data.member_tel,
+          "member_basic_address": res.data.member_basic_address,
+          "member_detail_address": res.data.member_detail_address,
+          "member_type":res.data.member_type,
+          "member_idKey":res.data.member_idKey,
+          "member_photo":res.data.member_photo,
+          // "member_agree":res.data.member_agree,
+        })
+              sessionStorage.setItem('user_pw',res.data.member_pw);
+          }) 
+      }else{
+        // alert("로그인페이지로 이동")
+        // document.location.href = '/login'
       }
       },[])
 
@@ -241,8 +269,8 @@ function Mypage() {
           "Content-type":"application/json"
       },
     }).then(res => {
-          alert('성공')
-          console.log(sessionStorage)
+      console.log(sessionStorage)
+      alert('성공')
           sessionStorage.clear();
           document.location.href = '/login'
         })

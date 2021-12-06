@@ -4,7 +4,6 @@ import NaverLogin from 'react-login-by-naver';
 
 const { naver } = window
 
-function NavLogin2(props) {
 
 
   const initializeNaverLogin = () => {
@@ -22,9 +21,3 @@ function NavLogin2(props) {
     
   }, []);
   
-  return (
-      <NaverLogin/>
-    )
-}
-
-export default NavLogin2;

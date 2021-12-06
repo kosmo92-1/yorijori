@@ -66,10 +66,10 @@ const {Kakao} = window;
             else if(res.data.chk === 1) {
                 console.log('======================','로그인 성공')
                 sessionStorage.setItem('social_state',"1")
-                sessionStorage.setItem("user_id", res.data.id);
+                sessionStorage.setItem("social_id", res.data.id);
                 sessionStorage.setItem('member_idKey', res.data.socialIdKey)
                 alert('로그인 성공')
-                document.location.href = '/mypage'
+                document.location.href = '/'
             }
         })
             .catch((error) => {
