@@ -19,9 +19,6 @@ import RecipeList from "views/recipe/RecipeList";
 import RecipeDetail from "views/RecipeDetail";
 import Map from "views/maps/Map";
 import MartMap from "views/maps/MartMap";
-import ChannelInfo from "views/channel/ChannelInfo";
-import SubscribeList from "views/subscribe/SubscribeList";
-import MyChannel from "views/myChannel/MyChannel";
 
 function App() {
   function debug() {
@@ -37,7 +34,8 @@ function App() {
           <Route path="/" element={<Main/>} exact/>
           <Route path="/map" element={<Map/>} exact/>
           <Route path="/recipes" element={<RecipeList/>} exact/>
-          <Route path="/recipe-detail" element={<RecipeDetail />} exact />
+          {/* 여광이 수정 */}
+          <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           <Route path="/login" element={<SignIn/>} exact/>
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
@@ -54,12 +52,6 @@ function App() {
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/test" element={<Testcompo/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
-          <Route path="/subscribe" element={<SubscribeList/>}exact/>
-          {/* <Route path="/channel/:channel_id" element={<ChannelInfo/>}exact/> */}
-          <Route path="/channel" element={<ChannelInfo/>}exact/>
-          <Route path="/myChannel" element={<MyChannel/>}exact/>
-          {/* ★ Glory - ㅇ Yoon ★ */}
-          <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
         </Routes>
       </div>
       <Footer></Footer>

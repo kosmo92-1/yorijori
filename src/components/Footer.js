@@ -36,9 +36,9 @@ function Footer(props) {
                 </p>
             </address>
             <p>&copy; yoribogojoribogo corp. all right reserved.</p>
-            <ReactChannelIO pluginKey={CHANNEL_ID_PLUGIN_KEY} locale="en" autoBoot>
+            {/* <ReactChannelIO pluginKey={CHANNEL_ID_PLUGIN_KEY} locale="en" autoBoot>
 			    <AppPage />
-		    </ReactChannelIO>
+		    </ReactChannelIO> */}
         </footer>
     );
 }

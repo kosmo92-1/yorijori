@@ -1,25 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
+import SubComponent from './SubComponent';
 import ChaListComponent from './SubComponent';
 
 // 채널 구독 리스트를 보여줍니다.
 function SubscribeList(props) {
-    const [chanlist,setChanlist] = useState([
-        
     
-    ])
-    const listComponent = chanlist.map((item)=>(<ChaListComponent info={item}/>));
-    
-    useEffect(()=>{
-        console.log('나와라')
-        axios.get('/listSub.do?member_id=admin')
-        .then((res)=>{
-            console.log(res.data)
-            setChanlist(res.data)
-        })
-        .catch((err)=>{console.log(err)})
-    },[])
     return (
         <div>
             <Container>
@@ -30,10 +17,7 @@ function SubscribeList(props) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
-                    <br/>
-                        {listComponent}
-                    </Col>
+                        <SubComponent/>
                 </Row>
                 <Row>
                     <Col></Col>
