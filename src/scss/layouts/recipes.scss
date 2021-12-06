@@ -36,21 +36,55 @@
         }
     }
     .list-filter {
-        padding: 50px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
         background: #e3e3e3;
         ul {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
+            max-width: 1060px;
+            padding: 0 55px;
+            overflow-x: hidden;
             li {
                 width: 130px;
+                min-width: 130px;
                 height: 130px;
+                min-height: 130px;
                 border-radius: 50%;
                 background: #fff;
+                font-weight: 600;
+                font-size: 0.875rem;
+                color: #fff;
                 text-align: center;
                 line-height: 130px;
+                cursor: pointer;
                 &:not(:last-child) {
                     margin-right: 40px;
+                }
+                &.cuisine {
+                    &-kr {
+                        background: url(v.$img + "filter-korean.png") no-repeat;
+                        background-size: cover;
+                    }
+                    &-ch {
+                        background: url(v.$img + "filter-chinese.png") no-repeat;
+                        background-size: cover;
+                    }
+                    &-western {
+                        background: url(v.$img + "filter-western.png") no-repeat;
+                        background-size: cover;
+                    }
+                    &-jp {
+                        background: url(v.$img + "filter-japanese.png") no-repeat;
+                        background-size: cover;
+                    }
+                    &-snack {
+                        background: url(v.$img + "filter-snack.png") no-repeat;
+                        background-size: cover;
+                    }
                 }
             }
         }
@@ -58,24 +92,70 @@
 }
 .sec-recipes {
     margin-top: 50px;
+    > div:not(.recipes) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .checkboxes {
+        label {
+            font-size: 0.875rem;
+            .checkbox {
+                margin-right: 5px;
+            }
+            &:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
     .recipes {
         display: flex;
         flex-wrap: wrap;
         .recipe {
             width: 50%;
+            // height: 300px;
             &:nth-child(2n) {
                 margin-bottom: 20px;
+                padding-left: 20px;
             }
             > div {
                 display: flex;
+                border: 1px solid #e3e3e3;
                 figure {
-                    width: 310px;
+                    width: 50%;
                     img {
                         width: 100%;
+                        max-width: 100%;
                     }
                 }
                 > div {
-                    width: calc(100% - 310px);
+                    width: 50%;
+                    padding: 0 25px;
+                    h4 {
+                        padding-bottom: 15px;
+                        font-weight: 600;
+                        font-size: 1.125rem;
+                        color: #222;
+                    }
+                    p {
+                        display: -webkit-box;
+                        padding-bottom: 25px;
+                        font-size: 0.875rem;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: normal;
+                        word-wrap: break-word;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                    }
+                    span {
+                        font-size: 0.75rem;
+                        a {
+                            color: v.$color-orange;
+                            text-decoration: underline;
+                        }
+                    }
                 }
             }
         }

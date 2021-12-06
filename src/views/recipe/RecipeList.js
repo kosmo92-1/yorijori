@@ -55,23 +55,32 @@ function RecipeList(props) {
                         </div>
                     </div>
                     <div className="list-filter">
+                        <i className="arrow left">이전</i>
                         <ul>
-                            <li>한식</li>
-                            <li>양식</li>
-                            <li>일식</li>
+                            <li className="cuisine-kr">
+                                한식
+                                <div></div>
+                            </li>
+                            <li className="cuisine-ch">중식</li>
+                            <li className="cuisine-western">양식</li>
+                            <li className="cuisine-jp">일식</li>
+                            <li className="cuisine-snack">분식</li>
+                            <li className="cuisine-veg">채식</li>
+                            <li className="cuisine-bizzare">괴식</li>
                         </ul>
+                        <i className="arrow right">다음</i>
                     </div>
                 </section>
                 <section className="sec-recipes">
                     {/* 레시피 1 */}
-                    <div className="d-flex justify-content-xl-between">
+                    <div>
                         <div className="checkboxes">
                             <label>
-                                <input type="checkbox"/>
+                                <input type="checkbox" className="checkbox"/>
                                 구독 레시피
                             </label>
                             <label>
-                                <input type="checkbox"/>
+                                <input type="checkbox" className="checkbox"/>
                                 관심 레시피
                             </label>
                         </div>

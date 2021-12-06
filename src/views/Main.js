@@ -1,12 +1,24 @@
-import RecommendRecipeCard from 'components/RecommendRecipeCard';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import banner from '../assets/images/banner.png';
+import RecommendRecipeCard from 'components/RecommendRecipeCard';
 import FeedRecipeCard from '../components/FeedRecipeCard';
+import axios from 'axios';
 
 var recipes = [...Array(6).keys()];
 
 function Main() {
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            const res = await axios.get("listRecipe.do");
+            console.log(res);
+        }
+        fetchRecipes();
+    })
+
     return (
         <main id="main">
             <h2 className="sr-only">구독 중인 레시피, 추천 레시피 등을 소개하는 페이지</h2>

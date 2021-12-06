@@ -39,7 +39,6 @@ function App() {
           <Route path="/reply" element={<Reply/> }exact/>
           <Route path="/kind" element={<Kind/>} exact/>
           <Route path="/signup/:member_email/:member_name/:member_idKey" element={<SignUp/>} exact/>
-          {/* <Route path="/mypage" element={<Mypage/>} exact/> */}
           <Route path="/signup" element={<SignUp/>} exact/>
           <Route path="/mypage" element={<SignMypage/>} exact/>
           <Route path="/kindlist" element={<KindList/>} exact/>
