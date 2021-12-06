@@ -20,6 +20,9 @@ import Map from "views/maps/Map";
 import MartMap from "views/maps/MartMap";
 import ChannelList from "views/channel/ChannelList";
 import SubscribeList from "views/subscribe/SubscribeList";
+import InsertChannel from "views/channel/InsertChannel";
+import Basket from "views/basket/Basket";
+
 
 function App() {
   function debug() {
@@ -44,6 +47,7 @@ function App() {
           <Route path="/mypage" element={<SignMypage/>} exact/>
           <Route path="/kindlist" element={<KindList/>} exact/>
           <Route path="/basketrlist" element={<BasketRecipeList/>} exact/>
+          <Route path="/basket" element={<Basket/>} exact/>
           <Route path="/insertRecipe" element={<InsertRecipe/>} exact/>
           <Route path="/notice" element={<NoticeList/>} exact/>
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
@@ -52,6 +56,7 @@ function App() {
           <Route path="/mart" element={<MartMap/>}exact/>
           <Route path="/subscribe" element={<SubscribeList/>}exact/>
           <Route path="/channel/:channel_id" element={<ChannelList/>}exact/>
+          <Route path="/insertChannel" element={<InsertChannel/>}exact/>
         </Routes>
       </div>
       <Footer></Footer>

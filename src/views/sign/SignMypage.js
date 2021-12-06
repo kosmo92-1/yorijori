@@ -33,7 +33,13 @@ function Mypage() {
 
       // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
       useEffect(()=>{
-        if(`${sessionStorage.getItem("social_id")}`!== null
+
+        // console.log("소셜아이디 :" , `${sessionStorage.getItem("social_id")}`);
+        // console.log("유저아이디 :" , `${sessionStorage.getItem("user_id")}`);
+        // console.log("소셜아이디 낫널:" , `${sessionStorage.getItem("social_id")}`!== "null");
+        // console.log("유저아이디 낫널:" ,  `${sessionStorage.getItem("user_id")}` !== "null");
+
+        if(`${sessionStorage.getItem("social_id")}`!== "null"
         //  && `${sessionStorage.getItem("user_id")}` === null
          ){
           console.log("12");
@@ -50,19 +56,21 @@ function Mypage() {
           "member_detail_address": res.data.member_detail_address,
           "member_type":res.data.member_type,
           "member_idKey":res.data.member_idKey,
-          // "member_photo":res.data.member_photo,
-          // "member_agree":res.data.member_agree,
+          "member_photo":res.data.member_photo,
+          "member_agree":res.data.member_agree,
         })
               sessionStorage.setItem('user_pw',res.data.member_pw);
               sessionStorage.setItem('user_id',res.data.member_id);
-            if( sessionStorage.getItem('social_state') === "1"){
-              console.log("카카오사진")
               setMember_photo(res.data.member_photo);
-            }
+            // if( sessionStorage.getItem('social_state') === "1"){
+            //   console.log("카카오사진")
+            //   setMember_photo(res.data.member_photo);
+            // }
           })
-        }else if(
+        }else 
+        if(
           // `${sessionStorage.getItem("social_id")}`=== null && 
-          `${sessionStorage.getItem("user_id")}` !== null
+          `${sessionStorage.getItem("user_id")}` !== "null"
         ){
           axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
           .then((res)=>{
@@ -77,12 +85,21 @@ function Mypage() {
           "member_detail_address": res.data.member_detail_address,
           "member_type":res.data.member_type,
           "member_idKey":res.data.member_idKey,
-          "member_photo":res.data.member_photo,
+          // "member_photo":res.data.member_photo,
           // "member_agree":res.data.member_agree,
         })
+        // let photo=res.data.member_photo
+        // console.log(photo)
+        setMember_photo(res.data.member_photo)
+        // setMember_photo({
+        //   "member_photo":res.data.member_photo,
+        // });
+        console.log(res.data.member_photo)
               sessionStorage.setItem('user_pw',res.data.member_pw);
           }) 
       }else{
+        
+        console.log("nothing")
         // alert("로그인페이지로 이동")
         // document.location.href = '/login'
       }
@@ -90,13 +107,19 @@ function Mypage() {
 
       // 파일 저장
       const saveFileImage = (e) => {
+        // console.log("1"+member_photo)
         let profile=URL.createObjectURL(e.target.files[0])
+        // console.log("2"+member_photo)
+
         setMember_photo(profile);
+        // console.log("3"+member_photo)
     
         setTempFormData({
           ...tempFormData,
-          member_photo: e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
+          "member_photo": e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
         });
+        // console.log("4"+member_photo)
+
       };
     //미리보기 스타일
       const imagestyle = {
@@ -387,6 +410,7 @@ function Mypage() {
             <img
               alt="sample"
               className="img-rounded img-responsive"
+              name="member_photo"
               src={member_photo}
               style={imagestyle}
               onChange={handleValueChange}
