@@ -1,13 +1,15 @@
 import React,{useEffect} from 'react';
 /*global kakao*/ 
 function Map(address) {
+
+
     useEffect(()=>{
+        console.log(address)
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(37.36990223828836, 126.80971744285071), // 지도의 중심좌표
             level: 4 // 지도의 확대 레벨
         };  
-        
     
         // 지도를 생성합니다    
         var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -53,8 +55,6 @@ function Map(address) {
             });
         }
     
-                //==============
-    
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
             } 
@@ -64,7 +64,8 @@ function Map(address) {
     
         return (
             <div>
-                <div id="map" style={{width:"50em", height:"40em"}}></div> 
+                <div id="map" style={{width:"45em", height:"35em"}}>
+                </div> 
             </div>
         );
 
