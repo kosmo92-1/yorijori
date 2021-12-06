@@ -19,6 +19,8 @@ import RecipeList from "views/recipe/RecipeList";
 import RecipeDetail from "views/RecipeDetail";
 import Map from "views/maps/Map";
 import MartMap from "views/maps/MartMap";
+import ChannelList from "views/channel/ChannelList";
+import SubscribeList from "views/subscribe/SubscribeList";
 
 function App() {
   function debug() {
@@ -50,6 +52,8 @@ function App() {
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/test" element={<Testcompo/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
+          <Route path="/subscribe" element={<SubscribeList/>}exact/>
+          <Route path="/channel/:channel_id" element={<ChannelList/>}exact/>
         </Routes>
       </div>
       <Footer></Footer>
