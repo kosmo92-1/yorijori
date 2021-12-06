@@ -12,12 +12,14 @@ import {
   Form,
 } from "reactstrap";
 import DaumPost from "components/DaumPost";
-import axios from "axios";
-function SignUp() {
+import axios,{ post } from "axios";
+
+function SignUp(props) {
+  const {member_email,member_name,member_idKey} = useParams();
   const [formData, setFormData] = useState({
     "member_photo": null,
-    "member_id": "",
-    "member_name": "",
+    "member_id": member_email,
+    "member_name": member_name,
     "member_pw": "",
     "confirmPw": "",
     "member_tel": "",
@@ -91,6 +93,7 @@ function SignUp() {
         })
         setMember_photo(`${sessionStorage.getItem("social_photo")}`);
       }else if(`${sessionStorage.getItem("social_state")}` === "2"){
+        setPortChange("0");
         console.log("소셜일때 포트"+portChange)
         console.log(`${sessionStorage.getItem("social_id")}`)
         setFormData({

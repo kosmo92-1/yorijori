@@ -1,6 +1,22 @@
 import React from 'react';
+import { ReactChannelIO, useChannelIOApi, useChannelIOEvent } from 'react-channel-plugin';
 
 function Footer(props) {
+    const CHANNEL_ID_PLUGIN_KEY = '0ddfeefe-3928-4044-94ce-c5be5536c579';
+
+    const AppPage = () => {
+        const { showMessenger } = useChannelIOApi();
+    
+        useChannelIOEvent("onShowMessenger", () => {
+            console.log("Messenger opened!");
+        });
+        return (
+            <button onClick={showMessenger}>
+                <span>Open</span>
+            </button>
+        );
+    };
+
     return (
         <footer id="footer">
             <ul className="clearfix">
@@ -20,6 +36,9 @@ function Footer(props) {
                 </p>
             </address>
             <p>&copy; yoribogojoribogo corp. all right reserved.</p>
+            <ReactChannelIO pluginKey={CHANNEL_ID_PLUGIN_KEY} locale="en" autoBoot>
+			    <AppPage />
+		    </ReactChannelIO>
         </footer>
     );
 }

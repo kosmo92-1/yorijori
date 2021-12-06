@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from 'components/KakaoLogin';
+import { Button, FormGroup, FormText, Input, Label } from 'reactstrap';
  
 function Login() {
     // 함수형 컴포넌트에서 state를 사용하기위해 useState 사용
@@ -46,7 +47,7 @@ function Login() {
             if (res.data.chk === 0){
                 console.log('======================',res.data.msg)
                 alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
-                document.location.href = '/signup'
+                document.location.href = `/signup/${loginInfo.member_email}/${loginInfo.member_name}/${loginInfo.member_idKey}`
             } else if(res.data.chk === 1) {
                 console.log('======================','로그인 성공')
                 sessionStorage.setItem('member_idKey', res.data.socialIdKey)
@@ -121,14 +122,36 @@ function Login() {
  
     return(
         <div>
+            <form>
+                <FormGroup>
+                    <Label for="exampleEmail">Email address</Label>
+                    <Input
+                        type='email' name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" 
+                    />
+                    <FormText color="muted">
+                    We'll never share your email with anyone else.
+                    </FormText>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="examplePassword">Password</Label>
+                    <Input
+                        type='password' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호"
+                        autoComplete="off"
+                    />
+                </FormGroup>
+                <GoogleLogin onSuccess={loginGoogle} onFailure={failGoogle}/>
+                <KakaoLogin onSuccess={loginkakao} />
+                <Button color="primary" type="submit">
+                    Submit
+                </Button>
+            </form>
             <h2>Login</h2>
-            <GoogleLogin onSuccess={loginGoogle} onFailure={failGoogle}/>
-            <KakaoLogin onSuccess={loginkakao} />
+           
             <div>
-                <input type='text' name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
+                <input />
             </div>
             <div>
-                <input type='password' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
+                <input  />
             </div>
             <div>
                 <button type='button' onClick={onClickLogin}>Login</button>
