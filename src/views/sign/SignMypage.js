@@ -32,7 +32,7 @@ function Mypage() {
 
       // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
       useEffect(()=>{
-        // if(`${sessionStorage.getItem("user_id")}`!== null){
+        if(`${sessionStorage.getItem("user_id")}`!== null){
           axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
           .then((res)=>{
             console.log(res.data)
@@ -48,10 +48,10 @@ function Mypage() {
           // "member_agree":res.data.member_agree,
             })
           })
-      //   }else{
-      //     alert("로그인 ㄱ")
-      //     document.location.href = '/login'
-      // }
+        }else{
+          alert("로그인 ㄱ")
+          document.location.href = '/login'
+      }
       },[])
 
       // 파일 저장
@@ -89,6 +89,10 @@ function Mypage() {
         var checkTel = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
         var checkAddress= /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣|-]{2,20}$/
         //아이디 입력제한
+        if(tempFormData.member_photo==null){
+          alert("프로필사진을 확인해주세요")
+          return;
+        }
         if(tempFormData.member_id=== ""){
           alert("아이디를 입력해주세요")
           return;
@@ -170,7 +174,9 @@ function Mypage() {
     .then(res => {
     alert('성공')
     console.log(res)
-    history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
+    // history.push("/mypage"); // 단 회원수정을했을때는 회원관리페이지로 이동합니다.
+    document.location.href = '/mypage'
+
   })
     // .catch(err =>{alert('실패')
     // console.log(tempFormData)
@@ -230,6 +236,7 @@ function Mypage() {
     }).then(res => {
           alert('성공')
           console.log(sessionStorage)
+          sessionStorage.clear();
           document.location.href = '/login'
         })
           .catch(err =>{alert('실패')
