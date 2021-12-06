@@ -12,7 +12,7 @@ function Main() {
         getlist: [
             {
                 "recipe_id": 0,
-                "member_id": "",
+                "channel_id": "",
                 "kind_id": "",
                 "recipe_title": "",
                 "recipe_ing": "",
@@ -48,12 +48,12 @@ function Main() {
     useEffect(() => {
         var page = 1;
         var pageNum = 6;
+
         axios({
             method: "get",
-            url: "/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
+            url: "yorijori/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
         })
         .then((res) => {
-            // console.log(res.data)
             setRecipeList(res.data)
         })
         .catch((err) => {

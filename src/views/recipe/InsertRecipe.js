@@ -74,7 +74,7 @@ function InsertRecipe(props) {
         .catch(err =>{alert('실패')})
     }
     return (
-      <div>
+      <main>
           <input type="text" onChange={handleMember_id} value={member_id} placeholder="Member_id"/>
           <input type="text" onChange={handleKindId} value={kind_id} placeholder="kind_id"/>
           <input type="text" onChange={handleRecipe_title} value={recipe_title} placeholder="recipe_title"/>
@@ -86,7 +86,7 @@ function InsertRecipe(props) {
           <input type="text" onChange={handleRecipe_quentity} value={recipe_quentity} placeholder="recipe_quentity"/>
           <input type="text" onChange={handleRecipe_difficulty} value={recipe_difficulty} placeholder="recipe_difficulty"/>
           <button onClick={sendAction}>보내기</button>
-      </div>
+      </main>
     );
 }
 export default InsertRecipe;
