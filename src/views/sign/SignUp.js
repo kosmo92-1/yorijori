@@ -388,9 +388,6 @@ function SignUp(props) {
           </Button>
         </FormGroup>
       </Form>
-
-    
-
       <div>
         <Button active block type="button"
                 onClick={registerSubmit} 
