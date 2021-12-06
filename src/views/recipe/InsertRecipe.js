@@ -74,7 +74,13 @@ function InsertRecipe(props) {
         .catch(err =>{alert('실패')})
     }
     return (
-      <main>
+        <main>
+            <h2 className="sr-only">레시피 작성 페이지</h2>
+            <form>
+                <table>
+                    
+                </table>
+            </form>
           <input type="text" onChange={handleMember_id} value={member_id} placeholder="Member_id"/>
           <input type="text" onChange={handleKindId} value={kind_id} placeholder="kind_id"/>
           <input type="text" onChange={handleRecipe_title} value={recipe_title} placeholder="recipe_title"/>

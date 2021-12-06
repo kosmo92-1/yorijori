@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router" 
-import { Table } from 'reactstrap';
+import { FormGroup, Input, Label, Table } from 'reactstrap';
 import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
@@ -75,26 +75,35 @@ function RecipeList(props) {
                     {/* 레시피 1 */}
                     <div>
                         <div className="checkboxes">
-                            <label>
-                                <input type="checkbox" className="checkbox"/>
-                                구독 레시피
-                            </label>
-                            <label>
-                                <input type="checkbox" className="checkbox"/>
-                                관심 레시피
-                            </label>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" className="checkbox"/>
+                                    구독 레시피
+                                    <span className="form-check-sign">
+                                    <span className="check"></span>
+                                    </span>
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" className="checkbox"/>
+                                    관심 레시피
+                                    <span className="form-check-sign">
+                                    <span className="check"></span>
+                                    </span>
+                                </Label>
+                            </FormGroup>
                         </div>
-                        <div className="selectbox">
-                            <select>
+                        <FormGroup className="selectbox">
+                            <Input type="select" name="filter" id="filter">
                                 <option>추천 순</option>
                                 <option>별점 순</option>
                                 <option>최다 댓글 순</option>
                                 <option>최근 등록일 순</option>
-                            </select>
-                        </div>
+                            </Input>
+                        </FormGroup>
                     </div>
                     <div className="recipes">
-
                         <div className="recipe">
                             {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
                             <div>

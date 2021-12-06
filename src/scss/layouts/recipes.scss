@@ -99,6 +99,8 @@
         margin-bottom: 20px;
     }
     .checkboxes {
+        display: flex;
+        align-items: center;
         label {
             font-size: 0.875rem;
             .checkbox {
