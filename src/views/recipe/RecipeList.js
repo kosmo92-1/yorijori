@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router" 
-import { Table } from 'reactstrap';
+import { FormGroup, Input, Label, Table } from 'reactstrap';
 import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
@@ -55,37 +55,55 @@ function RecipeList(props) {
                         </div>
                     </div>
                     <div className="list-filter">
+                        <i className="arrow left">이전</i>
                         <ul>
-                            <li>한식</li>
-                            <li>양식</li>
-                            <li>일식</li>
+                            <li className="cuisine-kr">
+                                한식
+                                <div></div>
+                            </li>
+                            <li className="cuisine-ch">중식</li>
+                            <li className="cuisine-western">양식</li>
+                            <li className="cuisine-jp">일식</li>
+                            <li className="cuisine-snack">분식</li>
+                            <li className="cuisine-veg">채식</li>
+                            <li className="cuisine-bizzare">괴식</li>
                         </ul>
+                        <i className="arrow right">다음</i>
                     </div>
                 </section>
                 <section className="sec-recipes">
                     {/* 레시피 1 */}
-                    <div className="d-flex justify-content-xl-between">
+                    <div>
                         <div className="checkboxes">
-                            <label>
-                                <input type="checkbox"/>
-                                구독 레시피
-                            </label>
-                            <label>
-                                <input type="checkbox"/>
-                                관심 레시피
-                            </label>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" className="checkbox"/>
+                                    구독 레시피
+                                    <span className="form-check-sign">
+                                    <span className="check"></span>
+                                    </span>
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" className="checkbox"/>
+                                    관심 레시피
+                                    <span className="form-check-sign">
+                                    <span className="check"></span>
+                                    </span>
+                                </Label>
+                            </FormGroup>
                         </div>
-                        <div className="selectbox">
-                            <select>
+                        <FormGroup className="selectbox">
+                            <Input type="select" name="filter" id="filter">
                                 <option>추천 순</option>
                                 <option>별점 순</option>
                                 <option>최다 댓글 순</option>
                                 <option>최근 등록일 순</option>
-                            </select>
-                        </div>
+                            </Input>
+                        </FormGroup>
                     </div>
                     <div className="recipes">
-
                         <div className="recipe">
                             {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
                             <div>
