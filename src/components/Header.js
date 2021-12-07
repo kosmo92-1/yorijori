@@ -26,8 +26,16 @@ function Header(props) {
     useEffect(() => {
         setUser_id(sessionStorage.getItem("user_id"))
         console.log(user_id);
-    }, [user_id])
-    
+    }, [user_id]) 
+
+    const logout = (e) => {
+        e.preventDefault();
+        sessionStorage.clear();
+        alert("로그아웃 성공")
+        console.log(sessionStorage)
+        window.location.reload() 
+    }
+
     return (
         <header id="header">
             <div className="inner-header">
@@ -44,7 +52,7 @@ function Header(props) {
                         <li><a href="/subscribe">채널구독</a></li>
                         {/* TODO : 값에 따라 로그인 로그아웃 변경 */}
                         {/* <li><a href="/login">로그인</a></li> */}
-                        <li>{user_id === null ? <a href="/login">로그인</a> : `${user_id}님 환영합니다` }</li>
+                        {user_id === null ? <li><a href="/login">로그인</a></li> : <> <li>{user_id}님 환영합니다</li><li><a href="/login" onClick={logout}>로그아웃</a></li></>} 
                     </ul>
                 </nav>
             </div>
