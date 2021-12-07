@@ -1,4 +1,5 @@
 import { Checkbox, } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -26,29 +27,31 @@ const partslist = {
 
 //장바구니
 function Basket(props) {
+    
+useEffect(()=>{
+
+       
+    axios.get("/getRecipe.do", "1")
+    .then((res)=>{
+      console.log(res.data)
+      // console.log(res.data.member_basic_address)
+  //     setUserData({
+  //   "member_id": res.data.member_id,
+  //   "member_name": res.data.member_name,
+  //   "member_basic_address": res.data.member_basic_address,
+  // })
+  // setAddress(userData.member_basic_address);
+    })
+  
+},[])
+
   const [basketData, setBasketData] = useState({
     recipe_thumbnail: null,
     recipe_ing: "",
     recipe_title: "",
   });
-  const [check1, setCheck1] = useState("0");
-  const [check2, setCheck2] = useState("0");
-  const [check3, setCheck3] = useState("0");
-  const [recipe_thumbnail, setRecipe_thumbnail] = useState(null);
 
-//   const onCheck1 = () => {
-//     setCheck1() = "1";
-//   };
-//   const onCheck2 = () => {
-//     setCheck2() = "1";
-//   };
-//   const onCheck3 = () => {
-//     setCheck3() = "1";
-//   };
-//   const deletelist = () => {
-//     if (check1 == "1") {
-//     }
-//   };
+  const [recipe_thumbnail, setRecipe_thumbnail] = useState(null);
 
   useEffect(() => {
     if (`${sessionStorage.getItem("recipe_thumbnail")}` !== "null") {
@@ -58,22 +61,7 @@ function Basket(props) {
   return (
     <Container>
       <Row>
-        {/* <Col xs="2">
-          <Container>
-            <h4>총 재료</h4>
-            <Form style={partslist}>
-              <FormGroup>
-                <div>토마토</div>
-                <div>토마토</div>
-                <div>토마토</div>
-                <div>토마토</div>
-                <div>토마토</div>
-                <div>토마토</div>
-                <div>토마토</div>
-              </FormGroup>
-            </Form>
-          </Container>
-        </Col> */}
+      
         <Col xs="1"/>
         <Col xs="10">
         <h3>장바구니</h3>
@@ -90,9 +78,6 @@ function Basket(props) {
             </Table>
           </Row>
           <Row>
-            <Col xs="1">
-            {/* <Checkbox {...label} /> */}
-            </Col>
             <Col xs="4">
               <div>
                 {recipe_thumbnail && (
@@ -110,7 +95,7 @@ function Basket(props) {
               <div>레시피 이름</div>
               <div>레시피 정보</div>
             </Col>
-            <Col xs="4">
+            <Col xs="5">
              <BasketRecipeList/>
             </Col>
             <Col xs="1">

@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import NaverLogin from 'react-login-by-naver';
@@ -62,7 +63,7 @@ function NavLogin(props) {
         clientId="KXolaFgogTY_yqxrrZFK"
         callbackUrl="http://127.0.0.1:3000/login"
         render={(props) => 
-            <div className="naverBtn" onClick={props.onClick}>Naver Login</div>}
+            <Button className="naverBtn" variant="outlined" color="success" onClick={props.onClick}>Naver Login</Button>}
             onSuccess={(result) => {
                 console.log(result)
                 loginNaver(result)

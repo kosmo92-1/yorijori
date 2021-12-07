@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button } from '@mui/material';
 
 const {Kakao} = window;
 // const loginWithKakao = () =>{
@@ -98,9 +99,7 @@ const KakaoLogin = () => {
   
     return (
     <div>
-        <a id="custom-login-btn" onClick={loginWithKakao}>
-            <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222" />
-        </a>
+        <Button onClick={loginWithKakao} >Login with Kakao</Button>
     </div>
     );
 };

@@ -209,7 +209,7 @@ const loginNaver = (res) =>{
       // post 보내고 나서 실행
       .then((res) => {
         console.log(res);
-        if (res === "noSearch") {
+        if (res.data === "noSearch") {
           alert("입력하신 정보와 일치하는 아이디가 존재하지 않습니다.");
           return;
         }else {
@@ -305,7 +305,7 @@ const loginNaver = (res) =>{
                     placeholder="가입한 메일 주소를 입력해 주세요."
                     onChange={handleValueChange}
                   />
-                  <Button onClick={onSendMail}>인증번호 발송</Button>
+                  <Button className="pwBtn" onClick={onSendMail}>비밀번호 발송</Button>
                 </FormGroup>
               </Form>
             )
@@ -336,11 +336,12 @@ const loginNaver = (res) =>{
           </div>
         </div>
           <div className="modal-footer">
-            <Button onClick={() => setFindPwModal(false)}>닫기</Button>
+            <Button className="pwclose" onClick={() => setFindPwModal(false)}>닫기</Button>
         </div>
       </Modal>
 
       <Form >
+        <h1 className="title">LOGIN</h1>
         <FormGroup>
         </FormGroup>
         <FormGroup>
@@ -384,7 +385,6 @@ const loginNaver = (res) =>{
         </FormGroup>
         <FormGroup>
           <NavLogin 
-            // onClick={loginNaver}
             onSuccess={loginNaver}
            />
         </FormGroup>
