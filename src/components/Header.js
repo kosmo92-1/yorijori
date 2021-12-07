@@ -31,7 +31,7 @@ function Header(props) {
                     <ul className="clearfix">
                         <li><a href="/mypage">마이페이지</a></li>
                         <li><a href="/mart">주변마트보기</a></li>
-                        <li><a href="#">공지사항</a></li>
+                        <li><a href="/notice">공지사항</a></li>
                         <li><a href="/myChannel">내채널</a></li>
                         <li><a href="/basket">장바구니</a></li>
                         <li><a href="/subscribe">채널구독</a></li>

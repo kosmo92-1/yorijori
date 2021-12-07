@@ -1,85 +1,84 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { TextField } from '@mui/material'
+import { minWidth } from '@mui/system'
+import axios from 'axios'
+import React, { useEffect, useState, createRef } from 'react'
+import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Container, FormGroup, Input, Label, Table } from 'reactstrap'
 
-function ReadNotice(props) {
-    const {notice_id} = useParams();
-    
-    const [readNotice, setReadNotice] = useState({
-        "read":{"notice_id":2,"notice_head":"head","notice_title":"title","notice_content":"content","notice_regdate":1637632251000},
-    })
-    
-    useEffect(()=>{
-        axios.get('/readNotice.do?notice_id='+notice_id)
-        // 값을가져와 넣어줍니다.
-        .then(res => {
-            console.log(res.data);
-        setReadNotice(res.data)
-        })
-        .catch(err =>{alert(err)})
-    },[])
+const ReadNotice = () => {
+  const [title, setTitle] = useState('title')
+  const [content, setContent] = useState('content')
+  const [head, setHead] = useState('공지사항')
+  const [id, setId] = useState(0)
 
-    const navigate = useNavigate();
-  
-    return (
-        <div>
-             <Form>
-                <FormGroup row>
-                    <Label
-                    for="noticeTitle"sm={2}>
-                    제목
-                    </Label>
-                    <Col sm={10}>
-                    <Input
-                        id="noticeTitle"
-                        name="notice_title"
-                        placeholder="제목을입력하세요"
-                        type="text"
-                        value={readNotice.read.notice_title}
-                    />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label
-                    for="noticeHead"
-                    sm={2}
-                    >
-                    유형선택
-                    </Label>
-                    <Col sm={10}>
-                    <Input
-                        id="noticeHead"
-                        name="notice_head"
-                        type="text"
-                        value={readNotice.read.notice_head}
-                    >
-                    </Input>
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label
-                    for="exampleText"
-                    sm={2}
-                    >
-                    내용
-                    </Label>
-                    <Col sm={10}>
-                    <Input
-                        id="exampleText"
-                        name="text"
-                        placeholder="내용을입력하세요"
-                        type="textarea"
-                        value={readNotice.read.notice_content}
-                    />
-                    </Col>
-                </FormGroup>
-                <FormGroup>
-                    <Button className="btn-round" color="danger" onClick={()=>navigate('/notice')}>취소</Button>
-                </FormGroup>
-            </Form>
-        </div>
-    );
+  const noticeJson = {
+    notice_id: id,
+    notice_title: title,
+    notice_head: head,
+    notice_content: content,
+  }
+  // 상세페이지 불러오기
+  useEffect(() => {
+    const toConvert = window.location.href.substr(window.location.href.indexOf('=') + 1)
+    console.log(window.location.href.substr(window.location.href.indexOf('=') + 1))
+    const notice_id = parseInt(toConvert, 10)
+    console.log(notice_id)
+    console.log('noticeDetail')
+    axios
+      .get(`/readNotice.do?notice_id=${notice_id}`, {
+        headers: { 'Content-type': 'application/json' },
+      })
+      // post 보내고 나서 실행
+      .then((res) => {
+        console.log(res.data)
+        setTitle(res.data.read.notice_title)
+        setContent(res.data.read.notice_content)
+        setHead(res.data.read.notice_head)
+        setId(res.data.read.notice_id)
+      })
+      .catch((err) => {
+        alert('실패')
+      })
+  }, [])
+  return (
+    <Container maxWidth="sm">
+
+          <Label tag="h5">공지상세보기</Label>
+          <Label className="mb-2 text-muted" tag="h6">
+          공지사항 게시판입니다.
+          </Label>
+            <FormGroup className="mb-3">
+            <TextField
+                  id="standard-multiline-flexible"
+                  label="공지유형"
+                  multiline
+                  maxRows={4}
+                  value={head}
+                  variant="standard"
+              />
+            </FormGroup>
+            <FormGroup>
+              <TextField
+                  id="standard-multiline-flexible"
+                  label="제목"
+                  multiline
+                  maxRows={5}
+                  value={title}
+                  variant="standard"
+              />
+            </FormGroup>
+            <FormGroup >
+              <TextField
+                  id="standard-multiline-flexible"
+                  label="내용"
+                  multiline
+                  minRows={20}
+                  sx={{ minWidth: 1000 }}
+                  value={content}
+                  variant="standard"
+        />
+            </FormGroup>
+    </Container>
+  )
 }
 
 export default ReadNotice;
