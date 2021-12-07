@@ -9,14 +9,13 @@ function MyChannelRecipe(props) {
     const memberJson = {
         member_id:member_id
     }
-
     const recipeComponent = recipelist.map((item)=>(
         <tr>
-            <td>{item.recipe_difficulty}</td>
-            <td>{item.kind_id}</td>
-            <td><a href="#">{item.recipe_title}</a></td>
-            <td>{item.recipe_quentity}</td>
-            <td>{item.recipe_viewcount}</td>
+            <td>{item.RECIPE_DIFFICULTY}</td>
+            <td>{item.KIND_NAME}</td>
+            <td><a href="#">{item.RECIPE_TITLE}</a></td>
+            <td>{item.RECIPE_QUENTITY}</td>
+            <td>{item.RECIPE_VIEWCOUNT}</td>
         </tr>
     ))
     useEffect(()=>{

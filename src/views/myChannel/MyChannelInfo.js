@@ -25,8 +25,8 @@ function MyChannelInfo(props) {
         })
         // post 보내고 나서 실행
         .then((res)=>{
-            console.log('레시피리스트')
-            console.log(res.data.readChannel.channel_name)
+           // console.log('레시피리스트')
+           // console.log(res.data.readChannel.channel_name)
             setChannelInfo(res.data.readChannel)
             setCount(res.data.readMemberRecipe.length)
         })
@@ -54,7 +54,7 @@ function MyChannelInfo(props) {
             <ListGroupItem>
                 <ListGroupItemHeading>개설날짜</ListGroupItemHeading>
                 <ListGroupItemText>
-                {channelInfo.channel_regdate}
+                {new Date(channelInfo.channel_regdate).toLocaleDateString()}
                 </ListGroupItemText>
             </ListGroupItem>
         </ListGroup>
