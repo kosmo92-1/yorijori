@@ -1,7 +1,8 @@
 import { Paper } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem, FormGroup, Input, Label, Table } from 'reactstrap';
+import { useNavigate } from "react-router" 
+import { Button, FormGroup, Input, Label, Table } from 'reactstrap';
 import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
@@ -243,6 +244,9 @@ function RecipeList(props) {
                         <div className="recipe">
                             {listComponent}
                         </div>
+                    </div>
+                    <div className="text-center">
+                        <Button color="danger">더 보기</Button>
                     </div>
                 </section>
             </div>

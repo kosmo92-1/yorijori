@@ -35,7 +35,7 @@ function RecommendUp(props){
     }
 
     return (
-        <Button block type="submit" onClick={actionRecommendUp}>
+        <Button className="btn-recommend" color="danger" type="submit" onClick={actionRecommendUp}>
             추천하기
         </Button>
     );
