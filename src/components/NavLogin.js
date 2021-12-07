@@ -62,7 +62,7 @@ function NavLogin(props) {
         clientId="KXolaFgogTY_yqxrrZFK"
         callbackUrl="http://127.0.0.1:3000/login"
         render={(props) => 
-            <div onClick={props.onClick}>Naver Login</div>}
+            <div className="naverBtn" onClick={props.onClick}>Naver Login</div>}
             onSuccess={(result) => {
                 console.log(result)
                 loginNaver(result)
@@ -72,7 +72,4 @@ function NavLogin(props) {
       
     );
 }
-//access_token=AAAAOWXV92xXlbEGFd6gRn6LTZdiKBp8c-jpmwtEEN3Bp65rxupxJUGc9665y1KND-zWf0-Qe3H911YsmDiRb54cG_w
-// &state=1115b724-a411-49d3-822d-0a1d5ef98b46
-// &token_type=bearer&expires_in=3600
 export default NavLogin;

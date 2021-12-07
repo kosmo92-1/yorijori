@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, FormGroup, FormText, Input, Label, Row, } from 'reactstrap';
+import { Col, Container, FormGroup, FormText, Input, Label, Row, Form} from 'reactstrap';
 import Map from './Map';
 
 function MartMap(props) {
@@ -72,7 +72,7 @@ function MartMap(props) {
                                 id="exampleEmail"
                                 value={address}
                             />
-                         <Button variant="contained">찾기</Button>
+                         {/* <Button variant="contained">찾기</Button> */}
                             <br/>
                             <br/>
                             <FormText color="muted">
@@ -83,6 +83,9 @@ function MartMap(props) {
                     </Col>
                     <Col className="bg-light border" xs="5">
                         <h4>마트 목록</h4>
+                        <Form>
+                                
+                        </Form>
                         
                     </Col>
                 </Row>
