@@ -49,7 +49,7 @@ function App() {
           <Route path="/insertRecipe" element={<InsertRecipe/>} exact/>
           <Route path="/notice" element={<NoticeList/>} exact/>
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
-          <Route path="/readnotice/:notice_id" element={<ReadNotice/>}exact/>
+          <Route path="/readnotice" element={<ReadNotice/>}exact/>
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/test" element={<Testcompo/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
