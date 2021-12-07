@@ -4,24 +4,40 @@ import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } fro
 
 function MyChannelInfo(props) {
     const member_id = sessionStorage.getItem('user_id')
-    const [sublist,setSublist] = useState()
-    
+    const memberJson = {
+        member_id:member_id
+    }
+    const [channelInfo,setChannelInfo] = useState({
+        channel_content: ".",
+        channel_id: 2,
+        channel_name: "d",
+        channel_photo: "\\imgUpload\\2021\\12\\06\\c365832f-efa2-47b7-a148-354c13b1dee5_apple.jpg",
+        channel_regdate: 1638759597000,
+        member_id: "admin1"
+    })
+    const [count,setCount] = useState(0)
     useEffect(()=>{
-        axios.get('/listSub.do?member_id=admin')
-        .then((res)=>{
-            console.log(res.data.listSubChannel)
-            setSublist(res.data.listSubChannel)
+        axios.get(`/readChannel.do?member_id=${member_id}`, memberJson, {
+            headers:{
+                // json으로 형식을 지정해줍니다.
+                "Content-type":"application/json"
+            }
         })
-        .catch((err)=>{console.log(err)})
+        // post 보내고 나서 실행
+        .then((res)=>{
+            console.log('레시피리스트')
+            console.log(res.data.readChannel.channel_name)
+            setChannelInfo(res.data.readChannel)
+            setCount(res.data.readMemberRecipe.length)
+        })
+        .catch(err =>{alert('실패')})
     },[])
     
     return (
         <ListGroup>
             <ListGroupItem>
-                <ListGroupItemHeading>채널제목</ListGroupItemHeading>
-                <ListGroupItemText>
-                채널 소개란입니다.
-                </ListGroupItemText>
+                <ListGroupItemHeading>{channelInfo.channel_name}</ListGroupItemHeading>
+                <ListGroupItemText>{channelInfo.channel_content}</ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>
                 <ListGroupItemHeading>구독자수</ListGroupItemHeading>
@@ -30,15 +46,15 @@ function MyChannelInfo(props) {
                 </ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>
-                <ListGroupItemHeading>보유레시피수</ListGroupItemHeading>
+                <ListGroupItemHeading>레시피수</ListGroupItemHeading>
                 <ListGroupItemText>
-                0개
+                {count}개
                 </ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>
                 <ListGroupItemHeading>개설날짜</ListGroupItemHeading>
                 <ListGroupItemText>
-                2021년 12월 6일
+                {channelInfo.channel_regdate}
                 </ListGroupItemText>
             </ListGroupItem>
         </ListGroup>
