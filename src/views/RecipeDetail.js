@@ -1,8 +1,11 @@
 import axios from 'axios';
+import RecommendUp from 'components/RecommendUp';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
+
 function RecipeDetail(props) {
+    const member_id = sessionStorage.getItem('user_id');
     const {recipe_id} = useParams();
     const [recipeDetail, setRecipeDetail] = useState({
         ingredient: [
@@ -76,6 +79,10 @@ function RecipeDetail(props) {
                 <p>
                     {recipeDetail.recipe.RECIPE_CONTENT}
                 </p>
+                <p>
+                    {recipeDetail.recipe.RECIPE_RECOMMEND}
+                </p>
+                <RecommendUp member_id={member_id} recipe_id={recipeDetail.recipe.RECIPE_ID} />
             </div>
         </main>
     );
