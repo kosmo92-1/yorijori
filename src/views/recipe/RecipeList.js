@@ -1,3 +1,4 @@
+import { Paper } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router" 
@@ -6,41 +7,77 @@ import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
 function RecipeList(props) {
-    const [recipeList, setRecipeList] = useState({
-        "getlist": [
-            {
-                "recipe_id": 7,
-                "member_id": "hhhye",
-                "kind_id": null,
-                "recipe_title": "10. 마지막 요2",
-                "recipe_ing": null,
-                "recipe_content": null,
-                "recipe_time": null,
-                "recipe_regdate": 1637915911000,
-                "recipe_thumbnail": null,
-                "recipe_viewcount": 0,
-                "recipe_quentity": null,
-                "recipe_difficulty": null,
-                "recipe_recommend": 0
-            },
-        ]
-    })
-    const recipeComponent = recipeList.getlist.map((item)=>(<tr><td>{item.recipe_id}</td><td>{item.member_id}</td><td onClick={()=>actionRead(item.recipe_id)}>{item.recipe_title}</td></tr>))
 
-    const navigate = useNavigate();
-    const actionRead = (recipe_id) => {
-        let path = `/readrecipe/${recipe_id}`
-        navigate(path)
+    const [recipeList,setRecipeList] = useState([])
+    const [checkBoxSub,setCheckBoxSub] = useState('normal')
+    const [checkBoxRec,setCheckBoxRec] = useState('normal')
+    //드롭다운 메뉴에 따라 쿼리가 바뀜
+    // 1 - 최근등록일순
+    // 2 - 추천순
+    // 3 - 최다 댓글순
+    // 4 - 최근 등록일순
+    const [dropdown,setDropdown] = useState(1)
+    //레시피 리스트를 받아옵니다.
+    useEffect(()=>{
+        console.log('useeffect:dropdown :'+dropdown)
+        let url = '/listRecipe.do'
+        if(dropdown==='1')  url = '/listRecipe.do'
+        if(dropdown==='2')  url = '/recommendRecipe.do'
+      
+        console.log('finalUrl'+url)
+        axios.get(url)
+        // post 보내고 나서 실행
+        .then((res)=>{
+        console.log('레시피리스트')
+        console.log(res.data.getlist)
+        setRecipeList(res.data.getlist)
+        })
+        .catch(err =>{alert('실패')})
+    
+        
+    },[checkBoxSub,checkBoxRec,dropdown])
+
+    const listComponent = recipeList.map((item) =>(
+        <div>
+            <figure>
+                <img src={item.recipe_thumbnail} alt="레시피 이미지" />
+            </figure>
+            <div>
+                <h4>{item.recipe_id}{item.recipe_title}</h4>
+                {/* 별점 */}
+                <p className="text-trunc">
+                    {item.recipe_content}
+                </p>
+                <span><a>요리왕김다밍</a>님</span>
+            </div>
+        </div>
+    ))
+
+    // 체크인데 후순위
+    const isChecked = (e) =>{
+        //console.log(e.target.checked)
+        //console.log(e.target.value)
+        if(e.target.checked){
+            if(e.target.value==='구독'){
+                setCheckBoxSub('subscribe')
+            }
+            if(e.target.value==='관심'){
+                setCheckBoxRec('recommend')
+            }
+        }else{
+            if(e.target.value==='구독'){
+                setCheckBoxSub('normal')
+            }
+            if(e.target.value==='관심'){
+                setCheckBoxRec('normal')
+            }
+        }
     }
-    // useEffect(()=>{
-    //     axios.get('/listRecipe.do')
-    //     // 값을가져와 넣어줍니다.
-    //     .then(res => {
-    //     console.log(res.data);
-    //     setRecipeList(res.data)
-    //     })
-    //     .catch(err =>{alert(err)})
-    // },[])
+    //정렬 셀렉트 박스 
+    const isSelected = (e) =>{
+        console.log(e.target.value)
+        setDropdown(e.target.value)
+    }
     return (
         <main>
             <section className="sec-banner">
@@ -54,6 +91,8 @@ function RecipeList(props) {
                             <label><i className="fa fa-search" aria-hidden="true"></i></label>
                         </div>
                     </div>
+        
+
                     <div className="list-filter">
                         <i className="arrow left">이전</i>
                         <ul>
@@ -70,14 +109,15 @@ function RecipeList(props) {
                         </ul>
                         <i className="arrow right">다음</i>
                     </div>
+                    
                 </section>
                 <section className="sec-recipes">
                     {/* 레시피 1 */}
                     <div>
-                        <div className="checkboxes">
+                        {/* <div className="checkboxes">
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" className="checkbox"/>
+                                    <Input type="checkbox" className="checkbox" value="구독" onClick={isChecked}/>
                                     구독 레시피
                                     <span className="form-check-sign">
                                     <span className="check"></span>
@@ -86,98 +126,24 @@ function RecipeList(props) {
                             </FormGroup>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="checkbox" className="checkbox"/>
+                                    <Input type="checkbox" className="checkbox"  value="관심" onClick={isChecked}/>
                                     관심 레시피
                                     <span className="form-check-sign">
                                     <span className="check"></span>
                                     </span>
                                 </Label>
                             </FormGroup>
-                        </div>
+                        </div> */}
                         <FormGroup className="selectbox">
-                            <Input type="select" name="filter" id="filter">
-                                <option>추천 순</option>
-                                <option>별점 순</option>
-                                <option>최다 댓글 순</option>
-                                <option>최근 등록일 순</option>
+                            <Input type="select" name="filter" id="filter" onChange={isSelected}>
+                                <option value="1">최근 등록일 순</option>
+                                <option value="2">추천 순</option>
                             </Input>
                         </FormGroup>
                     </div>
                     <div className="recipes">
                         <div className="recipe">
-                            {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
-                            <div>
-                                <figure>
-                                    <img src={recipe} alt="레시피 이미지" />
-                                </figure>
-                                <div>
-                                    <h4>블루베리 요거트</h4>
-                                    {/* 별점 */}
-                                    <p className="text-trunc">
-                                        맛이 없을 수 없는 싱싱한 블루베리에다
-                                        요거트를 얹으면? 이것도 못 만들면 정말
-                                        이상하죠. 그럼 요리 못하시는 거예요 완전 미친거 아니냐고요
-                                    </p>
-                                    <span><a>요리왕김다밍</a>님</span>
-                                </div>
-                            </div>
-                        </div>
-
-                         {/* dummy datas */}
-
-                            <div className="recipe">
-                            {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
-                            <div>
-                                <figure>
-                                    <img src={recipe} alt="레시피 이미지" />
-                                </figure>
-                                <div>
-                                    <h4>블루베리 요거트</h4>
-                                    {/* 별점 */}
-                                    <p className="text-trunc">
-                                        맛이 없을 수 없는 싱싱한 블루베리에다
-                                        요거트를 얹으면? 이것도 못 만들면 정말
-                                        이상하죠. 그럼 요리 못하시는 거예요 완전 미친거 아니냐고요
-                                    </p>
-                                    <span><a>요리왕김다밍</a>님</span>
-                                </div>
-                            </div>
-                        </div>
-                            <div className="recipe">
-                            {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
-                            <div>
-                                <figure>
-                                    <img src={recipe} alt="레시피 이미지" />
-                                </figure>
-                                <div>
-                                    <h4>블루베리 요거트</h4>
-                                    {/* 별점 */}
-                                    <p className="text-trunc">
-                                        맛이 없을 수 없는 싱싱한 블루베리에다
-                                        요거트를 얹으면? 이것도 못 만들면 정말
-                                        이상하죠. 그럼 요리 못하시는 거예요 완전 미친거 아니냐고요
-                                    </p>
-                                    <span><a>요리왕김다밍</a>님</span>
-                                </div>
-                            </div>
-                        </div>
-                            <div className="recipe">
-                            {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
-                            <div>
-                                <figure>
-                                    <img src={recipe} alt="레시피 이미지" />
-                                </figure>
-                                <div>
-                                    <h4>블루베리 요거트</h4>
-                                    {/* 별점 */}
-                                    <p className="text-trunc">
-                                        맛이 없을 수 없는 싱싱한 블루베리에다
-                                        요거트를 얹으면? 이것도 못 만들면 정말
-                                        이상하죠. 그럼 요리 못하시는 거예요 완전 미친거 아니냐고요
-                                    </p>
-                                    <span><a>요리왕김다밍</a>님</span>
-                                </div>
-                            </div>
+                            {listComponent}
                         </div>
                     </div>
                     <div className="text-center">
@@ -185,14 +151,6 @@ function RecipeList(props) {
                     </div>
                 </section>
             </div>
-            {/* <Table>
-                <thead>
-                    <tr><th>#</th><th>유형</th><th>제목</th></tr>
-                </thead>
-                <tbody>
-                    {recipeComponent}
-                </tbody>
-            </Table> */}
         </main>
     );
 }
