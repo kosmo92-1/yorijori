@@ -16,6 +16,7 @@ function MyChannelInfo(props) {
         member_id: "admin1"
     })
     const [count,setCount] = useState(0)
+    const [countSubscribe,setCountSubscribe] = useState(0)
     useEffect(()=>{
         axios.get(`/readChannel.do?member_id=${member_id}`, memberJson, {
             headers:{
@@ -29,6 +30,9 @@ function MyChannelInfo(props) {
            // console.log(res.data.readChannel.channel_name)
             setChannelInfo(res.data.readChannel)
             setCount(res.data.readMemberRecipe.length)
+            console.log('구독자수')
+            console.log(res.data.countSubscribe)
+            setCountSubscribe(res.data.countSubscribe)
         })
         .catch(err =>{alert('실패')})
     },[])
@@ -42,7 +46,7 @@ function MyChannelInfo(props) {
             <ListGroupItem>
                 <ListGroupItemHeading>구독자수</ListGroupItemHeading>
                 <ListGroupItemText>
-                0d명
+                {countSubscribe+'명'}
                 </ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>

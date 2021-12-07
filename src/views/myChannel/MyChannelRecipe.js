@@ -19,7 +19,7 @@ function MyChannelRecipe(props) {
         </tr>
     ))
     useEffect(()=>{
-        axios.get('/readChannel.do?member_id=admin', memberJson, {
+        axios.get(`/readChannel.do?member_id=${member_id}`, memberJson, {
             headers:{
                 // json으로 형식을 지정해줍니다.
                 "Content-type":"application/json"
