@@ -1,46 +1,38 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router" 
 import { FormGroup, Input, Label, Table } from 'reactstrap';
 import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
 function RecipeList(props) {
-    const [recipeList, setRecipeList] = useState({
-        "getlist": [
-            {
-                "recipe_id": 7,
-                "member_id": "hhhye",
-                "kind_id": null,
-                "recipe_title": "10. 마지막 요2",
-                "recipe_ing": null,
-                "recipe_content": null,
-                "recipe_time": null,
-                "recipe_regdate": 1637915911000,
-                "recipe_thumbnail": null,
-                "recipe_viewcount": 0,
-                "recipe_quentity": null,
-                "recipe_difficulty": null,
-                "recipe_recommend": 0
-            },
-        ]
-    })
-    const recipeComponent = recipeList.getlist.map((item)=>(<tr><td>{item.recipe_id}</td><td>{item.member_id}</td><td onClick={()=>actionRead(item.recipe_id)}>{item.recipe_title}</td></tr>))
 
-    const navigate = useNavigate();
-    const actionRead = (recipe_id) => {
-        let path = `/readrecipe/${recipe_id}`
-        navigate(path)
-    }
-    // useEffect(()=>{
-    //     axios.get('/listRecipe.do')
-    //     // 값을가져와 넣어줍니다.
-    //     .then(res => {
-    //     console.log(res.data);
-    //     setRecipeList(res.data)
-    //     })
-    //     .catch(err =>{alert(err)})
-    // },[])
+    const [recipeList,setRecipeList] = useState([])
+    //레시피 리스트를 받아옵니다.
+    useEffect(()=>{
+        axios.get('/listRecipe.do')
+        // post 보내고 나서 실행
+        .then((res)=>{
+            console.log('레시피리스트')
+            console.log(res.data.getlist)
+            setRecipeList(res.data.getlist)
+        })
+        .catch(err =>{alert('실패')})
+    },[])
+    const listComponent = recipeList.map((item) =>(
+        <div>
+            <figure>
+                <img src={item.recipe_thumbnail} alt="레시피 이미지" />
+            </figure>
+            <div>
+                <h4>{item.recipe_title}</h4>
+                {/* 별점 */}
+                <p className="text-trunc">
+                    {item.recipe_content}
+                </p>
+                <span><a>요리왕김다밍</a>님</span>
+            </div>
+        </div>
+    ))
     return (
         <main>
             <section className="sec-banner">
@@ -105,13 +97,14 @@ function RecipeList(props) {
                     </div>
                     <div className="recipes">
                         <div className="recipe">
+                            {listComponent}
                             {/* TODO : 페이지 내역에 따른 RecipeCard 노출 타입을 설정 후 전달 */}
                             <div>
                                 <figure>
                                     <img src={recipe} alt="레시피 이미지" />
                                 </figure>
                                 <div>
-                                    <h4>블루베리 요거트</h4>
+                                    <h4>블루베리 요거트1</h4>
                                     {/* 별점 */}
                                     <p className="text-trunc">
                                         맛이 없을 수 없는 싱싱한 블루베리에다
