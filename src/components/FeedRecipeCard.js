@@ -1,21 +1,22 @@
-import React, {useState} from 'react';
-import recipe from '../assets/images/recipes/recipe.png';
-// import recipes from '../assets/images/recipes';
+import React from 'react';
+import { useNavigate } from "react-router" 
 
-// const recipes = [
-//     {id:1, src: '../assets/images/recipes/recipe.png', desc: '레시피 이미지'}
-// ];
+function FeedRecipeCard(props) {
+    const recipes = props;
 
-function RecipeCard(props) {
-    const recipes = props.recipes;
-    // const recipe = recipes.map(({id, src, desc}) =>
-    //     <img key={id} src={src} alt={desc} />
-    // );
+    const navigate = useNavigate();
+    const actionRead = (e) =>{
+        e.preventDefault();
+        let path = url
+        navigate(path)
+    }
+
+    const url = `/recipe-detail/${recipes.value.recipe_id}`
+    // const imgUrl = `yorijori/${recipes.value.recipe_thumbnail}`
 
     return (
-        // TODO : data에 따른 img 생성 
-        <a href="#" className="recipe-card">
-            <img src={recipe} alt="레시피 이미지" />
+       <a href={url} className="recipe-card" onClick={actionRead}>
+            <img src={recipes.value.recipe_thumbnail} alt={recipes.value.recipe_title} />
             {/* {
                 recipes.map(({id, src, desc}) => <img key={id} src={src} alt={desc} />)
             } */}
@@ -23,4 +24,4 @@ function RecipeCard(props) {
     );
 }
 
-export default RecipeCard;
+export default FeedRecipeCard;
