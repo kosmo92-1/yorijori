@@ -1,3 +1,4 @@
+import { Checkbox, } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -90,7 +91,7 @@ function Basket(props) {
           </Row>
           <Row>
             <Col xs="1">
-              <Input type="checkbox" className="check1" onClick={check1} />
+            {/* <Checkbox {...label} /> */}
             </Col>
             <Col xs="4">
               <div>
@@ -110,79 +111,7 @@ function Basket(props) {
               <div>레시피 정보</div>
             </Col>
             <Col xs="4">
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-            </Col>
-            <Col xs="1">
-                <Button>삭제</Button>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs="1">
-              <Input type="checkbox" className="check2" />
-            </Col>
-            <Col xs="4">
-              <div>
-                {recipe_thumbnail && (
-                  <img
-                    alt="sample"
-                    className="img-rounded img-responsive"
-                    name="recipe_thumbnail"
-                    src={recipe_thumbnail}
-                    style={imagestyle}
-                  />
-                )}
-              </div>
-            </Col>
-            <Col xs="2">
-              <div>레시피 이름</div>
-              <div>레시피 정보</div>
-            </Col>
-            <Col xs="4">
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-            </Col>
-            <Col xs="1">
-                <Button>삭제</Button>
-            </Col>
-          </Row>
-          <Row hidden>
-            <Col xs="1">
-              <Input type="checkbox" className="check2" />
-            </Col>
-            <Col xs="4">
-              <div>
-                {recipe_thumbnail && (
-                  <img
-                    alt="sample"
-                    className="img-rounded img-responsive"
-                    name="recipe_thumbnail"
-                    src={recipe_thumbnail}
-                    style={imagestyle}
-                  />
-                )}
-              </div>
-            </Col>
-            <Col xs="2">
-              <div>레시피 이름</div>
-              <div>레시피 정보</div>
-            </Col>
-            <Col xs="4">
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
-              <div>재료</div>
+             <BasketRecipeList/>
             </Col>
             <Col xs="1">
                 <Button>삭제</Button>

@@ -59,9 +59,11 @@ function Mypage() {
           "member_photo":res.data.member_photo,
           "member_agree":res.data.member_agree,
         })
-              sessionStorage.setItem('user_pw',res.data.member_pw);
-              sessionStorage.setItem('user_id',res.data.member_id);
-              sessionStorage.setItem("recipe_thumbnail",res.data.member_photo);
+
+        sessionStorage.setItem('user_pw',res.data.member_pw);
+        sessionStorage.setItem('user_id',res.data.member_id);
+        sessionStorage.setItem("recipe_thumbnail",res.data.member_photo);
+        sessionStorage.removeItem('social_id');
               setMember_photo(res.data.member_photo);
             // if( sessionStorage.getItem('social_state') === "1"){
             //   console.log("카카오사진")
