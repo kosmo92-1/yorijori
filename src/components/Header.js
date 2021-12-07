@@ -51,6 +51,7 @@ function Header(props) {
                         <li></li>
                         <li><a href="/mart">주변마트보기</a></li>
                         <li><a href="/notice">공지사항</a></li>
+                        <li><a href="/recipes">레시피</a></li>
                         <li></li>
                         <li></li>
                         <li></li>
