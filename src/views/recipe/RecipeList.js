@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router" 
-import { FormGroup, Input, Label, Table } from 'reactstrap';
+import { Button, FormGroup, Input, Label, Table } from 'reactstrap';
 import Banner from '../../assets/images/banner-recipe.png';
 import recipe from '../../assets/images/recipes/recipe.png';
 
@@ -179,6 +179,9 @@ function RecipeList(props) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="text-center">
+                        <Button color="danger">더 보기</Button>
                     </div>
                 </section>
             </div>

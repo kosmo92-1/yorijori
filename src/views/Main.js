@@ -51,7 +51,7 @@ function Main() {
 
         axios({
             method: "get",
-            url: "yorijori/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
+            url: "/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
         })
         .then((res) => {
             setRecipeList(res.data)

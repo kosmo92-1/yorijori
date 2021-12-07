@@ -1,5 +1,9 @@
 @use "../abstracts/variables" as v;
 
+/* --------------------------------------------------------------------------------------------------------------
+    list
+----------------------------------------------------------------------------------------------------------------*/
+
 .sec-banner {
     img {
         width: 100%;
@@ -92,7 +96,7 @@
 }
 .sec-recipes {
     margin-top: 50px;
-    > div:not(.recipes) {
+    > div:first-child {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -142,7 +146,7 @@
                     }
                     p {
                         display: -webkit-box;
-                        padding-bottom: 25px;
+                        // padding-bottom: 25px;
                         font-size: 0.875rem;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -163,3 +167,14 @@
         }
     }
 }
+
+/* --------------------------------------------------------------------------------------------------------------
+    write
+----------------------------------------------------------------------------------------------------------------*/
+
+// form.writing {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+// }
