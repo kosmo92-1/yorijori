@@ -20,10 +20,10 @@ const NoticeList = () => {
   })
   const noticeComponent = noticeList.list.map((item) => (
     // eslint-disable-next-line react/jsx-key
-    <TableRow onClick={() => actionRead(item.notice_id)}>
+    <TableRow >
       <TableCell>{item.notice_id}</TableCell>
       <TableCell>{item.notice_head}</TableCell>
-      <TableCell>{item.notice_title}</TableCell>
+      <TableCell><a href="#" onClick={(e) =>{e.preventDefault(); actionRead(item.notice_id)}}>{item.notice_title}</a></TableCell>
       <TableCell>{new Date(item.notice_regdate).toLocaleDateString()}</TableCell>
     </TableRow>
   ))

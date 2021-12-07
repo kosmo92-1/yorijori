@@ -10,6 +10,7 @@ function RecipeList(props) {
 
     const [recipeList,setRecipeList] = useState([])
     const [kind,setKind]= useState([])
+    const [search,setSearch] = useState('')
     const [checkBoxSub,setCheckBoxSub] = useState('normal')
     const [checkBoxRec,setCheckBoxRec] = useState('normal')
     //드롭다운 메뉴에 따라 쿼리가 바뀜
@@ -89,6 +90,25 @@ function RecipeList(props) {
     const isSelected = (e) =>{
         console.log(e.target.value)
         setDropdown(e.target.value)
+    }
+
+    //검색 인풋 설정
+    const handleInput = (e) => {
+        setSearch(e.target.value)
+    }
+
+    //서치 버튼 눌렀을때
+    const searchBtn = (e) => {
+        e.preventDefault()
+        console.log('search')
+        axios.get('/listRecipe.do?searchType=RECIPE_TITLE&keyword='+search)
+        // post 보내고 나서 실행
+        .then((res)=>{
+        console.log(res.data.getlist)
+        setRecipeList(res.data.getlist)
+        })
+        .catch(err =>{alert('실패')})
+
     }
 
 
@@ -179,8 +199,8 @@ function RecipeList(props) {
                 <section className="sec-filter">
                     <div className="search-box">
                         <div>
-                            <input type="search" placeholder="레시피 찾기" />
-                            <label><i className="fa fa-search" aria-hidden="true"></i></label>
+                            <input type="search" placeholder="레시피 찾기" value={search} onChange={handleInput}/>
+                            <label ><a href="#" onClick={searchBtn}><i className="fa fa-search" aria-hidden="true" ></i></a></label>
                         </div>
                     </div>
                     <Carousel
