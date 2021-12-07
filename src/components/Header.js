@@ -35,6 +35,7 @@ function Header(props) {
                         <li><a href="/myChannel">내채널</a></li>
                         <li><a href="/basket">장바구니</a></li>
                         <li><a href="/subscribe">채널구독</a></li>
+                        <li><a href="/recipes">레시피</a></li>
                         {/* TODO : 값에 따라 로그인 로그아웃 변경 */}
                         <li><a href="/login">로그인</a></li>
                     </ul>
