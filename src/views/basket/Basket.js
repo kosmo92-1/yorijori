@@ -11,8 +11,8 @@ import {
 } from "reactstrap";
 import BasketRecipeList from "./BasketRecipeList";
 const imagestyle = {
-  height: "150px",
-  width: "150px",
+  height: "100px",
+  width: "100px",
   borderRadius: "50%",
 };
 const partslist = {
@@ -57,7 +57,7 @@ function Basket(props) {
   return (
     <Container>
       <Row>
-        <Col xs="2">
+        {/* <Col xs="2">
           <Container>
             <h4>총 재료</h4>
             <Form style={partslist}>
@@ -72,8 +72,10 @@ function Basket(props) {
               </FormGroup>
             </Form>
           </Container>
-        </Col>
+        </Col> */}
+        <Col xs="1"/>
         <Col xs="10">
+        <h3>장바구니</h3>
           <Row>
             <Table hover responsive size="" striped>
               <thead>
@@ -103,7 +105,7 @@ function Basket(props) {
                 )}
               </div>
             </Col>
-            <Col xs="3">
+            <Col xs="2">
               <div>레시피 이름</div>
               <div>레시피 정보</div>
             </Col>
@@ -114,6 +116,9 @@ function Basket(props) {
               <div>재료</div>
               <div>재료</div>
               <div>재료</div>
+            </Col>
+            <Col xs="1">
+                <Button>삭제</Button>
             </Col>
           </Row>
 
@@ -134,7 +139,7 @@ function Basket(props) {
                 )}
               </div>
             </Col>
-            <Col xs="3">
+            <Col xs="2">
               <div>레시피 이름</div>
               <div>레시피 정보</div>
             </Col>
@@ -145,6 +150,9 @@ function Basket(props) {
               <div>재료</div>
               <div>재료</div>
               <div>재료</div>
+            </Col>
+            <Col xs="1">
+                <Button>삭제</Button>
             </Col>
           </Row>
           <Row hidden>
@@ -164,7 +172,7 @@ function Basket(props) {
                 )}
               </div>
             </Col>
-            <Col xs="3">
+            <Col xs="2">
               <div>레시피 이름</div>
               <div>레시피 정보</div>
             </Col>
@@ -176,13 +184,12 @@ function Basket(props) {
               <div>재료</div>
               <div>재료</div>
             </Col>
-          </Row>
-          <Row>
-            <Button 
-            // onClick={deletelist}
-            >삭제</Button>
+            <Col xs="1">
+                <Button>삭제</Button>
+            </Col>
           </Row>
         </Col>
+        <Col xs="1"/>
       </Row>
     </Container>
   );

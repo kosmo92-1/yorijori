@@ -23,6 +23,7 @@ import SubscribeList from "views/subscribe/SubscribeList";
 // import InsertChannel from "views/channel/InsertChannel";
 import Basket from "views/basket/Basket";
 import MyChannel from "views/myChannel/MyChannel";
+import InsertChannel from "views/channel/InsertChannel";
 
 function App() {
   function debug() {
@@ -55,7 +56,7 @@ function App() {
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
           <Route path="/subscribe" element={<SubscribeList/>}exact/>
-          {/* <Route path="/insertChannel" element={<InsertChannel/>}exact/> */}
+          <Route path="/insertChannel" element={<InsertChannel/>}exact/>
           {/* <Route path="/channel/:channel_id" element={<ChannelInfo/>}exact/> */}
           <Route path="/channel" element={<ChannelInfo/>}exact/>
           <Route path="/myChannel" element={<MyChannel/>}exact/>
