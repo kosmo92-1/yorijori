@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle, Col, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col } from 'reactstrap';
 
 function SubComponent(props) {
 
