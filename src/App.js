@@ -55,7 +55,6 @@ function App() {
           <Route path="/recipelist" element={<RecipeList/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
           <Route path="/subscribe" element={<SubscribeList/>}exact/>
-          <Route path="/channel/:channel_id" element={<ChannelList/>}exact/>
           {/* <Route path="/insertChannel" element={<InsertChannel/>}exact/> */}
           {/* <Route path="/channel/:channel_id" element={<ChannelInfo/>}exact/> */}
           <Route path="/channel" element={<ChannelInfo/>}exact/>
