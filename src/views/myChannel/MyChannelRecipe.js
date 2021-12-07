@@ -10,6 +10,15 @@ function MyChannelRecipe(props) {
         member_id:member_id
     }
 
+    const recipeComponent = recipelist.map((item)=>(
+        <tr>
+            <td>{item.recipe_difficulty}</td>
+            <td>{item.kind_id}</td>
+            <td><a href="#">{item.recipe_title}</a></td>
+            <td>{item.recipe_quentity}</td>
+            <td>{item.recipe_viewcount}</td>
+        </tr>
+    ))
     useEffect(()=>{
         axios.get('/readChannel.do?member_id=admin', memberJson, {
             headers:{
@@ -21,17 +30,20 @@ function MyChannelRecipe(props) {
         .then((res)=>{
             console.log('레시피리스트')
             console.log(res.data)
-            setRecipelist(res.data)
+            setRecipelist(res.data.readMemberRecipe)
         })
         .catch(err =>{alert('실패')})
     },[])
     return (
         <Table>
-            <tr>
-                <td>테이블</td>
-                <td>테이블</td>
-                <td>테이블</td>
-            </tr>
+            <thead>
+                <th>난이도</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>양</th>
+                <th>조회수</th>
+            </thead>
+           {recipeComponent}
         </Table>
     );
 }
