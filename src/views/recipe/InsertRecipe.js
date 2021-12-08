@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControl, InputLabel, MenuItem, Select, TextareaAutosize, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useLayoutEffect, useState } from 'react';
 import {Badge, Button, Col, Container, Input, Row } from 'reactstrap';
@@ -7,16 +7,17 @@ import IconComponent from './IconComponent';
 
 // 종류 등록
 function InsertRecipe(props) {
-    const [member_id,setMember_id]= useState("hhhye");
-    const [kind_id,setKind_id]= useState("음식종류");
-    const [recipe_title,setRecipe_title]= useState("10. 마지막 요");
-    const [recipe_ing,setRecipe_ing]= useState("재료는 오이당근어쩌구 ");
-    const [recipe_content,setRecipe_content]= useState("자 이렇게 만들어보세");
-    const [recipe_time,setRecipe_time]= useState("30분걸려욤");
+    const [member_id,setMember_id]= useState("");
+    const [kind_id,setKind_id]= useState("");
+    const [recipe_title,setRecipe_title]= useState("");
+    const [recipe_ing,setRecipe_ing]= useState("");
+    const [recipe_content,setRecipe_content]= useState("");
+    const [recipe_time,setRecipe_time]= useState("");
     const [file,setFile]= useState(null);
     const [fileUrl,setFileUrl] =useState("")
-    const [recipe_quentity,setRecipe_quentity]= useState("4인분");
-    const [recipe_difficulty,setRecipe_difficulty]= useState("high");
+    const [recipe_quentity,setRecipe_quentity]= useState("");
+    const [recipe_difficulty,setRecipe_difficulty]= useState("");
+    const checkNum = []
     
     
     const handleMember_id = (e) => {
@@ -61,7 +62,12 @@ function InsertRecipe(props) {
 
     const [kindMap, setKindMap] = useState([{ kind_id: '', kind_name: '' }])
     const [ingMap, setIngMap] = useState([{ kind_id: '', kind_name: '' }])
-    const [ingMapByKindId, setIngMapByKindId] = useState({'ingredient_1':[],})
+    function addCheckBox(e){
+        console.log(e)
+        if(e.target.checked){
+            checkNum.push(e.target.value)
+        }
+    }
 
     useLayoutEffect(() => {
         //해당 종류의 리스트를불러온다.
@@ -78,7 +84,7 @@ function InsertRecipe(props) {
     const listComponent = kindMap.map((item) => <MenuItem value={item.kind_id} key={item.kind_id}>{item.kind_name}</MenuItem>)
 
     const accordionComponent = ingMap.map((item)=>(
-        <><Checkbox {...item.ing_name} /><IconComponent ing_icon={item.ing_icon} ing_name={item.ing_name} /></>
+        <><Checkbox {...item.ing_name} value={item.ing_id} onChange={addCheckBox}/><IconComponent ing_icon={item.ing_icon} ing_name={item.ing_name} /></>
     ))
 
     var frm = new FormData();
@@ -92,6 +98,8 @@ function InsertRecipe(props) {
     frm.append("recipe_quentity",recipe_quentity)
     frm.append("recipe_difficulty",recipe_difficulty)
     const sendAction = () =>{
+        console.log(checkNum)
+        // 레시피 등록
         axios.post('/insertRecipe.do', frm, {
             headers:{
                 // json으로 형식을 지정해줍니다.
@@ -99,8 +107,32 @@ function InsertRecipe(props) {
             },
         })
         // post 보내고 나서 실행
-        .then(res => {alert('성공')})
-        .catch(err =>{alert('실패')})
+        .then(res => {
+            //성공하면 recipe_id를 리턴받아서 재료등록을 실행한다.
+             //레시피 재료 등록
+            // 재료입력을 반복해서 실행한다.
+            // checkNum.forEach(element => {
+            //     console.log(res.data)
+            //     console.log(element)
+            //     let ingJson = {
+            //         recipe_id:res.data.recipe_id,
+            //         ing_id:element
+            //     }
+            //     axios.post('/insertRecipe_ing.do',ingJson , {
+            //         headers:{
+            //             // json으로 형식을 지정해줍니다.
+            //             "Content-type":"application/json"
+            //         },
+            //     })
+            //     // post 보내고 나서 실행
+            //     .then(res => {alert('글등록성공')})
+            //     .catch(err =>{console.log('실패')})
+            // });
+
+        })
+        .catch(err =>{console.log('실패')})
+
+       
     }
     return (
        <Container>
@@ -201,7 +233,7 @@ function InsertRecipe(props) {
                         </div>
                         <div className="form-row">
                         <FormControl>
-                            <TextField id="outlined-basic" label="레시피 이름"margin="normal" variant="outlined" sx={{
+                            <TextField id="outlined-basic" label="레시피 이름"margin="normal" variant="outlined" value={recipe_title} onChange={handleRecipe_title} sx={{
                                     bgcolor: 'background.paper',
                                     boxShadow: 1,
                                     borderRadius: 1,
@@ -210,7 +242,7 @@ function InsertRecipe(props) {
                         </FormControl>
                         </div>
                         {/* 재료선택 아코디언 */}
-                        <Accordion>
+                        <Accordion style={{width:800}}>
                             <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -243,13 +275,23 @@ function InsertRecipe(props) {
                             </FormControl>
                         </div>
                         <div className="form-row">
-                        <TextField id="outlined-basic" label="레시피설명" margin="normal" variant="outlined"sx={{
+                        {/* <TextField id="outlined-basic" label="레시피설명" margin="normal" variant="outlined"sx={{
                                     bgcolor: 'background.paper',
                                     boxShadow: 1,
                                     borderRadius: 1,
                                     minWidth: 800,
-                                  }} />
+                                  }} /> */}
+                            <FormControl>
+                                <TextareaAutosize
+                                aria-label="empty textarea"
+                                placeholder="레시피 설명을적어주세요"
+                                style={{ width: 800,height:300 }}
+                                value={recipe_content}
+                                onChange={handleRecipe_content}
+                                />
+                            </FormControl>
                         </div>
+                    
                         <Button color="primary" onClick={sendAction}>보내기</Button>
                     </form>
             </main>
