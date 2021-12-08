@@ -200,7 +200,17 @@ function SignIn() {
           console.log("======================", "로그인 성공");
           sessionStorage.setItem("user_id", inputId);
           sessionStorage.setItem("user_pw", inputPw);
-
+          //로그인 성공하면 채널 정보를 받아온다.
+          axios.get(`/readChannel.do?member_id=${res.data.member_id}`)
+          // post 보내고 나서 실행
+          .then((res)=>{
+              console.log(res.data.readChannel)
+              if(res.data.readChannel!=null){
+                sessionStorage.setItem('channel_id',res.data.readChannel.channel_id)
+                // alert(sessionStorage.getItem('channel_id'))
+              }
+          })
+          .catch(err =>{alert('실패')})
           alert("로그인 성공");
           if(sessionStorage.getItem("user_type")==="1"){
             console.log("이동하냐?")
@@ -209,6 +219,7 @@ function SignIn() {
             console.log("일반회원입장")
             document.location.href = "/";
           }
+
         }
       })
       // 실패시 실행
