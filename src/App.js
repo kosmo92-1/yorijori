@@ -18,13 +18,15 @@ import RecipeList from "views/recipe/RecipeList";
 import RecipeDetail from "views/RecipeDetail";
 import Map from "views/maps/Map";
 import MartMap from "views/maps/MartMap";
-import ChannelInfo from "views/channel/ChannelInfo";
+// import ChannelInfo from "views/channel/ChannelInfo";
 import SubscribeList from "views/subscribe/SubscribeList";
 // import InsertChannel from "views/channel/InsertChannel";
 import Basket from "views/basket/Basket";
 import MyChannel from "views/myChannel/MyChannel";
 // import InsertChannel from "views/channel/InsertChannel";
 import Channel from "views/channel/Channel";
+// import InsertChannel from "views/channel/InsertChannel";
+import UpdateRecipe from "views/recipe/UpdateRecipe";
 
 function App() {
   function debug() {
@@ -64,7 +66,7 @@ function App() {
           {/* ★ Glory - ㅇ Yoon ★ */}
           <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           {/* <Route path="/recipe-detail" element={<RecipeDetail />} exact /> */}
-
+          <Route path="/updaterecipe/:recipe_id" element={<UpdateRecipe />} exact />
         </Routes>
       </div>
       <Footer></Footer>

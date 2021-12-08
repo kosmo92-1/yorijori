@@ -4,9 +4,11 @@ import React, { useLayoutEffect, useState } from 'react';
 import {Badge, Button, Col, Container, Input, Row } from 'reactstrap';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconComponent from './IconComponent';
+import { useParams } from 'react-router';
 
 // 종류 등록
-function InsertRecipe(props) {
+function UpdateRecipe(props) {
+    const {recipe_id} = useParams();
 
     const [channel_id,setChannel_id]= useState("");
     const [kind_id,setKind_id]= useState("");
@@ -18,7 +20,7 @@ function InsertRecipe(props) {
     const [fileUrl,setFileUrl] =useState("")
     const [recipe_quentity,setRecipe_quentity]= useState("");
     const [recipe_difficulty,setRecipe_difficulty]= useState("");
-    const [checkNum,setCheckNum] = useState([])
+    const checkNum = []
     
     const handleKindId = (e) => {
         console.log(e.target.value)
@@ -58,12 +60,10 @@ function InsertRecipe(props) {
 
     const [kindMap, setKindMap] = useState([{ kind_id: '', kind_name: '' }])
     const [ingMap, setIngMap] = useState([{ kind_id: '', kind_name: '' }])
-
-    //체크박스체크
     function addCheckBox(e){
-        console.log(e.target.value)
+        console.log(e)
         if(e.target.checked){
-            setCheckNum(checkNum => [...checkNum, e.target.value]);
+            checkNum.push(e.target.value)
         }
     }
 
@@ -77,8 +77,21 @@ function InsertRecipe(props) {
         axios.get('/listIngredient.do').then((res) => {
             console.log(res.data.list)
             setIngMap(res.data.list)
-            
           })
+        //해당레시피정보를 가져온다.
+        axios.get('/getRecipe.do?recipe_id='+recipe_id).then((res) =>{
+            console.log('해당레시피정보')
+            console.log(res.data)
+            setChannel_id(res.data.recipe.CHANNEL_ID)
+            setKind_id(res.data.recipe.KIND_ID)
+            setRecipe_title(res.data.recipe.RECIPE_TITLE)
+            setRecipe_ing(res.data.recipe.RECIPE_ING)
+            setRecipe_content(res.data.recipe.RECIPE_CONTENT)
+            setRecipe_time(res.data.recipe.RECIPE_TIME)
+            setFile(res.data.recipe.RECIPE_THUMBNAIL)
+            setRecipe_quentity(res.data.recipe.RECIPE_QUENTITY)
+            setRecipe_difficulty(res.data.recipe.RECIPE_DIFFICULTY)
+        })
       }, [])
     const listComponent = kindMap.map((item) => <MenuItem value={item.kind_id} key={item.kind_id}>{item.kind_name}</MenuItem>)
 
@@ -87,6 +100,7 @@ function InsertRecipe(props) {
     ))
 
     var frm = new FormData();
+    frm.append("recipe_id",recipe_id)
     frm.append("channel_id",channel_id)
     frm.append("kind_id",kind_id)
     frm.append("recipe_title",recipe_title)
@@ -99,7 +113,7 @@ function InsertRecipe(props) {
     const sendAction = () =>{
         console.log(checkNum)
         // 레시피 등록
-        axios.post('/insertRecipe.do', frm, {
+        axios.post('/updateRecipe.do', frm, {
             headers:{
                 // json으로 형식을 지정해줍니다.
                 "Content-type":"multipart/form-data"
@@ -107,28 +121,26 @@ function InsertRecipe(props) {
         })
         // post 보내고 나서 실행
         .then(res => {
-            console.log(res.data.getRecipeID)
-            alert(checkNum)
-            // 성공하면 recipe_id를 리턴받아서 재료등록을 실행한다.
-            //  레시피 재료 등록
+            //성공하면 recipe_id를 리턴받아서 재료등록을 실행한다.
+             //레시피 재료 등록
             // 재료입력을 반복해서 실행한다.
-            checkNum.forEach(element => {
-                console.log(res.data.getRecipeID)
-                console.log(element)
-                let ingJson = {
-                    recipe_id:res.data.getRecipeID,
-                    ing_id:element
-                }
-                axios.post('/insertRecipe_ing.do',ingJson , {
-                    headers:{
-                        // json으로 형식을 지정해줍니다.
-                        "Content-type":"application/json"
-                    },
-                })
-                // post 보내고 나서 실행
-                .then(res => {alert('글등록성공')})
-                .catch(err =>{console.log('실패')})
-            });
+            // checkNum.forEach(element => {
+            //     console.log(res.data)
+            //     console.log(element)
+            //     let ingJson = {
+            //         recipe_id:res.data.recipe_id,
+            //         ing_id:element
+            //     }
+            //     axios.post('/insertRecipe_ing.do',ingJson , {
+            //         headers:{
+            //             // json으로 형식을 지정해줍니다.
+            //             "Content-type":"application/json"
+            //         },
+            //     })
+            //     // post 보내고 나서 실행
+            //     .then(res => {alert('글등록성공')})
+            //     .catch(err =>{console.log('실패')})
+            // });
             window.location.href='/myChannel'
 
         })
@@ -268,12 +280,12 @@ function InsertRecipe(props) {
                         </div>
                         {file&&(<div className="form-row">
                             <FormControl >
-                                <img src={fileUrl}></img>
+                                <img src={file}></img>
                             </FormControl>
                         </div>)}
                         <div className="form-row">
                             <FormControl >
-                                <Input type="file" className="input" onChange={handleFile}></Input>
+                                <Input type="file" className="input"  onChange={handleFile}></Input>
                             </FormControl>
                         </div>
                         <div className="form-row">
@@ -302,4 +314,4 @@ function InsertRecipe(props) {
         </Container>
     );
 }
-export default InsertRecipe;
+export default UpdateRecipe;
