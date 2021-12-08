@@ -2,6 +2,8 @@ import axios from 'axios';
 import RecommendUp from 'components/RecommendUp';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from "react-router-dom";
+import { Button } from 'reactstrap';
 
 
 function RecipeDetail(props) {
@@ -55,6 +57,7 @@ function RecipeDetail(props) {
     const date = _date.toLocaleDateString()
     console.log(recipeDetail.recipe.RECIPE_TITLE)
 
+    const navigate = useNavigate();
 
     return (
         <main className="recipes-wrap board-wrap">
@@ -96,6 +99,8 @@ function RecipeDetail(props) {
                 <div className="btn-wrap">
                     <RecommendUp member_id={member_id} recipe_id={recipeDetail.recipe.RECIPE_ID} />
                 </div>
+                <br />
+                <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
         </main>
     );
