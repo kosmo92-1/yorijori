@@ -61,10 +61,10 @@ function Header(props) {
                         <li>
                         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                             <DropdownToggle caret>
-                                내 정보 
+                                회원 메뉴 
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem header>내정보</DropdownItem>
+                                <DropdownItem header>회원정보</DropdownItem>
                                 <DropdownItem><a href="/mypage">마이페이지</a></DropdownItem>
                                 <DropdownItem><a href="/myChannel">내채널</a></DropdownItem>
                                 <DropdownItem><a href="/channel">장바구니</a></DropdownItem>

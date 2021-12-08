@@ -311,16 +311,18 @@ function Mypage() {
         <Container>
           <Row>
             <Col xs="2" className="sideBar">
-            <Button block>회원정보수정</Button>
             <Button block>
-            {/* <Link> */}
+              회원정보수정
+            </Button>
+            <Button block>
+            <Link to='/myChannel'>
             My Channel
-            {/* </Link> */}
+            </Link>
             </Button> 
             <Button block>
-                 {/* <Link> */}
+                 <Link to ="/notice">
                  공지사항
-                 {/* </Link> */}
+                 </Link>
             </Button>
             <Button block
                 onClick={() => setDropModal(true)}
