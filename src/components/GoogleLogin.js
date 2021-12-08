@@ -38,7 +38,8 @@ export default function GoogleButton({ onSocial }){
                 // 성공시 호출되는 콜백
                 onSuccess={onSuccess}
                 // 실패시 호출되는 콜백
-                onFailure={onFailure}/>
+                onFailure={onFailure}
+                />
         </div>
     );
 };

@@ -4,6 +4,11 @@ import { Button, Container, Form, FormGroup, Input, Modal } from "reactstrap";
 import { useNavigate } from "react-router";
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from 'components/KakaoLogin';
+import NavLogin from "components/NavLogin";
+import FabookLogin from "components/FabookLogin";
+import NaverLogin from 'react-login-by-naver';
+
+
 
 function SignIn() {
   const [findPwModal, setFindPwModal] = React.useState(false);
@@ -13,8 +18,8 @@ function SignIn() {
   const [inputData, setInputData] = useState({
     "inputName": "",
     "inputTel": "",
-    // "inputEmail":"",
-    // "cerNum":"",
+    "inputEmail":"",
+    "cerNum":"",
   });
   const handleValueChange = (event) => {
     // API 요청에 날릴 Form state에 정보를 추가합니다.
@@ -74,16 +79,64 @@ function SignIn() {
             console.log('======================','로그인 성공')
             sessionStorage.setItem('member_idKey', res.data.socialIdKey)
             alert('로그인 성공')
-            document.location.href = '/mypage'
+            document.location.href = '/'
         }
     })
     // 실패시 실행
     .catch()
 }
+const loginNaver = (res) =>{
+        console.log("1"+res)
+        // console.log(res.email)
+        // console.log(res.name)
+        // console.log(res.id)
+        // sessionStorage.setItem('social_id', res.email)
+        // sessionStorage.setItem('social_name',res.name)
+        // sessionStorage.setItem('member_idKey',res.id)
+        // sessionStorage.setItem('social_state',"2")
+        // // 메일 주소, DB 비교 컴포넌트 props 메일주소 
+        // const loginInfo={
+        //     "member_email":res.email,
+        //     "member_name":res.name,
+        //     "member_idKey":res.id,
+        // }
+        
+        // // axios를 이용해 post로 전송하며
+        // axios.post('/socialLogin.do', loginInfo, {
+        //     headers:{
+        //         // json으로 형식을 지정함.
+        //         "Content-type":"application/json"
+        //     }
+        // })
+        //  // post 보내고 나서 실행
+        // .then(res => {
+        //     console.log(res)
+        //     console.log('res.data.socialIdKey :: ', res.data.socialIdKey)
+        //     console.log('res.data.chk :: ', res.data.chk)
+        //     if (res.data.chk === 0){
+        //         console.log('======================',res.data.msg)
+                
+        //         alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
+        //         document.location.href = '/signup'
+        //     } else if(res.data.chk === 1) {
+        //         console.log('======================','로그인 성공')
+        //         sessionStorage.setItem('member_idKey', res.data.socialIdKey)
+        //         alert('로그인 성공')
+        //         document.location.href = '/'
+        //     }
+        // })
+        // // 실패시 실행
+        // .catch()
+}
 
   const loginkakao = (res) =>{
       console.log(res)
   }
+  const loginFaBook = (res) =>{
+    console.log(res)
+}
+
+
   //로그인 함수
   const onClickLogin = (e) => {
     e.preventDefault();
@@ -130,7 +183,7 @@ function SignIn() {
           alert("로그인 성공");
         }
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = '/mypage'
+        document.location.href = '/'
       })
       // 실패시 실행
       .catch();
@@ -156,13 +209,39 @@ function SignIn() {
       // post 보내고 나서 실행
       .then((res) => {
         console.log(res);
-        if (res === "noSearch") {
+        if (res.data === "noSearch") {
           alert("입력하신 정보와 일치하는 아이디가 존재하지 않습니다.");
           return;
         }else {
           alert("고객님의 아이디는 = " + res.data +" 입니다.");
           setFindPwModal(false);
         }
+      })
+      // 실패시 실행
+      .catch();
+  };
+  const onSendMail = (e) => {
+    e.preventDefault();
+    const sendMailJson ={
+      "member_name":inputData.inputName,
+      "member_id":inputData.inputEmail,
+      "member_email":inputData.inputEmail,
+  }
+    // json처럼 선언해줍니다.
+    // axio를 이용해 post로 전송하며
+    console.log(sendMailJson);
+    console.log(inputData);
+    axios.post("/findPw.do", sendMailJson, {
+        headers: {
+          // json으로 형식을 지정해줍니다.
+          "Content-type":"application/json"
+        },
+      })
+      // post 보내고 나서 실행
+      .then((res) => {
+        console.log(res);
+        alert("임시비밀 번호가 발급 되었습니다.")
+      
       })
       // 실패시 실행
       .catch();
@@ -209,7 +288,16 @@ function SignIn() {
             ),
             tabCont:(
                 <Form name="pwForm">
-                <FormGroup>
+                  <FormGroup>
+                  <Input
+                    type="text"
+                    id="inputName"
+                    name="inputName"
+                    placeholder="이름을 입력해 주세요."
+                    onChange={handleValueChange}
+                  />
+                </FormGroup>
+                  <FormGroup>
                   <Input
                     type="text"
                     id="inputEmail"
@@ -217,17 +305,7 @@ function SignIn() {
                     placeholder="가입한 메일 주소를 입력해 주세요."
                     onChange={handleValueChange}
                   />
-                  <Button>인증번호 발송</Button>
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    type="text"
-                    id="cerNum"
-                    name="cerNum"
-                    placeholder="인증번호를 입력해주세요."
-                    onChange={handleValueChange}
-                  />
-                  <Button>인증번호 확인</Button>
+                  <Button className="pwBtn" onClick={onSendMail}>비밀번호 발송</Button>
                 </FormGroup>
               </Form>
             )
@@ -258,11 +336,12 @@ function SignIn() {
           </div>
         </div>
           <div className="modal-footer">
-            <Button onClick={() => setFindPwModal(false)}>닫기</Button>
+            <Button className="pwclose" onClick={() => setFindPwModal(false)}>닫기</Button>
         </div>
       </Modal>
 
       <Form >
+        <h1 className="title">LOGIN</h1>
         <FormGroup>
         </FormGroup>
         <FormGroup>
@@ -304,7 +383,14 @@ function SignIn() {
         <FormGroup>
         <KakaoLogin onSuccess={loginkakao} />
         </FormGroup>
-        <FormGroup></FormGroup>
+        <FormGroup>
+          <NavLogin 
+            onSuccess={loginNaver}
+           />
+        </FormGroup>
+        <FormGroup>
+            <FabookLogin onSuccess={loginNaver}/>
+        </FormGroup>
       </Form>
     </Container>
   );

@@ -1,6 +1,5 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Testcompo from "./components/Testcompo";
 import {Routes,Route} from 'react-router-dom'
 import Main from "./views/Main";
 import SignIn from "./views/sign/SignIn"
@@ -21,7 +20,11 @@ import Map from "views/maps/Map";
 import MartMap from "views/maps/MartMap";
 import ChannelInfo from "views/channel/ChannelInfo";
 import SubscribeList from "views/subscribe/SubscribeList";
+// import InsertChannel from "views/channel/InsertChannel";
+import Basket from "views/basket/Basket";
 import MyChannel from "views/myChannel/MyChannel";
+import InsertChannel from "views/channel/InsertChannel";
+import Test from "views/Test";
 
 function App() {
   function debug() {
@@ -46,17 +49,19 @@ function App() {
           <Route path="/mypage" element={<SignMypage/>} exact/>
           <Route path="/kindlist" element={<KindList/>} exact/>
           <Route path="/basketrlist" element={<BasketRecipeList/>} exact/>
+          <Route path="/basket" element={<Basket/>} exact/>
           <Route path="/insertRecipe" element={<InsertRecipe/>} exact/>
           <Route path="/notice" element={<NoticeList/>} exact/>
           <Route path="/insertnotice" element={<InsertNotice/>} exact/>
           <Route path="/readnotice" element={<ReadNotice/>}exact/>
           <Route path="/recipelist" element={<RecipeList/>} exact/>
-          <Route path="/test" element={<Testcompo/>} exact/>
           <Route path="/mart" element={<MartMap/>}exact/>
           <Route path="/subscribe" element={<SubscribeList/>}exact/>
+          <Route path="/insertChannel" element={<InsertChannel/>}exact/>
           {/* <Route path="/channel/:channel_id" element={<ChannelInfo/>}exact/> */}
           <Route path="/channel" element={<ChannelInfo/>}exact/>
           <Route path="/myChannel" element={<MyChannel/>}exact/>
+          <Route path="/test" element={<Test/>}exact/>
           {/* ★ Glory - ㅇ Yoon ★ */}
           <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           {/* <Route path="/recipe-detail" element={<RecipeDetail />} exact /> */}

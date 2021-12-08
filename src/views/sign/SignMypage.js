@@ -19,6 +19,7 @@ function Mypage() {
         "member_detail_address": "",
         "member_type":"",
         "member_agree":"",
+        "member_idKey":"",
       });
      
       const [member_photo, setMember_photo] = useState(null);
@@ -32,7 +33,48 @@ function Mypage() {
 
       // 프로필 로딩, 페이지 로드시 한번만 실행합니다.
       useEffect(()=>{
-        if(`${sessionStorage.getItem("user_id")}`!== null){
+
+        // console.log("소셜아이디 :" , `${sessionStorage.getItem("social_id")}`);
+        // console.log("유저아이디 :" , `${sessionStorage.getItem("user_id")}`);
+        // console.log("소셜아이디 낫널:" , `${sessionStorage.getItem("social_id")}`!== "null");
+        // console.log("유저아이디 낫널:" ,  `${sessionStorage.getItem("user_id")}` !== "null");
+
+        if(`${sessionStorage.getItem("social_id")}`!== "null"
+        //  && `${sessionStorage.getItem("user_id")}` === null
+         ){
+          console.log("12");
+          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("social_id")}`)
+          .then((res)=>{
+            console.log(res.data)
+            // console.log(res.data.member_basic_address)
+            setTempFormData({
+          "member_id": res.data.member_id,
+          "member_name": res.data.member_name,
+          "member_email": res.data.member_email,
+          "member_tel": res.data.member_tel,
+          "member_basic_address": res.data.member_basic_address,
+          "member_detail_address": res.data.member_detail_address,
+          "member_type":res.data.member_type,
+          "member_idKey":res.data.member_idKey,
+          "member_photo":res.data.member_photo,
+          "member_agree":res.data.member_agree,
+        })
+
+        sessionStorage.setItem('user_pw',res.data.member_pw);
+        sessionStorage.setItem('user_id',res.data.member_id);
+        sessionStorage.setItem("recipe_thumbnail",res.data.member_photo);
+        sessionStorage.removeItem('social_id');
+              setMember_photo(res.data.member_photo);
+            // if( sessionStorage.getItem('social_state') === "1"){
+            //   console.log("카카오사진")
+            //   setMember_photo(res.data.member_photo);
+            // }
+          })
+        }else 
+        if(
+          // `${sessionStorage.getItem("social_id")}`=== null && 
+          `${sessionStorage.getItem("user_id")}` !== "null"
+        ){
           axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
           .then((res)=>{
             console.log(res.data)
@@ -45,24 +87,42 @@ function Mypage() {
           "member_basic_address": res.data.member_basic_address,
           "member_detail_address": res.data.member_detail_address,
           "member_type":res.data.member_type,
+          "member_idKey":res.data.member_idKey,
+          // "member_photo":res.data.member_photo,
           // "member_agree":res.data.member_agree,
-            })
-          })
-        }else{
-          alert("로그인 ㄱ")
-          document.location.href = '/login'
+        })
+        // let photo=res.data.member_photo
+        // console.log(photo)
+        setMember_photo(res.data.member_photo)
+        // setMember_photo({
+        //   "member_photo":res.data.member_photo,
+        // });
+        console.log(res.data.member_photo)
+              sessionStorage.setItem('user_pw',res.data.member_pw);
+          }) 
+      }else{
+        
+        console.log("nothing")
+        alert("로그인 페이지로 이동합니다.")
+        document.location.href = '/login'
       }
       },[])
 
       // 파일 저장
       const saveFileImage = (e) => {
+        // console.log("1"+member_photo)
         let profile=URL.createObjectURL(e.target.files[0])
+        // console.log("2"+member_photo)
+
         setMember_photo(profile);
+        // console.log("3"+member_photo)
     
         setTempFormData({
           ...tempFormData,
-          member_photo: e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
+          "member_photo": e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
         });
+        // console.log("4"+member_photo)
+
       };
     //미리보기 스타일
       const imagestyle = {
@@ -89,10 +149,10 @@ function Mypage() {
         var checkTel = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
         var checkAddress= /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣|-]{2,20}$/
         //아이디 입력제한
-        if(tempFormData.member_photo==null){
-          alert("프로필사진을 확인해주세요")
-          return;
-        }
+        // if(tempFormData.member_photo==null){
+        //   alert("프로필사진을 확인해주세요")
+        //   return;
+        // }
         if(tempFormData.member_id=== ""){
           alert("아이디를 입력해주세요")
           return;
@@ -163,6 +223,7 @@ function Mypage() {
         reqFormData.append("member_basic_address", tempFormData.member_basic_address);
         reqFormData.append("member_detail_address", tempFormData.member_detail_address);
         reqFormData.append("member_type", tempFormData.member_type);
+        reqFormData.append("member_idKey", tempFormData.member_idKey);
         reqFormData.append("agreeEvent", tempFormData.agreeEvent);
          
     axios.post('/updateMember.do', reqFormData,{
@@ -234,8 +295,8 @@ function Mypage() {
           "Content-type":"application/json"
       },
     }).then(res => {
-          alert('성공')
-          console.log(sessionStorage)
+      console.log(sessionStorage)
+      alert('성공')
           sessionStorage.clear();
           document.location.href = '/login'
         })
@@ -352,6 +413,7 @@ function Mypage() {
             <img
               alt="sample"
               className="img-rounded img-responsive"
+              name="member_photo"
               src={member_photo}
               style={imagestyle}
               onChange={handleValueChange}

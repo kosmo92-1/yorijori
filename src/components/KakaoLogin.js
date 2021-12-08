@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button } from '@mui/material';
 
 const {Kakao} = window;
 // const loginWithKakao = () =>{
@@ -65,10 +66,11 @@ const {Kakao} = window;
             } 
             else if(res.data.chk === 1) {
                 console.log('======================','로그인 성공')
-                sessionStorage.setItem("user_id", res.data.id);
+                sessionStorage.setItem('social_state',"1")
+                sessionStorage.setItem("social_id", res.data.id);
                 sessionStorage.setItem('member_idKey', res.data.socialIdKey)
                 alert('로그인 성공')
-                document.location.href = '/mypage'
+                document.location.href = '/'
             }
         })
             .catch((error) => {
@@ -97,9 +99,7 @@ const KakaoLogin = () => {
   
     return (
     <div>
-        <a id="custom-login-btn" onClick={loginWithKakao}>
-            <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222" />
-        </a>
+        <Button onClick={loginWithKakao} >Login with Kakao</Button>
     </div>
     );
 };

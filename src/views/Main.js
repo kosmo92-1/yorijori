@@ -8,7 +8,7 @@ import FeedRecipeCard from '../components/FeedRecipeCard';
 var recipes = [...Array(6).keys()];
 
 function Main() {
-    const [recipeList, setRecipeList] = useState({
+    const [recommendedRecipeList, setRecommendedrecipeList] = useState({
         getlist: [
             {
                 "recipe_id": 0,
@@ -26,7 +26,7 @@ function Main() {
                 "recipe_recommend": 0
             }
         ],
-        "pageMaker": {
+        pageMaker: {
             "totalCount": 0,
             "startPage": 0,
             "endPage": 0,
@@ -45,21 +45,58 @@ function Main() {
         }
     })
 
+    const [feededRecipeList, setFeededRecipeList] = useState({
+        listSubRecipe: [
+            {
+                "recipe_id": 0,
+                "channel_id": "",
+                "kind_id": "",
+                "recipe_title": "",
+                "recipe_ing": "",
+                "recipe_content": "",
+                "recipe_time": "",
+                "recipe_regdate": 0,
+                "recipe_thumbnail": "",
+                "recipe_viewcount": 0,
+                "recipe_quentity": "",
+                "recipe_difficulty": "",
+                "recipe_recommend": 0
+            },
+        ]
+    });
+
+    
     useEffect(() => {
         var page = 1;
         var pageNum = 6;
+        const user_id = sessionStorage.getItem("user_id")
+        console.log(user_id);
 
         axios({
             method: "get",
             url: "/recommendRecipe.do?page="+ page +"&pageNum=" + pageNum,
         })
         .then((res) => {
-            setRecipeList(res.data)
+            setRecommendedrecipeList(res.data)
         })
+        .then(
+            axios({
+                method: "get",
+                url: "/listSubRecipe.do?member_id=" + user_id,
+            })
+            .then((res) => {
+                setFeededRecipeList(res.data)
+            })
+        )
         .catch((err) => {
             alert(err)
         })
     }, [])
+
+    console.log(recommendedRecipeList)
+    console.log(feededRecipeList)
+
+    const modFeededRecipeList = feededRecipeList.listSubRecipe.slice(0, 6)
 
     return (
         <main id="main">
@@ -73,11 +110,11 @@ function Main() {
                         Feed
                         <Link to={`recipes`}>더 보기</Link>
                     </h3>
-                    {/* <div>
+                    <div>
                         {
-                            recipeList.getlist.map((feedCard) => <FeedRecipeCard key={feedCard.recipe_id} value={feedCard}></FeedRecipeCard>)
+                            modFeededRecipeList.map((feedCard) => <FeedRecipeCard key={feedCard.recipe_id} value={feedCard}></FeedRecipeCard>)
                         }
-                    </div> */}
+                    </div>
                 </section>
                 <section>
                     <h3>
@@ -86,7 +123,7 @@ function Main() {
                     </h3>
                     <div>
                         {
-                            recipeList.getlist.map((rcCard) => <RecommendRecipeCard key={rcCard.recipe_id} value={rcCard}></RecommendRecipeCard>)
+                            recommendedRecipeList.getlist.map((rcCard) => <RecommendRecipeCard key={rcCard.recipe_id} value={rcCard}></RecommendRecipeCard>)
                         }
                     </div>
                 </section>

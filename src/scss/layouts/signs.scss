@@ -78,7 +78,30 @@
 
 .modal-header{
     button{
-        margin-left: 10px;
+        margin-left: 5px;
         margin-right: 10px;
     }
 }
+.pwBtn{
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 20px;
+        display: inline-block;
+        position: relative;
+        float: right;
+    }
+.pwclose{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    left: -45%;
+    }
+
+
+    //로고
+
+    .kep-login-facebook{
+        width: 100%;
+    }
