@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {  Col, Container, Nav, NavItem, NavLink, Row, TabContent, Table, TabPane } from 'reactstrap';
 import SubComponent from 'views/subscribe/SubComponent';
 import MyChannelInfo from './MyChannelInfo';
+import MyChannelInsert from './MyChannelInsert';
 import MyChannelRecipe from './MyChannelRecipe';
 //마이페이지
 function MyChannel(props) {
 
     const [activeTab, setActiveTab] = useState('1');
+    // 채널 가입 유무체크
+    const [channelChk,setChannelChk] = useState(null)
+
+    useEffect(()=>{
+        axios.get('readChannel.do')
+        .then((res)=>console.log('readChannel: '+res))
+    },[])
 
     const toggle = tab => {
     if(activeTab !== tab) setActiveTab(tab);
@@ -16,7 +25,7 @@ function MyChannel(props) {
             <Container>
                 <Row>
                     <Col>
-                        <h4>마이페이지</h4>
+                        <h4>내 채널</h4>
                         <hr/>
                     </Col>
                 </Row>
@@ -46,6 +55,7 @@ function MyChannel(props) {
                             <TabPane tabId="1">
                                 <Row>
                                 <Col sm="12">
+                                    <MyChannelInsert/>
                                     <MyChannelInfo/>
                                 </Col>
                                 </Row>

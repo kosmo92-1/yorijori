@@ -77,12 +77,12 @@ function InsertRecipe(props) {
     return (
         <main>
             <h2 className="sr-only">레시피 작성 페이지</h2>
-            <form>
+            <form class="writing">
                 <div className="form-row">
                     <fieldset disabled>
                         <FormGroup className="col-md-6">
                             <Label>아이디</Label>
-                            <Input type="text" onChange={handleMember_id} value={member_id} />
+                            <Input type="text" className="input" onChange={handleMember_id} value={member_id} />
                         </FormGroup>
                     </fieldset>
                 </div>
@@ -97,50 +97,50 @@ function InsertRecipe(props) {
                             <option>분식</option>
                             <option>채식</option>
                         </Input> */}
-                        <Input type="text" onChange={handleKindId} value={kind_id}></Input>
+                        <Input type="text" className="input" onChange={handleKindId} value={kind_id}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>제목</Label>
-                        <Input type="text" onChange={handleRecipe_title} value={recipe_title}></Input>
+                        <Input type="text" className="input" onChange={handleRecipe_title} value={recipe_title}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>재료</Label>
-                        <Input type="text" onChange={handleRecipe_ing} value={recipe_ing}></Input>
+                        <Input type="text" className="input" onChange={handleRecipe_ing} value={recipe_ing}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>내용</Label>
-                        <Input type="textarea" onChange={handleRecipe_content} value={recipe_content}></Input>
+                        <Input type="textarea" className="input" onChange={handleRecipe_content} value={recipe_content}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>소요시간</Label>
-                        <Input type="text" onChange={handleRecipe_time} value={recipe_time}></Input>
+                        <Input type="text" className="input" onChange={handleRecipe_time} value={recipe_time}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         {/* VALUE 제거 */}
-                        <Input type="file" onChange={handleFile}></Input>
+                        <Input type="file" className="input" onChange={handleFile}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>기준 양</Label>
-                        <Input type="text" onChange={handleRecipe_quentity} value={recipe_quentity}></Input>
+                        <Input type="text" className="input" onChange={handleRecipe_quentity} value={recipe_quentity}></Input>
                     </FormGroup>
                 </div>
                 <div className="form-row">
                     <FormGroup className="col-md-6">
                         <Label>난이도</Label>
                         {/* TODO : change radiobtn */}
-                        <Input type="text" onChange={handleRecipe_difficulty} value={recipe_difficulty}></Input>
+                        <Input type="text" className="input" onChange={handleRecipe_difficulty} value={recipe_difficulty}></Input>
                     </FormGroup>
                 </div>
                 <Button color="primary" onClick={sendAction}>보내기</Button>

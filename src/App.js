@@ -64,6 +64,8 @@ function App() {
           <Route path="/test" element={<Test/>}exact/>
           {/* ★ Glory - ㅇ Yoon ★ */}
           <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
+          {/* <Route path="/recipe-detail" element={<RecipeDetail />} exact /> */}
+
         </Routes>
       </div>
       <Footer></Footer>

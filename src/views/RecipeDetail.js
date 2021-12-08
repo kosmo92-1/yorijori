@@ -57,32 +57,45 @@ function RecipeDetail(props) {
 
 
     return (
-        <main>
-            <div>
-                <h3>{recipeDetail.recipe.RECIPE_TITLE}</h3>
-                <p>
-                    <span>{recipeDetail.recipe.CHANNEL_NAME}</span>
-                    <span>{recipeDetail.recipe.KIND_NAME}</span>
-                    {/* <span>{test}</span> */}
-                    <span>{date}</span>
-                </p>
-                <img src={recipeDetail.recipe.RECIPE_THUMBNAIL} alt={recipeDetail.recipe.RECIPE_TITLE}></img>
-                <p>
-                    <span>{recipeDetail.recipe.RECIPE_QUENTITY},</span>
-                    <span>{recipeDetail.recipe.RECIPE_VIEWCOUNT},</span>
-                    <span>
-                        {
-                        recipeDetail.ingredient.map((data) => <span key={data.ing_id}>{data.ing_name},</span>)
-                        }
-                    </span>
-                </p>
-                <p>
-                    {recipeDetail.recipe.RECIPE_CONTENT}
-                </p>
-                <p>
-                    {recipeDetail.recipe.RECIPE_RECOMMEND}
-                </p>
-                <RecommendUp member_id={member_id} recipe_id={recipeDetail.recipe.RECIPE_ID} />
+        <main className="recipes-wrap board-wrap">
+            <h2 className="sr-only">레시피 상세 페이지</h2>
+            <div className="board">
+                <div className="board-hd">
+                    <h3>{recipeDetail.recipe.RECIPE_TITLE}</h3>
+                    <div className="board-info">
+                        <span>작성자 : {recipeDetail.recipe.CHANNEL_NAME}</span>
+                        <span>작성일 : {date}</span>
+                        <span>조회 수 : {recipeDetail.recipe.RECIPE_VIEWCOUNT}</span>
+                        <span>추천 수 : {recipeDetail.recipe.RECIPE_RECOMMEND}</span>
+                    </div>
+                </div>
+                <div className="board-contents">
+                    <img src={recipeDetail.recipe.RECIPE_THUMBNAIL} alt={recipeDetail.recipe.RECIPE_TITLE} />
+                    <div className="recipe-info">
+                        <div>
+                            분류
+                            <span>{recipeDetail.recipe.KIND_NAME}</span>
+                        </div>
+                        <div>
+                            양
+                            <span>{recipeDetail.recipe.RECIPE_QUENTITY}</span>
+                        </div>
+                        <div>
+                            재료
+                            <span>
+                                {
+                                recipeDetail.ingredient.map((data) => <span key={data.ing_id}>{data.ing_name}</span>)
+                                }
+                            </span>
+                        </div>
+                    </div>
+                    <p>
+                        {recipeDetail.recipe.RECIPE_CONTENT}
+                    </p>
+                </div>
+                <div className="btn-wrap">
+                    <RecommendUp member_id={member_id} recipe_id={recipeDetail.recipe.RECIPE_ID} />
+                </div>
             </div>
         </main>
     );
