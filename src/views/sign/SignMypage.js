@@ -324,9 +324,9 @@ function Mypage() {
             <Button block
                 onClick={() => setDropModal(true)}
             >회원탈퇴</Button>
-             {/* <Button block
+             <Button block
                 onClick= {logout}
-            >로그아웃</Button> */}
+            >로그아웃</Button>
             </Col>
             <Col xs="10">
             <Modal isOpen={addressModal} toggle={() => setAddressModal(false)}
