@@ -1,11 +1,22 @@
-import React,{useEffect} from 'react';
+import axios from 'axios';
+import React,{useEffect, useState} from 'react';
 /*global kakao*/ 
-function Map(address) {
-
+function Map() {
+    const memberId = sessionStorage.getItem('user_id')
+    const [address,setAddress] = useState('서울특별시 금천구 가산동 426-5 월드 메르디앙 벤처 센터 2 차 410 호')
 
     useEffect(()=>{
-        console.log("map,address",address)
-        
+        axios.get('/getMember.do?member_id='+memberId)
+        .then((res)=>{
+            console.log('---')
+            console.log(res.data)
+            let totalAddress = res.data.member_basic_address+' '+res.data.member_detail_address
+            console.log(totalAddress)
+            setAddress(totalAddress)
+        })
+        .catch((err)=>{
+            console.log('실패')
+        })
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(37.36990223828836, 126.80971744285071), // 지도의 중심좌표

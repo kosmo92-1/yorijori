@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router';
-import { Button, Card, CardText, CardTitle, Col, Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Nav, NavItem, NavLink, Row, TabContent, Table, TabPane } from 'reactstrap';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import {  Col, Container, Nav, NavItem, NavLink, Row, TabContent, Table, TabPane } from 'reactstrap';
 import SubComponent from 'views/subscribe/SubComponent';
-// 채널번호를 받아 채널정보 출력
+//마이페이지
 function ChannelInfo(props) {
-    //채널 아이디를
-    // const {channel_id} = useParams();
 
     const [activeTab, setActiveTab] = useState('1');
-    const member_id = sessionStorage.getItem('user_id')
+    // 채널 가입 유무체크
+    const [channelChk,setChannelChk] = useState(null)
+
+    useEffect(()=>{
+        axios.get('readChannel.do')
+        .then((res)=>console.log('readChannel: '+res))
+    },[])
 
     const toggle = tab => {
     if(activeTab !== tab) setActiveTab(tab);
@@ -18,7 +22,7 @@ function ChannelInfo(props) {
             <Container>
                 <Row>
                     <Col>
-                        <h4>마이페이지</h4>
+                        <h4></h4>
                         <hr/>
                     </Col>
                 </Row>
@@ -48,45 +52,12 @@ function ChannelInfo(props) {
                             <TabPane tabId="1">
                                 <Row>
                                 <Col sm="12">
-                                    <ListGroup>
-                                        <ListGroupItem>
-                                            <ListGroupItemHeading>채널제목</ListGroupItemHeading>
-                                            <ListGroupItemText>
-                                            채널 소개란입니다.
-                                            </ListGroupItemText>
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            <ListGroupItemHeading>구독자수</ListGroupItemHeading>
-                                            <ListGroupItemText>
-                                            0명
-                                            </ListGroupItemText>
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            <ListGroupItemHeading>보유레시피수</ListGroupItemHeading>
-                                            <ListGroupItemText>
-                                            0개
-                                            </ListGroupItemText>
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            <ListGroupItemHeading>개설날짜</ListGroupItemHeading>
-                                            <ListGroupItemText>
-                                            2021년 12월 6일
-                                            </ListGroupItemText>
-                                        </ListGroupItem>
-                                    </ListGroup>
                                 </Col>
                                 </Row>
                             </TabPane>
                             <TabPane tabId="2">
                                 <Row>
                                     <Col>
-                                       <Table>
-                                           <tr>
-                                               <td>테이블</td>
-                                               <td>테이블</td>
-                                               <td>테이블</td>
-                                           </tr>
-                                       </Table>
                                     </Col>
                                 </Row>
                             </TabPane>
