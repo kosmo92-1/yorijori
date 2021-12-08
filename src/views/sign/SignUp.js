@@ -78,27 +78,28 @@ function SignUp(props) {
 
   useEffect(()=>{
     defaultSetting()
-      if(`${sessionStorage.getItem("social_id")}` === "null"){
+      if(`${sessionStorage.getItem("social_state")}` === "null"){
        console.log("소셜 없음")
       }else if(`${sessionStorage.getItem("social_state")}` === "1"){
         setPortChange("1");
         console.log("카카오일때 포트"+portChange)
-        console.log(`${sessionStorage.getItem("social_id")}`)
+        console.log(`${sessionStorage.getItem("user_id")}`)
         setFormData({
-          "member_id": `${sessionStorage.getItem("social_id")}`,
-          "member_email": `${sessionStorage.getItem("social_id")}`,
+          "member_id": `${sessionStorage.getItem("user_id")}`,
+          "member_email": `${sessionStorage.getItem("user_id")}`,
           "member_name": `${sessionStorage.getItem("social_name")}`,
           "member_photo": `${sessionStorage.getItem("social_photo")}`,
           "member_idKey": `${sessionStorage.getItem("member_idKey")}`,
+          "member_type": "0",
         })
         setMember_photo(`${sessionStorage.getItem("social_photo")}`);
       }else if(`${sessionStorage.getItem("social_state")}` === "2"){
         setPortChange("0");
         console.log("소셜일때 포트"+portChange)
-        console.log(`${sessionStorage.getItem("social_id")}`)
+        console.log(`${sessionStorage.getItem("user_id")}`)
         setFormData({
-          "member_id": `${sessionStorage.getItem("social_id")}`,
-          "member_email": `${sessionStorage.getItem("social_id")}`,
+          "member_id": `${sessionStorage.getItem("user_id")}`,
+          "member_email": `${sessionStorage.getItem("user_id")}`,
           "member_name": `${sessionStorage.getItem("social_name")}`,
           "member_idKey": `${sessionStorage.getItem("member_idKey")}`,
           "member_type": "0",

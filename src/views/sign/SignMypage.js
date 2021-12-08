@@ -39,11 +39,11 @@ function Mypage() {
         // console.log("소셜아이디 낫널:" , `${sessionStorage.getItem("social_id")}`!== "null");
         // console.log("유저아이디 낫널:" ,  `${sessionStorage.getItem("user_id")}` !== "null");
 
-        if(`${sessionStorage.getItem("social_id")}`!== "null"
+        if(`${sessionStorage.getItem("social_state")}`!== "null"
         //  && `${sessionStorage.getItem("user_id")}` === null
          ){
           console.log("12");
-          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("social_id")}`)
+          axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
           .then((res)=>{
             console.log(res.data)
             // console.log(res.data.member_basic_address)
@@ -70,10 +70,9 @@ function Mypage() {
             //   setMember_photo(res.data.member_photo);
             // }
           })
-        }else 
-        if(
+        }else if(
           // `${sessionStorage.getItem("social_id")}`=== null && 
-          `${sessionStorage.getItem("user_id")}` !== "null"
+          `${sessionStorage.getItem("social_state")}` === "null"
         ){
           axios.get(`/getMember.do?member_id=${sessionStorage.getItem("user_id")}`)
           .then((res)=>{
@@ -284,6 +283,7 @@ function Mypage() {
       }
       
       const onDropId = () => {
+        console.log("드롭아이디 들어옴")
         const dropJson ={
           member_id:`${sessionStorage.getItem("user_id")}`,
           member_pw:`${sessionStorage.getItem("user_pw")}`,
@@ -298,6 +298,7 @@ function Mypage() {
       console.log(sessionStorage)
       alert('성공')
           sessionStorage.clear();
+          setDropModal(false)
           document.location.href = '/login'
         })
           .catch(err =>{alert('실패')
