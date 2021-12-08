@@ -17,6 +17,8 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 function ChannelInfo(props) {
+	const [sub,setSub] = useState(true)
+	const memberId = sessionStorage.getItem('user_id')
     const channelId = props
     // console.log(channelId.props.channel_id)
 	const [channelInfo, setChannelInfo] = useState({
@@ -31,6 +33,13 @@ function ChannelInfo(props) {
     const [count, setCount] = useState(0);
 	const [countSubscribe, setCountSubscribe] = useState(0);
 	useEffect(() => {
+		// 이미 구독했는지 체크
+		axios.get(`/checkSubscribe.do?member_id=${memberId}&channel_id=${channelInfo.channel_id}`)
+		.then((res)=>{
+			console.log('구독중?')
+			console.log(res.data)
+			setSub(res.data)
+		})
         // console.log(props)
 		axios
 			.get('/readChannelbyChanId.do?channel_id=' + channelId.props.channel_id)
@@ -55,6 +64,48 @@ function ChannelInfo(props) {
 				alert("실패");
 			});
 	}, [channelInfo.member_id, props]);
+
+	//구독하기
+	const actionSubscribe = () =>{
+		//member_id, channel_id
+		
+		//로그인 해야 구독가능하게 설정
+		if(memberId==null){
+			alert('로그인해주세요')
+			window.location.href='/login'
+		}
+		let subJson = {
+			member_id: memberId,
+			channel_id: channelInfo.channel_id
+		}
+		axios.post('/insertSubscribe.do', subJson, {
+            headers:{
+                // json으로 형식을 지정해줍니다.
+                "Content-type":"application/json"
+            },
+        })
+        // post 보내고 나서 실행
+        .then(res => {alert('성공')
+		window.location.reload()})
+        .catch(err =>{alert('실패')})
+	}
+	// 구독취소
+	const cancelSubscribe = () =>{
+		let subJson = {
+			member_id: memberId,
+			channel_id: channelInfo.channel_id
+		}
+		axios.post('/deleteSubscribe.do', subJson, {
+            headers:{
+                // json으로 형식을 지정해줍니다.
+                "Content-type":"application/json"
+            },
+        })
+        // post 보내고 나서 실행
+        .then(res => {alert('성공')
+		window.location.reload()})
+        .catch(err =>{alert('실패')})		
+	}
 
 	// useEffect(()=>{
 	//     if(`${sessionStorage.getItem("social_id")}`!= null){
@@ -179,6 +230,9 @@ function ChannelInfo(props) {
 	// }
 	return (
 		<ListGroup>
+			<ListGroupItemHeading style={{textAlign:'right'}}>
+				{sub!==0?<Button onClick={cancelSubscribe}>구독취소</Button>:<Button onClick={actionSubscribe}>구독하기</Button>}
+			</ListGroupItemHeading>
 			<ListGroupItem>
 				<ListGroupItemHeading>{channelInfo.channel_name}</ListGroupItemHeading>
 				<ListGroupItemText>{channelInfo.channel_content}</ListGroupItemText>

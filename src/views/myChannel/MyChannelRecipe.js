@@ -44,6 +44,9 @@ function MyChannelRecipe(props) {
                 <th>조회수</th>
             </thead>
            {recipeComponent}
+           <tfoot>
+               <button>글쓰기</button>
+           </tfoot>
         </Table>
     );
 }
