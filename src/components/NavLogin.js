@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import NaverLogin from 'react-login-by-naver';
 import { useLocation } from 'react-router-dom';
+import naverLogin from '../assets/images/naverLogin.png';
 
 function NavLogin(props) {
 
@@ -58,12 +59,17 @@ function NavLogin(props) {
         // 실패시 실행
         .catch()
     }
+    const imagestyle = {
+        height: "100px",
+        width: "100%",
+      };
     return (
         <NaverLogin
         clientId="KXolaFgogTY_yqxrrZFK"
         callbackUrl="http://127.0.0.1:3000/login"
         render={(props) => 
-            <Button className="naverBtn" variant="outlined" color="success" onClick={props.onClick}>Naver Login</Button>}
+            // <Button className="naverBtn" variant="outlined" color="success" onClick={props.onClick}>Naver Login</Button>}
+            <div className="naverBtn"  onClick={props.onClick}><img src={naverLogin} style={imagestyle} alt="naverFail"></img></div>}
             onSuccess={(result) => {
                 console.log(result)
                 loginNaver(result)

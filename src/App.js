@@ -24,7 +24,6 @@ import SubscribeList from "views/subscribe/SubscribeList";
 import Basket from "views/basket/Basket";
 import MyChannel from "views/myChannel/MyChannel";
 import InsertChannel from "views/channel/InsertChannel";
-import Test from "views/Test";
 
 function App() {
   function debug() {
@@ -61,7 +60,6 @@ function App() {
           {/* <Route path="/channel/:channel_id" element={<ChannelInfo/>}exact/> */}
           <Route path="/channel" element={<ChannelInfo/>}exact/>
           <Route path="/myChannel" element={<MyChannel/>}exact/>
-          <Route path="/test" element={<Test/>}exact/>
           {/* ★ Glory - ㅇ Yoon ★ */}
           <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           {/* <Route path="/recipe-detail" element={<RecipeDetail />} exact /> */}

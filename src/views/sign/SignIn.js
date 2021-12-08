@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, Form, FormGroup, Input, Modal } from "reactstrap";
 import { useNavigate } from "react-router";
-import GoogleLogin from 'react-google-login';
-import KakaoLogin from 'components/KakaoLogin';
+import GoogleLogin from "react-google-login";
+import KakaoLogin from "components/KakaoLogin";
 import NavLogin from "components/NavLogin";
 import FabookLogin from "components/FabookLogin";
-import NaverLogin from 'react-login-by-naver';
-
-
+import NaverLogin from "react-login-by-naver";
 
 function SignIn() {
   const [findPwModal, setFindPwModal] = React.useState(false);
@@ -16,14 +14,14 @@ function SignIn() {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [inputData, setInputData] = useState({
-    "inputName": "",
-    "inputTel": "",
-    "inputEmail":"",
-    "cerNum":"",
+    inputName: "",
+    inputTel: "",
+    inputEmail: "",
+    cerNum: "",
   });
   const handleValueChange = (event) => {
     // API 요청에 날릴 Form state에 정보를 추가합니다.
-    
+
     setInputData({
       ...inputData,
       [event.target.name]: event.target.value,
@@ -41,101 +39,101 @@ function SignIn() {
   const handleInputPw = (e) => {
     setInputPw(e.target.value);
   };
-  
-  const loginGoogle = (res) =>{
-    console.log(res)
-    console.log(res.profileObj.email)
-    console.log(res.profileObj.name)
-    console.log(res.profileObj.googleId)
-    sessionStorage.setItem('social_id', res.profileObj.email)
-    sessionStorage.setItem('social_name',res.profileObj.name)
-    sessionStorage.setItem('member_idKey',res.profileObj.googleId)
-    sessionStorage.setItem('social_state',"2")
-    // 메일 주소, DB 비교 컴포넌트 props 메일주소 
-    const loginInfo={
-        "member_email":res.profileObj.email,
-        "member_name":res.profileObj.name,
-        "member_idKey":res.profileObj.googleId,
-    }
-    
+
+  const loginGoogle = (res) => {
+    console.log(res);
+    console.log(res.profileObj.email);
+    console.log(res.profileObj.name);
+    console.log(res.profileObj.googleId);
+    sessionStorage.setItem("social_id", res.profileObj.email);
+    sessionStorage.setItem("social_name", res.profileObj.name);
+    sessionStorage.setItem("member_idKey", res.profileObj.googleId);
+    sessionStorage.setItem("social_state", "2");
+    // 메일 주소, DB 비교 컴포넌트 props 메일주소
+    const loginInfo = {
+      member_email: res.profileObj.email,
+      member_name: res.profileObj.name,
+      member_idKey: res.profileObj.googleId,
+    };
+
     // axios를 이용해 post로 전송하며
-    axios.post('/socialLogin.do', loginInfo, {
-        headers:{
-            // json으로 형식을 지정함.
-            "Content-type":"application/json"
-        }
-    })
-     // post 보내고 나서 실행
-    .then(res => {
-        console.log(res)
-        console.log('res.data.socialIdKey :: ', res.data.socialIdKey)
-        console.log('res.data.chk :: ', res.data.chk)
-        if (res.data.chk === 0){
-            console.log('======================',res.data.msg)
-            
-            alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
-            document.location.href = '/signup'
-        } else if(res.data.chk === 1) {
-            console.log('======================','로그인 성공')
-            sessionStorage.setItem('member_idKey', res.data.socialIdKey)
-            alert('로그인 성공')
-            document.location.href = '/'
-        }
-    })
-    // 실패시 실행
-    .catch()
-}
-const loginNaver = (res) =>{
-        console.log("1"+res)
-        // console.log(res.email)
-        // console.log(res.name)
-        // console.log(res.id)
-        // sessionStorage.setItem('social_id', res.email)
-        // sessionStorage.setItem('social_name',res.name)
-        // sessionStorage.setItem('member_idKey',res.id)
-        // sessionStorage.setItem('social_state',"2")
-        // // 메일 주소, DB 비교 컴포넌트 props 메일주소 
-        // const loginInfo={
-        //     "member_email":res.email,
-        //     "member_name":res.name,
-        //     "member_idKey":res.id,
-        // }
-        
-        // // axios를 이용해 post로 전송하며
-        // axios.post('/socialLogin.do', loginInfo, {
-        //     headers:{
-        //         // json으로 형식을 지정함.
-        //         "Content-type":"application/json"
-        //     }
-        // })
-        //  // post 보내고 나서 실행
-        // .then(res => {
-        //     console.log(res)
-        //     console.log('res.data.socialIdKey :: ', res.data.socialIdKey)
-        //     console.log('res.data.chk :: ', res.data.chk)
-        //     if (res.data.chk === 0){
-        //         console.log('======================',res.data.msg)
-                
-        //         alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
-        //         document.location.href = '/signup'
-        //     } else if(res.data.chk === 1) {
-        //         console.log('======================','로그인 성공')
-        //         sessionStorage.setItem('member_idKey', res.data.socialIdKey)
-        //         alert('로그인 성공')
-        //         document.location.href = '/'
-        //     }
-        // })
-        // // 실패시 실행
-        // .catch()
-}
+    axios
+      .post("/socialLogin.do", loginInfo, {
+        headers: {
+          // json으로 형식을 지정함.
+          "Content-type": "application/json",
+        },
+      })
+      // post 보내고 나서 실행
+      .then((res) => {
+        console.log(res);
+        console.log("res.data.socialIdKey :: ", res.data.socialIdKey);
+        console.log("res.data.chk :: ", res.data.chk);
+        if (res.data.chk === 0) {
+          console.log("======================", res.data.msg);
 
-  const loginkakao = (res) =>{
-      console.log(res)
-  }
-  const loginFaBook = (res) =>{
-    console.log(res)
-}
+          alert("가입한 기록이 없습니다. 회원가입을 진행해주세요.");
+          document.location.href = "/signup";
+        } else if (res.data.chk === 1) {
+          console.log("======================", "로그인 성공");
+          sessionStorage.setItem("member_idKey", res.data.socialIdKey);
+          alert("로그인 성공");
+          document.location.href = "/";
+        }
+      })
+      // 실패시 실행
+      .catch();
+  };
+  const loginNaver = (res) => {
+    console.log("1" + res);
+    // console.log(res.email)
+    // console.log(res.name)
+    // console.log(res.id)
+    // sessionStorage.setItem('social_id', res.email)
+    // sessionStorage.setItem('social_name',res.name)
+    // sessionStorage.setItem('member_idKey',res.id)
+    // sessionStorage.setItem('social_state',"2")
+    // // 메일 주소, DB 비교 컴포넌트 props 메일주소
+    // const loginInfo={
+    //     "member_email":res.email,
+    //     "member_name":res.name,
+    //     "member_idKey":res.id,
+    // }
 
+    // // axios를 이용해 post로 전송하며
+    // axios.post('/socialLogin.do', loginInfo, {
+    //     headers:{
+    //         // json으로 형식을 지정함.
+    //         "Content-type":"application/json"
+    //     }
+    // })
+    //  // post 보내고 나서 실행
+    // .then(res => {
+    //     console.log(res)
+    //     console.log('res.data.socialIdKey :: ', res.data.socialIdKey)
+    //     console.log('res.data.chk :: ', res.data.chk)
+    //     if (res.data.chk === 0){
+    //         console.log('======================',res.data.msg)
+
+    //         alert('가입한 기록이 없습니다. 회원가입을 진행해주세요.')
+    //         document.location.href = '/signup'
+    //     } else if(res.data.chk === 1) {
+    //         console.log('======================','로그인 성공')
+    //         sessionStorage.setItem('member_idKey', res.data.socialIdKey)
+    //         alert('로그인 성공')
+    //         document.location.href = '/'
+    //     }
+    // })
+    // // 실패시 실행
+    // .catch()
+  };
+
+  const loginkakao = (res) => {
+    console.log(res);
+  };
+  const loginFaBook = (res) => {
+    console.log(res);
+  };
 
   //로그인 함수
   const onClickLogin = (e) => {
@@ -183,27 +181,28 @@ const loginNaver = (res) =>{
           alert("로그인 성공");
         }
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = '/'
+        document.location.href = "/";
       })
       // 실패시 실행
       .catch();
-      // alert("실패")
+    // alert("실패")
   };
 
   const onFindId = (e) => {
     e.preventDefault();
-    const idCheckJson ={
-      member_name:inputData.inputName,
-      member_tel:inputData.inputTel,
-  }
+    const idCheckJson = {
+      member_name: inputData.inputName,
+      member_tel: inputData.inputTel,
+    };
     // json처럼 선언해줍니다.
     // axio를 이용해 post로 전송하며
     console.log(idCheckJson);
     console.log(inputData);
-    axios.post("/findId.do", idCheckJson, {
+    axios
+      .post("/findId.do", idCheckJson, {
         headers: {
           // json으로 형식을 지정해줍니다.
-          "Content-type":"application/json"
+          "Content-type": "application/json",
         },
       })
       // post 보내고 나서 실행
@@ -212,8 +211,8 @@ const loginNaver = (res) =>{
         if (res.data === "noSearch") {
           alert("입력하신 정보와 일치하는 아이디가 존재하지 않습니다.");
           return;
-        }else {
-          alert("고객님의 아이디는 = " + res.data +" 입니다.");
+        } else {
+          alert("고객님의 아이디는 = " + res.data + " 입니다.");
           setFindPwModal(false);
         }
       })
@@ -222,97 +221,108 @@ const loginNaver = (res) =>{
   };
   const onSendMail = (e) => {
     e.preventDefault();
-    const sendMailJson ={
-      "member_name":inputData.inputName,
-      "member_id":inputData.inputEmail,
-      "member_email":inputData.inputEmail,
-  }
+    const sendMailJson = {
+      member_name: inputData.inputName,
+      member_id: inputData.inputEmail,
+      member_email: inputData.inputEmail,
+    };
     // json처럼 선언해줍니다.
     // axio를 이용해 post로 전송하며
     console.log(sendMailJson);
     console.log(inputData);
-    axios.post("/findPw.do", sendMailJson, {
+    axios
+      .post("/findPw.do", sendMailJson, {
         headers: {
           // json으로 형식을 지정해줍니다.
-          "Content-type":"application/json"
+          "Content-type": "application/json",
         },
       })
       // post 보내고 나서 실행
       .then((res) => {
         console.log(res);
-        alert("임시비밀 번호가 발급 되었습니다.")
-      
+        alert("임시비밀 번호가 발급 되었습니다.");
       })
       // 실패시 실행
       .catch();
   };
 
-  const [activeIndex, setActiveIndex]=useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-    const tabClickHandler=(index)=>{
-        setActiveIndex(index);
-    };
-//아이디 비밀번호 찾기 탭
-    const tabContArr=[
-        {
-            tabTitle:(
-                <Button className={activeIndex===0 ? "is-active" : ""} onClick={()=>tabClickHandler(0)}>아이디 찾기</Button>
-            ),
-            tabCont:(
-                <Form name="idForm">
-                <FormGroup>
-                  <Input
-                    type="text"
-                    id="inputName"
-                    name="inputName"
-                    placeholder="이름을 입력해 주세요."
-                    onChange={handleValueChange}
-                  />
-                  </FormGroup>
-                  <FormGroup>
-                  <Input
-                    type="text"
-                    id="inputTel"
-                    name="inputTel"
-                    placeholder="전화번호를 입력해주세요."
-                    onChange={handleValueChange}
-                  />
-                </FormGroup>
-                <Button onClick={onFindId}>확인</Button>
-              </Form>
-            )
-        },
-        {
-            tabTitle:(
-                  <Button className={activeIndex===1 ? "is-active" : ""} onClick={()=>tabClickHandler(1)}>비밀번호 찾기</Button> 
-            ),
-            tabCont:(
-                <Form name="pwForm">
-                  <FormGroup>
-                  <Input
-                    type="text"
-                    id="inputName"
-                    name="inputName"
-                    placeholder="이름을 입력해 주세요."
-                    onChange={handleValueChange}
-                  />
-                </FormGroup>
-                  <FormGroup>
-                  <Input
-                    type="text"
-                    id="inputEmail"
-                    name="inputEmail"
-                    placeholder="가입한 메일 주소를 입력해 주세요."
-                    onChange={handleValueChange}
-                  />
-                  <Button className="pwBtn" onClick={onSendMail}>비밀번호 발송</Button>
-                </FormGroup>
-              </Form>
-            )
-        }
-    ];
+  const tabClickHandler = (index) => {
+    setActiveIndex(index);
+  };
+  //아이디 비밀번호 찾기 탭
+  const tabContArr = [
+    {
+      tabTitle: (
+        <Button
+          className={activeIndex === 0 ? "is-active" : ""}
+          onClick={() => tabClickHandler(0)}
+        >
+          아이디 찾기
+        </Button>
+      ),
+      tabCont: (
+        <Form name="idForm">
+          <FormGroup>
+            <Input
+              type="text"
+              id="inputName"
+              name="inputName"
+              placeholder="이름을 입력해 주세요."
+              onChange={handleValueChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              type="text"
+              id="inputTel"
+              name="inputTel"
+              placeholder="전화번호를 입력해주세요."
+              onChange={handleValueChange}
+            />
+          </FormGroup>
+          <Button onClick={onFindId}>확인</Button>
+        </Form>
+      ),
+    },
+    {
+      tabTitle: (
+        <Button
+          className={activeIndex === 1 ? "is-active" : ""}
+          onClick={() => tabClickHandler(1)}
+        >
+          비밀번호 찾기
+        </Button>
+      ),
+      tabCont: (
+        <Form name="pwForm">
+          <FormGroup>
+            <Input
+              type="text"
+              id="inputName"
+              name="inputName"
+              placeholder="이름을 입력해 주세요."
+              onChange={handleValueChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              type="text"
+              id="inputEmail"
+              name="inputEmail"
+              placeholder="가입한 메일 주소를 입력해 주세요."
+              onChange={handleValueChange}
+            />
+            <Button className="pwBtn" onClick={onSendMail}>
+              비밀번호 발송
+            </Button>
+          </FormGroup>
+        </Form>
+      ),
+    },
+  ];
 
-  
   return (
     <Container className="login">
       <Modal
@@ -322,28 +332,25 @@ const loginNaver = (res) =>{
         toggle={() => setFindPwModal(false)}
       >
         <div className="modal-header">
-        <ul className="tabs is-boxed">
-            {tabContArr.map((section, index)=>{
-                return section.tabTitle
+          <ul className="tabs is-boxed">
+            {tabContArr.map((section, index) => {
+              return section.tabTitle;
             })}
           </ul>
-        
         </div>
         <div className="modal-body">
-        
-          <div>
-          	{tabContArr[activeIndex].tabCont}
-          </div>
+          <div>{tabContArr[activeIndex].tabCont}</div>
         </div>
-          <div className="modal-footer">
-            <Button className="pwclose" onClick={() => setFindPwModal(false)}>닫기</Button>
+        <div className="modal-footer">
+          <Button className="pwclose" onClick={() => setFindPwModal(false)}>
+            닫기
+          </Button>
         </div>
       </Modal>
 
-      <Form >
+      <Form>
         <h1 className="title">LOGIN</h1>
-        <FormGroup>
-        </FormGroup>
+        <FormGroup></FormGroup>
         <FormGroup>
           <Input
             type="text"
@@ -369,7 +376,9 @@ const loginNaver = (res) =>{
         </FormGroup>
 
         <FormGroup>
-          <Button block onClick={() => navigate("/signup")}>회원가입</Button>
+          <Button block onClick={() => navigate("/signup")}>
+            회원가입
+          </Button>
         </FormGroup>
 
         <FormGroup>
@@ -378,18 +387,18 @@ const loginNaver = (res) =>{
           </Button>
         </FormGroup>
         <FormGroup>
-        <GoogleLogin onSuccess={loginGoogle} />
+          <NavLogin onSuccess={loginNaver} />
         </FormGroup>
         <FormGroup>
-        <KakaoLogin onSuccess={loginkakao} />
+        <div class="g-signin2" data-width="580" data-height="50" data-longtitle="true">
+          <GoogleLogin onSuccess={loginGoogle} />
+          </div>
         </FormGroup>
         <FormGroup>
-          <NavLogin 
-            onSuccess={loginNaver}
-           />
+          <KakaoLogin onSuccess={loginkakao} />
         </FormGroup>
         <FormGroup>
-            <FabookLogin onSuccess={loginNaver}/>
+          <FabookLogin onSuccess={loginNaver} />
         </FormGroup>
       </Form>
     </Container>
