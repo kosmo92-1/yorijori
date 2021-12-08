@@ -175,6 +175,7 @@ function RecipeList(props) {
                                 <option value="2">추천 순</option>
                             </Input>
                         </FormGroup>
+                        <a href="/insertrecipe"><p>레시피쓰기</p></a>
                     </div>
                     <div className="recipes">
                         {/* <div className="recipe"> */}
