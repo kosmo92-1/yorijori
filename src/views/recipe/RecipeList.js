@@ -111,85 +111,6 @@ function RecipeList(props) {
 
     }
 
-
-    //캐러셀
-    const items = [
-        {
-          src: 'http://www.hotelrestaurant.co.kr/data/photos/20180205/art_15175330519518_43b250.bmp',
-          altText: '한식',
-          caption: ' '
-        },
-        {
-          src: 'https://lh3.googleusercontent.com/proxy/BInOw1NO-cmiRpxsFJFPLglFbDV5Q9d9HWClh0sgvA3xKT7MJc3vz492aLRs79yqjstIYOM2ZvWu4FV3hr40YYXsG3jPsYeUh6lX33s9mTSF5cNhqtosWd-4MDShzbW08YBEY0pg9p7X4szYqioCcCY3gA',
-          altText: '양식',
-          caption: ' '
-        },
-        {
-          src: 'https://cdn.mkhealth.co.kr/news/photo/202004/img_MKH200406003_0.jpg',
-          altText: '중식',
-          caption: ' '
-        },
-        {
-            src: 'http://www.canews.kr/news/photo/201712/225_323_85.jpg',
-            altText: '일식',
-            caption: ' '
-        },
-        {
-            src: 'https://lh3.googleusercontent.com/proxy/ekuWtNld2mNE690Uo75Op5LprdXnMblP6lzi8KartpJ2xhTigt829hbg-xe5MDHZ99zbWxqv5LxrJXaU8x3oHdpmvjr2Qj7xg1Dyg4gRHjOZxFZi',
-            altText: '야식',
-            caption: ' '
-        }
-      ];
-
-      const [activeIndex, setActiveIndex] = useState(0);
-      const [animating, setAnimating] = useState(false);
-    
-      const next = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
-        setActiveIndex(nextIndex);
-      }
-    
-      const previous = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
-        setActiveIndex(nextIndex);
-      }
-    
-      const goToIndex = (newIndex) => {
-        if (animating) return;
-        setActiveIndex(newIndex);
-      }
-    
-      const slides = items.map((item) => {
-        return (
-          <CarouselItem
-            onExiting={() => setAnimating(true)}
-            onExited={() => setAnimating(false)}
-            key={item.src}
-          >
-            <style>
-                {
-                    `.img{
-                        height:358px
-                    }
-                    .caption{
-                        position:absolute;
-                        font-size:50pt;
-                        color:white;
-                        top:40%;
-                        left:40%;
-                    }
-                    `
-                }
-            </style>
-            <img src={item.src} alt={item.altText} className="img"/>
-            <p className="caption">{item.altText}</p>
-            <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-          </CarouselItem>
-        );
-      });
-
     return (
         <main>
             <section className="sec-banner">
@@ -203,17 +124,7 @@ function RecipeList(props) {
                             <label ><a href="#" onClick={searchBtn}><i className="fa fa-search" aria-hidden="true" ></i></a></label>
                         </div>
                     </div>
-                    <Carousel
-                    activeIndex={activeIndex}
-                    next={next}
-                    previous={previous}
-                    >
-                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-                    {slides}
-                    <CarouselControl direction="prev" directionText=" " onClickHandler={previous} />
-                    <CarouselControl direction="next" directionText=" " onClickHandler={next} />
-                    </Carousel>
-                    {/* <div className="list-filter">
+                    <div className="list-filter">
                         <i className="arrow left">이전</i>
                         <ul>
                             <li className="cuisine-kr">
@@ -228,7 +139,7 @@ function RecipeList(props) {
                             <li className="cuisine-bizzare">괴식</li>
                         </ul>
                         <i className="arrow right">다음</i>
-                    </div> */}
+                    </div>
                 </section>
                 <section className="sec-recipes">
                     {/* 레시피 1 */}
