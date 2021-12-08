@@ -5,12 +5,6 @@ import kakaoLogin from '../assets/images/kakaoLogin.png';
 
 
 const {Kakao} = window;
-// const loginWithKakao = () =>{
-  //     console.log("hello");
-  //     Kakao.Auth.authorize({
-    //     redirectUri: 'http://localhost:3000/login'
-    //     })
-    // }
     const loginWithKakao = () => {
       console.log("hello");
       const scope = "profile_nickname, profile_image, account_email";

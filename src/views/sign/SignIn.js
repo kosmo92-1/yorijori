@@ -134,10 +134,31 @@ function SignIn() {
   const loginFaBook = (res) => {
     console.log(res);
   };
+  const [pwPass, setPwPass] = useState("");
 
+  const onPwCHeck = (inputPw,inputId) => {
+    console.log("비번들어옴"+inputPw);
+    console.log("비번들어옴"+inputId);
+
+    axios.get(`/getMember.do?member_id=${inputId}`)
+          .then((res) => {
+            console.log("응답타입"+res.data.member_type);
+          sessionStorage.setItem("user_type", res.data.member_type);
+        console.log("응답비번"+res.data.member_pw);
+        if(res.data.member_pw === inputPw){
+          console.log("비번맞음")
+          setPwPass("pwSuccess")
+        }else{
+          console.log("비번틀림")
+          setPwPass("pwFalse")
+        }
+        return
+      })
+  }
   //로그인 함수
   const onClickLogin = (e) => {
     e.preventDefault();
+    onPwCHeck(inputPw,inputId)
     console.log("click login");
     console.log("ID : ", inputId);
     console.log("PW : ", inputPw);
@@ -157,6 +178,7 @@ function SignIn() {
       // post 보내고 나서 실행
       .then((res) => {
         console.log(res);
+        console.log(loginInfo);
         console.log("res.data.member_id :: ", res.data.member_id);
         console.log("res.data.member_pw :: ", res.data.member_pw);
         // 아이디가 일치할경우는 res에서 값을 모두 받아오고
@@ -164,22 +186,20 @@ function SignIn() {
         if (res.data.member_id === undefined) {
           // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
           console.log("======================", res.data.msg);
-          alert("입력하신 id 가 일치하지 않습니다.");
-        } else if (res.data.member_pw === undefined) {
+          alert("ID를 확인해 주세요.");
+          document.location.href = "/login";
+        } else if (res.data.member_pw === undefined || inputPw === "" ||pwPass === "pwFalse" ) {
           // id는 있지만, pw 는 다른 경우 userId = null , msg = undefined
           console.log(
-            "======================",
-            "입력하신 비밀번호 가 일치하지 않습니다."
-          );
-          alert("입력하신 비밀번호 가 일치하지 않습니다.");
-        } else if (res.data.member_id === inputId) {
+            "======================");
+          alert("비밀번호를 확인해 주세요.");
+          document.location.href = "/login";
+        } else if (res.data.member_id === inputId && res.data.member_pw === inputPw && pwPass==="pwSuccess") {
           // id, pw 모두 일치 userId = userId1, msg = undefined
+          console.log( res.data)
           console.log("======================", "로그인 성공");
           sessionStorage.setItem("user_id", inputId);
           sessionStorage.setItem("user_pw", inputPw);
-
-          alert("로그인 성공");
-
           //로그인 성공하면 채널 정보를 받아온다.
           axios.get(`/readChannel.do?member_id=${res.data.member_id}`)
           // post 보내고 나서 실행
@@ -191,9 +211,16 @@ function SignIn() {
               }
           })
           .catch(err =>{alert('실패')})
+          alert("로그인 성공");
+          if(sessionStorage.getItem("user_type")==="1"){
+            console.log("이동하냐?")
+            document.location.href = "localhost:3001/";
+          }else{
+            console.log("일반회원입장")
+            document.location.href = "/";
+          }
+
         }
-        // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/";
       })
       // 실패시 실행
       .catch();
