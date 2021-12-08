@@ -57,12 +57,15 @@ function RecipeList(props) {
                     <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
                 </figure>
                 <div>
-                    <h4>{item.recipe_id}{item.RECIPE_TITLE}</h4>
+                    <h4><a href={`/recipe-detail/${item.RECIPE_ID}`}>{item.RECIPE_TITLE}</a></h4>
                     {/* 별점 */}
                     <p className="text-trunc">
                         {item.RECIPE_CONTENT}
                     </p>
-                    <span><a>{item.CHANNEL_NAME}</a>님</span>
+                    <p className="text-trunc">
+                        추천수 {item.RECIPE_RECOMMEND}
+                    </p>
+                    <span><a href={`/channel/${item.CHANNEL_ID}`}>{item.CHANNEL_NAME}</a>님</span>
                 </div>
             </div>
         </div>
@@ -179,7 +182,7 @@ function RecipeList(props) {
                         {/* </div> */}
                     </div>
                     <div className="text-center">
-                        <Button color="danger">더 보기</Button>
+                        {/* <Button color="danger">더 보기</Button> */}
                     </div>
                 </section>
             </div>
