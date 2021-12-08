@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
+import { useNavigate } from "react-router-dom";
+import { Button, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
 
-const ReadNotice = ( {history} ) => {
+const ReadNotice = () => {
   const [title, setTitle] = useState('title')
   const [content, setContent] = useState('content')
   const [head, setHead] = useState('공지사항')
@@ -40,35 +41,39 @@ const ReadNotice = ( {history} ) => {
       })
   }, [])
 
-  return (
-		<ListGroup>
-			<ListGroupItem>
-				<ListGroupItemHeading>공지상세보기</ListGroupItemHeading>
-				<ListGroupItemText>공지사항 게시판입니다.</ListGroupItemText>
-			</ListGroupItem>
-			<ListGroupItem>
-				
-			</ListGroupItem>
-			<ListGroupItem>
-				<ListGroupItemHeading>공지유형</ListGroupItemHeading>
-				<ListGroupItemText>{head}</ListGroupItemText>
-			</ListGroupItem>
-			<ListGroupItem>
-				<ListGroupItemHeading>제목</ListGroupItemHeading>
-				<ListGroupItemText>{title}</ListGroupItemText>
-			</ListGroupItem>
-			<ListGroupItem>
-				<ListGroupItemHeading>내용</ListGroupItemHeading>
-				<ListGroupItemText>{content}</ListGroupItemText>
-			</ListGroupItem>
-			<ListGroupItem>
-				<ListGroupItemHeading>등록일</ListGroupItemHeading>
-				<ListGroupItemText>
-					{new Date(regdate).toLocaleDateString()}
-				</ListGroupItemText>
-			</ListGroupItem>
-		</ListGroup>
+  const navigate = useNavigate();
 
+  return (
+    <>
+      <ListGroup>
+        <ListGroupItem>
+          <ListGroupItemHeading>공지상세보기</ListGroupItemHeading>
+          <ListGroupItemText>공지사항 게시판입니다.</ListGroupItemText>
+        </ListGroupItem>
+        <ListGroupItem>
+          
+        </ListGroupItem>
+        <ListGroupItem>
+          <ListGroupItemHeading>공지유형</ListGroupItemHeading>
+          <ListGroupItemText>{head}</ListGroupItemText>
+        </ListGroupItem>
+        <ListGroupItem>
+          <ListGroupItemHeading>제목</ListGroupItemHeading>
+          <ListGroupItemText>{title}</ListGroupItemText>
+        </ListGroupItem>
+        <ListGroupItem>
+          <ListGroupItemHeading>내용</ListGroupItemHeading>
+          <ListGroupItemText>{content}</ListGroupItemText>
+        </ListGroupItem>
+        <ListGroupItem>
+          <ListGroupItemHeading>등록일</ListGroupItemHeading>
+          <ListGroupItemText>
+            {new Date(regdate).toLocaleDateString()}
+          </ListGroupItemText>
+        </ListGroupItem>
+      </ListGroup>
+      <Button onClick={() => navigate(-1)}>Back</Button>
+    </>
 		// <Container maxWidth="xs">
 
 		//       <Label tag="h5">공지상세보기</Label>
