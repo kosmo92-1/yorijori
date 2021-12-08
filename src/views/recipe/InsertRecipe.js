@@ -7,7 +7,8 @@ import IconComponent from './IconComponent';
 
 // 종류 등록
 function InsertRecipe(props) {
-    const [member_id,setMember_id]= useState("");
+
+    const [channel_id,setChannel_id]= useState("");
     const [kind_id,setKind_id]= useState("");
     const [recipe_title,setRecipe_title]= useState("");
     const [recipe_ing,setRecipe_ing]= useState("");
@@ -19,11 +20,6 @@ function InsertRecipe(props) {
     const [recipe_difficulty,setRecipe_difficulty]= useState("");
     const checkNum = []
     
-    
-    const handleMember_id = (e) => {
-        console.log(e.target.value)
-        setMember_id(e.target.value);
-    }
     const handleKindId = (e) => {
         console.log(e.target.value)
         setKind_id(e.target.value);
@@ -70,6 +66,7 @@ function InsertRecipe(props) {
     }
 
     useLayoutEffect(() => {
+        setChannel_id(sessionStorage.getItem('channel_id'))
         //해당 종류의 리스트를불러온다.
         axios.get('/getKindList.do?kind_id=food').then((res) => {
           console.log(res.data)
@@ -88,7 +85,7 @@ function InsertRecipe(props) {
     ))
 
     var frm = new FormData();
-    frm.append("member_id",member_id)
+    frm.append("channel_id",channel_id)
     frm.append("kind_id",kind_id)
     frm.append("recipe_title",recipe_title)
     frm.append("recipe_ing",recipe_ing)
@@ -128,6 +125,7 @@ function InsertRecipe(props) {
             //     .then(res => {alert('글등록성공')})
             //     .catch(err =>{console.log('실패')})
             // });
+            window.location.href='/myChannel'
 
         })
         .catch(err =>{console.log('실패')})
@@ -180,9 +178,9 @@ function InsertRecipe(props) {
                                     minWidth: 200,
                                   }}
                             >
-                                <MenuItem value="0">쉬움</MenuItem>
-                                <MenuItem value="30">보통</MenuItem>
-                                <MenuItem value="60">어려움</MenuItem>
+                                <MenuItem value="쉬움">쉬움</MenuItem>
+                                <MenuItem value="보통">보통</MenuItem>
+                                <MenuItem value="어려움">어려움</MenuItem>
                             </Select>
                             </FormControl>
                             <FormControl>
@@ -200,12 +198,12 @@ function InsertRecipe(props) {
                                     minWidth: 200,
                                   }}
                             >
-                                <MenuItem value="0">30분 이하</MenuItem>
-                                <MenuItem value="30">30분</MenuItem>
-                                <MenuItem value="60">1시간</MenuItem>
-                                <MenuItem value="90">1시간 30분</MenuItem>
-                                <MenuItem value="120">2시간</MenuItem>
-                                <MenuItem value="130">2시간 이상</MenuItem>
+                                <MenuItem value="30분 이하">30분 이하</MenuItem>
+                                <MenuItem value="30분">30분</MenuItem>
+                                <MenuItem value="1시간">1시간</MenuItem>
+                                <MenuItem value="1시간 30분">1시간 30분</MenuItem>
+                                <MenuItem value="2시간">2시간</MenuItem>
+                                <MenuItem value="2시간 이상">2시간 이상</MenuItem>
                             </Select>
                             </FormControl>
                             <FormControl>
@@ -223,11 +221,11 @@ function InsertRecipe(props) {
                                     minWidth: 200,
                                   }}
                             >
-                                <MenuItem value="1">1인</MenuItem>
-                                <MenuItem value="2">2인</MenuItem>
-                                <MenuItem value="3">3인</MenuItem>
-                                <MenuItem value="4">4인</MenuItem>
-                                <MenuItem value="5">4인 이상</MenuItem>
+                                <MenuItem value="1인분">1인</MenuItem>
+                                <MenuItem value="2인분">2인</MenuItem>
+                                <MenuItem value="3인분">3인</MenuItem>
+                                <MenuItem value="4인분">4인</MenuItem>
+                                <MenuItem value="4인분이상">4인 이상</MenuItem>
                             </Select>
                             </FormControl>
                         </div>
@@ -257,7 +255,7 @@ function InsertRecipe(props) {
                             </AccordionDetails>
                         </Accordion>
                         <div className="form-row">
-                            <TextField id="outlined-basic" label="재료상세설명"margin="normal" variant="outlined"sx={{
+                            <TextField id="outlined-basic" label="재료상세설명"margin="normal" value={recipe_ing} onChange={handleRecipe_ing} variant="outlined"sx={{
                                     bgcolor: 'background.paper',
                                     boxShadow: 1,
                                     borderRadius: 1,
