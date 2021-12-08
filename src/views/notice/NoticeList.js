@@ -24,12 +24,17 @@ const NoticeList = () => {
     setPage(value);
   };
 
+  const font_style = {
+    color : 'black',
+    fontWeight : 500
+  }
+
   const noticeComponent = noticeList.list.map((item) => (
     // eslint-disable-next-line react/jsx-key
     <TableRow >
       <TableCell>{item.notice_id}</TableCell>
       <TableCell>{item.notice_head}</TableCell>
-      <TableCell><a href="#" onClick={(e) =>{e.preventDefault(); actionRead(item.notice_id)}}>{item.notice_title}</a></TableCell>
+      <TableCell><a href={`/readnotice?notice_id=${item.notice_id}`} onClick={(e) =>{e.preventDefault(); actionRead(item.notice_id)}} style={font_style}>{item.notice_title}</a></TableCell>
       <TableCell>{new Date(item.notice_regdate).toLocaleDateString()}</TableCell>
     </TableRow>
   ))
