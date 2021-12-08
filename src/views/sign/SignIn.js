@@ -390,9 +390,10 @@ function SignIn() {
           <NavLogin onSuccess={loginNaver} />
         </FormGroup>
         <FormGroup>
-        <div class="g-signin2" data-width="580" data-height="50" data-longtitle="true">
+          {/* 이렇게 하면 구글 로그인 막힘 */}
+        {/* <div class="g-signin2" data-width="580" data-height="50" data-longtitle="true" onClick={GoogleLogin}> */}
           <GoogleLogin onSuccess={loginGoogle} />
-          </div>
+          {/* </div> */}
         </FormGroup>
         <FormGroup>
           <KakaoLogin onSuccess={loginkakao} />
