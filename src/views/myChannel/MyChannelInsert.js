@@ -12,14 +12,12 @@ import {
 } from "reactstrap";
 
 function MyChannelInsert(props) {
-	const member_id = sessionStorage.getItem("user_id");
 
 	const [formData, setFormData] = useState({
 		"channel_name": "",
-		"member_id": member_id,
+		"member_id": sessionStorage.getItem("user_id"),
 		"channel_content": "",
-        "channel_photo": "",
-        "file": null
+        "channel_photo": null,
 	});
 
 	// const [channel_name, setChannel_name] = useState('');
@@ -27,12 +25,12 @@ function MyChannelInsert(props) {
 	const [channel_photo, setChannel_photo] = useState(null);
 
 	const saveFileImage = (e) => {
-		// let profile = URL.createObjectURL(e.target.files[0]);
-		// setChannel_photo(profile)
+		let profile = URL.createObjectURL(e.target.files[0]);
+		setChannel_photo(profile)
 
 		setFormData({
 			...formData,
-			file: e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
+			"channel_photo": e.target.files[0], // API에 요청을 날릴 Form State에 정보를 추가합니다.
 		});
 	};
 
@@ -43,6 +41,8 @@ function MyChannelInsert(props) {
 	};
 
 	const handleValueChange = (event) => {
+        // let profile=URL.createObjectURL(event.target.files[0])
+        // setChannel_photo(profile);
 		// API 요청에 날릴 Form state에 정보를 추가합니다.
 		setFormData({
 			...formData,
@@ -55,9 +55,10 @@ function MyChannelInsert(props) {
 		e.preventDefault();
 
 		const reqFormData = new FormData();
+        reqFormData.append("member_id", formData.member_id);
 		reqFormData.append("channel_name", formData.channel_name);
 		reqFormData.append("channel_content", formData.channel_content);
-		reqFormData.append("channel_photo", formData.channel_photo);
+		reqFormData.append("file", formData.channel_photo);
 
 		axios
 			.post("insertChannel.do", reqFormData, {

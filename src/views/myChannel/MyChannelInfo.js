@@ -44,6 +44,9 @@ function MyChannelInfo(props) {
                 <ListGroupItemText>{channelInfo.channel_content}</ListGroupItemText>
             </ListGroupItem>
             <ListGroupItem>
+                <img src={channelInfo.channel_photo} alt={channelInfo.channel_name}></img>
+            </ListGroupItem>
+            <ListGroupItem>
                 <ListGroupItemHeading>구독자수</ListGroupItemHeading>
                 <ListGroupItemText>
                 {countSubscribe+'명'}
