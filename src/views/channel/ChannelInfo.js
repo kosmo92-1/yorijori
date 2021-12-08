@@ -7,7 +7,7 @@ function ChannelInfo(props) {
 
     const [activeTab, setActiveTab] = useState('1');
     // 채널 가입 유무체크
-    const [channelChk,setChannelChk] = useState(null)
+    const [channelChk,setChannelChk] = useState(0)
 
     useEffect(()=>{
         axios.get('readChannel.do')

@@ -1,7 +1,9 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useLayoutEffect, useState } from 'react';
-import { Button, Col, Container, Input, Row } from 'reactstrap';
+import {Badge, Button, Col, Container, Input, Row } from 'reactstrap';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconComponent from './IconComponent';
 
 // 종류 등록
 function InsertRecipe(props) {
@@ -59,18 +61,25 @@ function InsertRecipe(props) {
 
     const [kindMap, setKindMap] = useState([{ kind_id: '', kind_name: '' }])
     const [ingMap, setIngMap] = useState([{ kind_id: '', kind_name: '' }])
+    const [ingMapByKindId, setIngMapByKindId] = useState({'ingredient_1':[],})
+
     useLayoutEffect(() => {
         //해당 종류의 리스트를불러온다.
         axios.get('/getKindList.do?kind_id=food').then((res) => {
           console.log(res.data)
           setKindMap(res.data)
         })
-        axios.get('/getKindList.do?kind_id=ingredient').then((res) => {
-            console.log(res.data)
-            setIngMap(res.data)
+        axios.get('/listIngredient.do').then((res) => {
+            console.log(res.data.list)
+            setIngMap(res.data.list)
+            
           })
       }, [])
     const listComponent = kindMap.map((item) => <MenuItem value={item.kind_id} key={item.kind_id}>{item.kind_name}</MenuItem>)
+
+    const accordionComponent = ingMap.map((item)=>(
+        <><Checkbox {...item.ing_name} /><IconComponent ing_icon={item.ing_icon} ing_name={item.ing_name} /></>
+    ))
 
     var frm = new FormData();
     frm.append("member_id",member_id)
@@ -104,8 +113,6 @@ function InsertRecipe(props) {
                     <h2 className="sr-only">레시피 작성 페이지</h2>
                     <form class="writing">
                         <div className="form-row">
-                            
-
                         </div>
                         <div className="form-row">
                             <FormControl>
@@ -202,6 +209,21 @@ function InsertRecipe(props) {
                                   }}/>
                         </FormControl>
                         </div>
+                        {/* 재료선택 아코디언 */}
+                        <Accordion>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            >
+                            <Typography>대표재료넣기</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                            <Typography>
+                                {accordionComponent}
+                            </Typography>
+                            </AccordionDetails>
+                        </Accordion>
                         <div className="form-row">
                             <TextField id="outlined-basic" label="재료상세설명"margin="normal" variant="outlined"sx={{
                                     bgcolor: 'background.paper',

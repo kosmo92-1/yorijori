@@ -7,14 +7,18 @@ import MyChannelInsert from './MyChannelInsert';
 import MyChannelRecipe from './MyChannelRecipe';
 //마이페이지
 function MyChannel(props) {
-
+    const member_id = sessionStorage.getItem('user_id');
     const [activeTab, setActiveTab] = useState('1');
     // 채널 가입 유무체크
     const [channelChk,setChannelChk] = useState(null)
 
     useEffect(()=>{
-        axios.get('readChannel.do')
-        .then((res)=>console.log('readChannel: '+res))
+        axios.get('channelCheck.do?member_id=' + member_id)
+        // axios.get('readChannel.do')
+        .then((res)=>{
+            console.log(res)
+            setChannelChk(res.data)
+        })
     },[])
 
     const toggle = tab => {
@@ -55,8 +59,9 @@ function MyChannel(props) {
                             <TabPane tabId="1">
                                 <Row>
                                 <Col sm="12">
-                                    <MyChannelInsert/>
-                                    <MyChannelInfo/>
+                                    {channelChk === 1 ? <MyChannelInfo></MyChannelInfo> : <MyChannelInsert></MyChannelInsert>}
+                                    {/* <MyChannelInsert/>
+                                    <MyChannelInfo/> */}
                                 </Col>
                                 </Row>
                             </TabPane>

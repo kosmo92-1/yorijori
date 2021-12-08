@@ -4,9 +4,10 @@ import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col } from 'react
 
 function SubComponent(props) {
 
-    const [sublist,setSublist] = useState([])
+    const [sublist,setSublist] = useState([]);
+    const member_id = sessionStorage.getItem('user_id');
     useEffect(()=>{
-        axios.get('/listSub.do?member_id=admin')
+        axios.get('/listSub.do?member_id=' + member_id)
         .then((res)=>{
             console.log(res.data.listSubChannel)
             setSublist(res.data.listSubChannel)
