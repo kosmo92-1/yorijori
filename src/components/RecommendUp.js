@@ -25,7 +25,8 @@ function RecommendUp(props){
             console.log(res.data);
             if (res.data === "noRecommend") {
                 alert("이 게시물을 추천했습니다.");
-                return;
+                //return;
+                window.location.reload()
             }else {
                 alert("이미 추천한 게시물 입니다.");
             }
