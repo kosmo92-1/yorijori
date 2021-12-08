@@ -73,15 +73,15 @@ function RecipeDetail(props) {
                     <img src={recipeDetail.recipe.RECIPE_THUMBNAIL} alt={recipeDetail.recipe.RECIPE_TITLE} />
                     <div className="recipe-info">
                         <div>
-                            분류
+                            분류<br />
                             <span>{recipeDetail.recipe.KIND_NAME}</span>
                         </div>
                         <div>
-                            양
+                            양<br />
                             <span>{recipeDetail.recipe.RECIPE_QUENTITY}</span>
                         </div>
                         <div>
-                            재료
+                            재료<br />
                             <span>
                                 {
                                 recipeDetail.ingredient.map((data) => <span key={data.ing_id}>{data.ing_name}</span>)
