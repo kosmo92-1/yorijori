@@ -63,7 +63,6 @@
 //               rows.push(memberList[i].member_id,memberList[i].member_name)
 //               console.log(rows)
 //             }
-          
 //     },[])
 //   return (
 //     <div style={{ height: 400, width: '100%' }}>
