@@ -1,43 +1,69 @@
-import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-import reactDom from 'react-dom';
+import { TableCell, TableRow } from '@mui/material';
 
 
 function BasketRecipeList(props) {
-    const [recipeList, setRecipeList] = useState({
+    const member_id = sessionStorage.getItem('user_id')
+    const [recipeList, setRecipeList] = useState([{
         basketList: [
             {
-                recipe_title: "레시피이름",
-                recipe_thumbnail: "썸네일 없음",
-                recipe_id: 2,
-                basket_id: 2,
-                recipe_time: "걸리는 시간",
-                recipe_difficulty: "?",
-                recipe_quentity: "많음",
-                basket_regdate : 1637685356000
+                "recipe_title": "",
+                "recipe_thumbnail": "",
+                "recipe_id": 0,
+                "basket_id": 0,
+                "recipe_time": "",
+                "recipe_difficulty": "",
+                "recipe_quentity": "",
+                "basket_regdate": 0
             },
         ],
         basketIngredients: {
-            2: [
+            ingredient: [
                 {
-                    ing_icon: "none",
-                    kind_id: "ing_4",
-                    ing_name: "설탕",
-                    ing_id: 4
+                    "ing_icon": "",
+                    "kind_id": "",
+                    "ing_name": "",
+                    "ing_id": 0
                 },
             ],
         }
-    })
-    const listComponent = recipeList.basketList.map((recipe)=>(<h3>{recipe.recipe_title}</h3>));
-    //request
-    const query = 
+    }])
+    const [basketList,setBasketList] = useState([])
+    const [basketIngredients,setBasketIngredients] = useState([
         {
-            member_id : "test1"
+            ing_icon: "",
+            ing_id: 0,
+            ing_name: "",
+            kind_id: "",
         }
+    ])
+
+    const listComponent = basketList.map((recipe)=> (
+        <TableRow>
+            <TableCell>{recipe.recipe_id}</TableCell>
+            <TableCell><img src={recipe.recipe_thumbnail} alt="썸네일" width="100"/></TableCell>
+            <TableCell>{recipe.recipe_title}</TableCell>
+        </TableRow>
+    ));
+
+
+    const llistComponent = basketIngredients.map((recipe)=> (
+        <TableRow>
+            <TableCell>{recipe.ing_name}</TableCell>
+            <TableCell><img src={recipe.ing_icon} alt="재료사진" width="100"/>{recipe.ing_icon}</TableCell>
+        </TableRow>
+    ));
+
+    
+
+
+    //request
+    const member = { member_id : member_id }
     useEffect(()=>{
-        axios.post('/getBasketList.do',query,{
+
+        axios.post('/getBasketList.do',member,  {
             headers:{
                 // json으로 형식을 지정해줍니다.
                 "Content-type":"application/json"
@@ -45,15 +71,18 @@ function BasketRecipeList(props) {
         })
         // 값을가져와 넣어줍니다.
         .then(res => {
-        console.log(res.data);
-        setRecipeList(res.data)
+        setBasketList(res.data.basketList)
+        setBasketIngredients(res.data.basketIngredients['ingredient'])
+        
         })
         .catch(err =>{alert(err)})
     },[])
+
     
     return (
         <div>
-              {listComponent}
+            {llistComponent}
+            {listComponent}
         </div>
     );
 }

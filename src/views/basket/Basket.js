@@ -31,9 +31,9 @@ function Basket(props) {
 useEffect(()=>{
 
        
-    axios.get("/getRecipe.do", "1")
+    axios.get("/getRecipe.do", "10")
     .then((res)=>{
-      console.log(res.data)
+      console.log('여긴몰까요::', res.data)
       // console.log(res.data.member_basic_address)
   //     setUserData({
   //   "member_id": res.data.member_id,
@@ -46,9 +46,11 @@ useEffect(()=>{
 },[])
 
   const [basketData, setBasketData] = useState({
+    recipe_id:0,
     recipe_thumbnail: null,
     recipe_ing: "",
     recipe_title: "",
+    ing_name: ""
   });
 
   const [recipe_thumbnail, setRecipe_thumbnail] = useState(null);
@@ -69,7 +71,7 @@ useEffect(()=>{
             <Table hover responsive size="" striped>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>번호</th>
                   <th>레시피</th>
                   <th>상세정보</th>
                   <th>재료</th>
@@ -92,11 +94,11 @@ useEffect(()=>{
               </div>
             </Col>
             <Col xs="2">
-              <div>레시피 이름</div>
+              <div><BasketRecipeList /></div>
               <div>레시피 정보</div>
             </Col>
             <Col xs="5">
-             <BasketRecipeList/>
+              {/* <BasketRecipeList ingredients={}/> */}
             </Col>
             <Col xs="1">
                 <Button>삭제</Button>
