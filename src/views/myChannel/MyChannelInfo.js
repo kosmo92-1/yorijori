@@ -8,12 +8,12 @@ function MyChannelInfo(props) {
         member_id:member_id
     }
     const [channelInfo,setChannelInfo] = useState({
-        channel_content: ".",
-        channel_id: 2,
-        channel_name: "d",
-        channel_photo: "\\imgUpload\\2021\\12\\06\\c365832f-efa2-47b7-a148-354c13b1dee5_apple.jpg",
-        channel_regdate: 1638759597000,
-        member_id: "admin1"
+        channel_content: "",
+        channel_id: 0,
+        channel_name: "",
+        channel_photo: "",
+        channel_regdate: 0,
+        member_id: ""
     })
     const [count,setCount] = useState(0)
     const [countSubscribe,setCountSubscribe] = useState(0)

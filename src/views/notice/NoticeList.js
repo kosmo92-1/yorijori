@@ -9,15 +9,21 @@ const NoticeList = () => {
       { notice_id: 0, notice_head: '', notice_title: '', notice_content: '', notice_regdate: '' },
     ],
     pageMaker: {
-      totalCount: 16,
+      totalCount: 0,
       startPage: 1,
-      endPage: 2,
+      endPage: 1,
       prev: false,
       next: false,
       displayPageNum: 10,
       cri: { page: 1, pageNum: 10, rowStart: 1, rowEnd: 10, pageStart: 0 },
     },
   })
+
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
   const noticeComponent = noticeList.list.map((item) => (
     // eslint-disable-next-line react/jsx-key
     <TableRow >
@@ -33,9 +39,10 @@ const NoticeList = () => {
     window.location.href = `/readnotice?notice_id=${notice_id}`
     // window.location.href = `/#/channel`
   }
+
   useEffect(() => {
     axios
-      .get('/listNotice.do')
+      .get('/listNotice.do?page=' + page)
       .then((res) => {
         console.log(res.data)
         setNoticeList(res.data)
@@ -43,7 +50,7 @@ const NoticeList = () => {
       .catch((err) => {
         alert(err)
       })
-  }, [])
+  }, [page])
   
 
   return (
@@ -65,7 +72,7 @@ const NoticeList = () => {
               </TableHead>
               <TableBody>{noticeComponent}</TableBody>
               </Table>
-              <Pagination count={10} />
+              <Pagination count={noticeList.pageMaker.endPage} page={page} onChange={handleChange} />
             </TableContainer>
       </Paper>
     </Container>

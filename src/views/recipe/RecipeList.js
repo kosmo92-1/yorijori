@@ -51,17 +51,22 @@ function RecipeList(props) {
     },[checkBoxSub,checkBoxRec,dropdown])
 
     const listComponent = recipeList.map((item) =>(
-        <div>
-            <figure>
-                <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
-            </figure>
+        <div className="recipe">    
             <div>
-                <h4>{item.recipe_id}{item.RECIPE_TITLE}</h4>
-                {/* 별점 */}
-                <p className="text-trunc">
-                    {item.RECIPE_CONTENT}
-                </p>
-                <span><a>{item.CHANNEL_NAME}</a>님</span>
+                <figure>
+                    <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
+                </figure>
+                <div>
+                    <h4><a href={`/recipe-detail/${item.RECIPE_ID}`}>{item.RECIPE_TITLE}</a></h4>
+                    {/* 별점 */}
+                    <p className="text-trunc">
+                        {item.RECIPE_CONTENT}
+                    </p>
+                    <p className="text-trunc">
+                        추천수 {item.RECIPE_RECOMMEND}
+                    </p>
+                    <span><a>{item.CHANNEL_NAME}</a>님</span>
+                </div>
             </div>
         </div>
     ))
@@ -111,85 +116,6 @@ function RecipeList(props) {
 
     }
 
-
-    //캐러셀
-    const items = [
-        {
-          src: 'http://www.hotelrestaurant.co.kr/data/photos/20180205/art_15175330519518_43b250.bmp',
-          altText: '한식',
-          caption: ' '
-        },
-        {
-          src: 'https://lh3.googleusercontent.com/proxy/BInOw1NO-cmiRpxsFJFPLglFbDV5Q9d9HWClh0sgvA3xKT7MJc3vz492aLRs79yqjstIYOM2ZvWu4FV3hr40YYXsG3jPsYeUh6lX33s9mTSF5cNhqtosWd-4MDShzbW08YBEY0pg9p7X4szYqioCcCY3gA',
-          altText: '양식',
-          caption: ' '
-        },
-        {
-          src: 'https://cdn.mkhealth.co.kr/news/photo/202004/img_MKH200406003_0.jpg',
-          altText: '중식',
-          caption: ' '
-        },
-        {
-            src: 'http://www.canews.kr/news/photo/201712/225_323_85.jpg',
-            altText: '일식',
-            caption: ' '
-        },
-        {
-            src: 'https://lh3.googleusercontent.com/proxy/ekuWtNld2mNE690Uo75Op5LprdXnMblP6lzi8KartpJ2xhTigt829hbg-xe5MDHZ99zbWxqv5LxrJXaU8x3oHdpmvjr2Qj7xg1Dyg4gRHjOZxFZi',
-            altText: '야식',
-            caption: ' '
-        }
-      ];
-
-      const [activeIndex, setActiveIndex] = useState(0);
-      const [animating, setAnimating] = useState(false);
-    
-      const next = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
-        setActiveIndex(nextIndex);
-      }
-    
-      const previous = () => {
-        if (animating) return;
-        const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
-        setActiveIndex(nextIndex);
-      }
-    
-      const goToIndex = (newIndex) => {
-        if (animating) return;
-        setActiveIndex(newIndex);
-      }
-    
-      const slides = items.map((item) => {
-        return (
-          <CarouselItem
-            onExiting={() => setAnimating(true)}
-            onExited={() => setAnimating(false)}
-            key={item.src}
-          >
-            <style>
-                {
-                    `.img{
-                        height:358px
-                    }
-                    .caption{
-                        position:absolute;
-                        font-size:50pt;
-                        color:white;
-                        top:40%;
-                        left:40%;
-                    }
-                    `
-                }
-            </style>
-            <img src={item.src} alt={item.altText} className="img"/>
-            <p className="caption">{item.altText}</p>
-            <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-          </CarouselItem>
-        );
-      });
-
     return (
         <main>
             <section className="sec-banner">
@@ -203,17 +129,7 @@ function RecipeList(props) {
                             <label ><a href="#" onClick={searchBtn}><i className="fa fa-search" aria-hidden="true" ></i></a></label>
                         </div>
                     </div>
-                    <Carousel
-                    activeIndex={activeIndex}
-                    next={next}
-                    previous={previous}
-                    >
-                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-                    {slides}
-                    <CarouselControl direction="prev" directionText=" " onClickHandler={previous} />
-                    <CarouselControl direction="next" directionText=" " onClickHandler={next} />
-                    </Carousel>
-                    {/* <div className="list-filter">
+                    <div className="list-filter">
                         <i className="arrow left">이전</i>
                         <ul>
                             <li className="cuisine-kr">
@@ -228,7 +144,7 @@ function RecipeList(props) {
                             <li className="cuisine-bizzare">괴식</li>
                         </ul>
                         <i className="arrow right">다음</i>
-                    </div> */}
+                    </div>
                 </section>
                 <section className="sec-recipes">
                     {/* 레시피 1 */}
@@ -261,12 +177,12 @@ function RecipeList(props) {
                         </FormGroup>
                     </div>
                     <div className="recipes">
-                        <div className="recipe">
+                        {/* <div className="recipe"> */}
                             {listComponent}
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="text-center">
-                        <Button color="danger">더 보기</Button>
+                        {/* <Button color="danger">더 보기</Button> */}
                     </div>
                 </section>
             </div>
