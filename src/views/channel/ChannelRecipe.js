@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { Table } from 'reactstrap';
 
 function ChannelRecipe(props) {
-    const member_id = sessionStorage.getItem('user_id')
+    const channel_id = useParams();
+    console.log(channel_id)
 
     const [recipelist,setRecipelist] = useState([])
-    const memberJson = {
-        member_id:member_id
+    const channelJson = {
+        channel_id:channel_id.channel_id
     }
     const recipeComponent = recipelist.map((item)=>(
         <tr>
@@ -19,7 +21,7 @@ function ChannelRecipe(props) {
         </tr>
     ))
     useEffect(()=>{
-        axios.get(`/readChannel.do?member_id=${member_id}`, memberJson, {
+        axios.get(`/readChannelbyChanId.do?channel_id=${channel_id.channel_id}`, channelJson, {
             headers:{
                 // json으로 형식을 지정해줍니다.
                 "Content-type":"application/json"

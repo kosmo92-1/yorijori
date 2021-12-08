@@ -18,7 +18,7 @@ import { useNavigate } from "react-router";
 
 function ChannelInfo(props) {
     const channelId = props
-    console.log(channelId.props.channel_id)
+    // console.log(channelId.props.channel_id)
 	const [channelInfo, setChannelInfo] = useState({
 		channel_content: "",
 		channel_id: "",
@@ -46,8 +46,8 @@ function ChannelInfo(props) {
                 axios.get('/readChannel.do?member_id=' + channelInfo.member_id)
                 .then((res) => {
                     setCount(res.data.readMemberRecipe.length);
-				    console.log("구독자수");
-				    console.log(res.data.countSubscribe);
+				    // console.log("구독자수");
+				    // console.log(res.data.countSubscribe);
 				    setCountSubscribe(res.data.countSubscribe);
                 })
             )

@@ -10,7 +10,7 @@ import ChannelRecipe from './ChannelRecipe';
 function Channel() {
     // 임시로 channel_id로 설정
     const chan_id = useParams();
-    console.log(chan_id)
+    // console.log(chan_id)
 
     const [activeTab, setActiveTab] = useState('1');
     
