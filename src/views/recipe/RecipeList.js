@@ -65,7 +65,7 @@ function RecipeList(props) {
                     <p className="text-trunc">
                         추천수 {item.RECIPE_RECOMMEND}
                     </p>
-                    <span><a>{item.CHANNEL_NAME}</a>님</span>
+                    <span><a href={`/channel/${item.CHANNEL_ID}`}>{item.CHANNEL_NAME}</a>님</span>
                 </div>
             </div>
         </div>
