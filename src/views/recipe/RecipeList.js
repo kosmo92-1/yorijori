@@ -51,17 +51,19 @@ function RecipeList(props) {
     },[checkBoxSub,checkBoxRec,dropdown])
 
     const listComponent = recipeList.map((item) =>(
-        <div>
-            <figure>
-                <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
-            </figure>
+        <div className="recipe">    
             <div>
-                <h4>{item.recipe_id}{item.RECIPE_TITLE}</h4>
-                {/* 별점 */}
-                <p className="text-trunc">
-                    {item.RECIPE_CONTENT}
-                </p>
-                <span><a>{item.CHANNEL_NAME}</a>님</span>
+                <figure>
+                    <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
+                </figure>
+                <div>
+                    <h4>{item.recipe_id}{item.RECIPE_TITLE}</h4>
+                    {/* 별점 */}
+                    <p className="text-trunc">
+                        {item.RECIPE_CONTENT}
+                    </p>
+                    <span><a>{item.CHANNEL_NAME}</a>님</span>
+                </div>
             </div>
         </div>
     ))
@@ -172,9 +174,9 @@ function RecipeList(props) {
                         </FormGroup>
                     </div>
                     <div className="recipes">
-                        <div className="recipe">
+                        {/* <div className="recipe"> */}
                             {listComponent}
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="text-center">
                         <Button color="danger">더 보기</Button>
