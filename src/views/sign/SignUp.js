@@ -110,7 +110,8 @@ function SignUp(props) {
     // 회원가입버튼을 누르면 동작합니다.
     event.preventDefault();
     var checkID = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    var checkPW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/
+    // var checkPW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/
+    var checkPW = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
     var checkName = /^[가-힣a-zA-Z]{2,20}$/
     var checkTel = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/
     var checkAddress= /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣|-]{2,20}$/
