@@ -13,6 +13,7 @@ function RecommendUp(props){
             alert('로그인 해주세요.')
             document.location.href = '/login'
         } else {
+            
         axios.post("/updateRecommend.do", checkRecommend, {
             headers: {
               // json으로 형식을 지정해줍니다.
@@ -21,8 +22,8 @@ function RecommendUp(props){
         })
           // post 보내고 나서 실행
         .then((res) => {
-            console.log(res);
-            if (res === "noRecommend") {
+            console.log(res.data);
+            if (res.data === "noRecommend") {
                 alert("이 게시물을 추천했습니다.");
                 return;
             }else {

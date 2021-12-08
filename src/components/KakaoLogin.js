@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
+import kakaoLogin from '../assets/images/kakaoLogin.png';
+
 
 const {Kakao} = window;
 // const loginWithKakao = () =>{
@@ -94,12 +96,15 @@ const {Kakao} = window;
     });
   
   };
-  
+  const imagestyle = {
+    height: "100px",
+    width: "100%",
+  };
 const KakaoLogin = () => {
   
     return (
     <div>
-        <Button onClick={loginWithKakao} >Login with Kakao</Button>
+        <div onClick={loginWithKakao} ><img src={kakaoLogin} alt="kakaoFail" style={imagestyle} ></img></div>
     </div>
     );
 };
