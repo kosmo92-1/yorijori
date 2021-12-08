@@ -11,12 +11,12 @@ function FeedRecipeCard(props) {
         navigate(path)
     }
 
-    const url = `/recipe-detail/${recipes.value.recipe_id}`
+    const url = `/recipe-detail/${recipes.value.RECIPE_ID}`
     // const imgUrl = `yorijori/${recipes.value.recipe_thumbnail}`
-
+    console.log(recipes)
     return (
        <a href={url} className="recipe-card" onClick={actionRead}>
-            <img src={recipes.value.recipe_thumbnail} alt={recipes.value.recipe_title} />
+            <img src={recipes.value.RECIPE_THUMBNAIL} alt={recipes.value.RECIPE_TITLE} />
             {/* {
                 recipes.map(({id, src, desc}) => <img key={id} src={src} alt={desc} />)
             } */}
