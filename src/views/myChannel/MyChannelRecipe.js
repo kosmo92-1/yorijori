@@ -9,11 +9,12 @@ function MyChannelRecipe(props) {
     const memberJson = {
         member_id:member_id
     }
+    const url = "/recipe-detail/";
     const recipeComponent = recipelist.map((item)=>(
         <tr>
             <td>{item.RECIPE_DIFFICULTY}</td>
             <td>{item.KIND_NAME}</td>
-            <td><a href="#">{item.RECIPE_TITLE}</a></td>
+            <td><a href={url+item.RECIPE_ID}>{item.RECIPE_TITLE}</a></td>
             <td>{item.RECIPE_QUENTITY}</td>
             <td>{item.RECIPE_VIEWCOUNT}</td>
         </tr>
