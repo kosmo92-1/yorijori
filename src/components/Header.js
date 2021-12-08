@@ -67,7 +67,7 @@ function Header(props) {
                                 <DropdownItem header>내정보</DropdownItem>
                                 <DropdownItem><a href="/mypage">마이페이지</a></DropdownItem>
                                 <DropdownItem><a href="/myChannel">내채널</a></DropdownItem>
-                                <DropdownItem><a href="/channel">장바구니</a></DropdownItem>
+                                <DropdownItem><a href="/basket">장바구니</a></DropdownItem>
                                 <DropdownItem><a href="/subscribe">채널구독</a></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem><a href="/logout" onClick={logout}>로그아웃</a></DropdownItem>
