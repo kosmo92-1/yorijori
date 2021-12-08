@@ -24,6 +24,7 @@ import SubscribeList from "views/subscribe/SubscribeList";
 import Basket from "views/basket/Basket";
 import MyChannel from "views/myChannel/MyChannel";
 import InsertChannel from "views/channel/InsertChannel";
+import UpdateRecipe from "views/recipe/UpdateRecipe";
 
 function App() {
   function debug() {
@@ -63,7 +64,7 @@ function App() {
           {/* ★ Glory - ㅇ Yoon ★ */}
           <Route path="/recipe-detail/:recipe_id" element={<RecipeDetail />} exact />
           {/* <Route path="/recipe-detail" element={<RecipeDetail />} exact /> */}
-
+          <Route path="/updaterecipe/:recipe_id" element={<UpdateRecipe />} exact />
         </Routes>
       </div>
       <Footer></Footer>
