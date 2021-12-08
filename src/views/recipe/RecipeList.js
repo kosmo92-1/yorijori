@@ -53,15 +53,15 @@ function RecipeList(props) {
     const listComponent = recipeList.map((item) =>(
         <div>
             <figure>
-                <img src={item.recipe_thumbnail} alt="레시피 이미지" />
+                <img src={item.RECIPE_THUMBNAIL} alt="레시피 이미지" />
             </figure>
             <div>
-                <h4>{item.recipe_id}{item.recipe_title}</h4>
+                <h4>{item.recipe_id}{item.RECIPE_TITLE}</h4>
                 {/* 별점 */}
                 <p className="text-trunc">
-                    {item.recipe_content}
+                    {item.RECIPE_CONTENT}
                 </p>
-                <span><a>요리왕김다밍</a>님</span>
+                <span><a>{item.CHANNEL_NAME}</a>님</span>
             </div>
         </div>
     ))

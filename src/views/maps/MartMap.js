@@ -1,9 +1,24 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Col, Container, FormGroup, FormText, Input, Label, Row, } from 'reactstrap';
-import Map from './Map';
-
+import SearchMap from './SearchMap'
 function MartMap(props) {
-    const address = toString('경기도 시흥시 능곡서로 27')
+
+    const [address,setAddress] = useState('')
+    const memberId = sessionStorage.getItem('user_id')
+
+    
+    useLayoutEffect(()=>{
+            axios.get('/getMember.do?member_id='+memberId)
+            .then((res)=>{
+                console.log(res.data)
+                console.log(res.data.member_basic_address)
+                setAddress(res.data.member_basic_address)
+            })
+            .catch((err)=>{
+                console.log('실패')
+            })
+    },[])
     return (
         <div>
             <Container>
@@ -14,27 +29,24 @@ function MartMap(props) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="bg-light border" xs="7">  
+                    <Col className="bg-light border" xs="12">  
                         <FormGroup>
                             <br/>
-                            <Label for="exampleEmail">내 주소</Label>
+                            <Label for="address">내 주소</Label>
                             <br/>
                             <Input
                                 type="text"
-                                name="email"
-                                id="exampleEmail"
+                                name="address"
+                                id="address"
                                 value={address}
                             />
                             <br/>
                             <br/>
                             <FormText color="muted">
                                 프로필에 등록한 주소를 기반으로 보여집니다.
-                                <Map address={address}/>
                             </FormText>
+                            <SearchMap search={address}/>
                         </FormGroup>
-                    </Col>
-                    <Col className="bg-light border" xs="5">
-                        .col-6
                     </Col>
                 </Row>
                 <Row>
