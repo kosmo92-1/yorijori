@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { Button, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
+import { Button, Container, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap'
 
 const ReadNotice = () => {
   const [title, setTitle] = useState('title')
@@ -44,14 +44,15 @@ const ReadNotice = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Container>
       <ListGroup>
         <ListGroupItem>
           <ListGroupItemHeading>공지상세보기</ListGroupItemHeading>
           <ListGroupItemText>공지사항 게시판입니다.</ListGroupItemText>
         </ListGroupItem>
         <ListGroupItem>
-          
+          <ListGroupItemHeading>번호</ListGroupItemHeading>
+          <ListGroupItemText>{id}</ListGroupItemText>
         </ListGroupItem>
         <ListGroupItem>
           <ListGroupItemHeading>공지유형</ListGroupItemHeading>
@@ -72,8 +73,9 @@ const ReadNotice = () => {
           </ListGroupItemText>
         </ListGroupItem>
       </ListGroup>
+      <br />
       <Button onClick={() => navigate(-1)}>Back</Button>
-    </>
+    </Container>
 		// <Container maxWidth="xs">
 
 		//       <Label tag="h5">공지상세보기</Label>
