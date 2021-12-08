@@ -21,7 +21,7 @@ function NavLogin(props) {
         console.log(res.email)
         console.log(res.name)
         console.log(res.id)
-        sessionStorage.setItem('social_id', res.email)
+        sessionStorage.setItem('user_id', res.email)
         sessionStorage.setItem('social_name',res.name)
         sessionStorage.setItem('member_idKey',res.id)
         sessionStorage.setItem('social_state',"2")

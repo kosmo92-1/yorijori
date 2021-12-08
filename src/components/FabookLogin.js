@@ -16,7 +16,7 @@ const FaceBookLogin = ({ oAuthLoginHandler }) => {
       "member_name":name,
       "member_idKey":id,
   }
-    sessionStorage.setItem('social_id', res.id+"@facebook.com")
+    sessionStorage.setItem('user_id', res.id+"@facebook.com")
     sessionStorage.setItem('social_name',res.name)
     sessionStorage.setItem('member_idKey',res.id)
     sessionStorage.setItem('social_state',"2")
