@@ -45,7 +45,7 @@ function SignIn() {
     console.log(res.profileObj.email);
     console.log(res.profileObj.name);
     console.log(res.profileObj.googleId);
-    sessionStorage.setItem("social_id", res.profileObj.email);
+    sessionStorage.setItem("user_id", res.profileObj.email);
     sessionStorage.setItem("social_name", res.profileObj.name);
     sessionStorage.setItem("member_idKey", res.profileObj.googleId);
     sessionStorage.setItem("social_state", "2");

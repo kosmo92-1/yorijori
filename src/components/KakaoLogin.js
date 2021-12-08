@@ -57,7 +57,7 @@ const {Kakao} = window;
             console.log('res.data.chk :: ', res.data.chk)
             if (res.data.chk === 0){
                 console.log('======================',res.data.msg)
-                sessionStorage.setItem('social_id', res.data.id)
+                sessionStorage.setItem('user_id', res.data.id)
                 sessionStorage.setItem('social_name', res.data.name)
                 sessionStorage.setItem('social_photo', `${profile.profile_image_url}`)
                 sessionStorage.setItem('member_idKey', res.data.socialIdKey)
@@ -69,7 +69,7 @@ const {Kakao} = window;
             else if(res.data.chk === 1) {
                 console.log('======================','로그인 성공')
                 sessionStorage.setItem('social_state',"1")
-                sessionStorage.setItem("social_id", res.data.id);
+                sessionStorage.setItem("user_id", res.data.id);
                 sessionStorage.setItem('member_idKey', res.data.socialIdKey)
                 alert('로그인 성공')
                 document.location.href = '/'
