@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
+import InsertRecipe from 'views/recipe/InsertRecipe';
 
 function MyChannelRecipe(props) {
     const member_id = sessionStorage.getItem('user_id')
@@ -45,7 +46,7 @@ function MyChannelRecipe(props) {
             </thead>
            {recipeComponent}
            <tfoot>
-               <button>글쓰기</button>
+               <button><a href='/insertRecipe'>레시피쓰기</a></button>
            </tfoot>
         </Table>
     );
