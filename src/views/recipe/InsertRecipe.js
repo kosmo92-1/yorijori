@@ -107,28 +107,28 @@ function InsertRecipe(props) {
         })
         // post 보내고 나서 실행
         .then(res => {
-            console.log(res.data.getRecipeID)
-            alert(checkNum)
-            // 성공하면 recipe_id를 리턴받아서 재료등록을 실행한다.
-            //  레시피 재료 등록
-            // 재료입력을 반복해서 실행한다.
-            checkNum.forEach(element => {
-                console.log(res.data.getRecipeID)
-                console.log(element)
-                let ingJson = {
-                    recipe_id:res.data.getRecipeID,
-                    ing_id:element
-                }
-                axios.post('/insertRecipe_ing.do',ingJson , {
-                    headers:{
-                        // json으로 형식을 지정해줍니다.
-                        "Content-type":"application/json"
-                    },
-                })
-                // post 보내고 나서 실행
-                .then(res => {alert('글등록성공')})
-                .catch(err =>{console.log('실패')})
-            });
+            // console.log(res.data.getRecipeID)
+            // alert(checkNum)
+            // // 성공하면 recipe_id를 리턴받아서 재료등록을 실행한다.
+            // //  레시피 재료 등록
+            // // 재료입력을 반복해서 실행한다.
+            // checkNum.forEach(element => {
+            //     console.log(res.data.getRecipeID)
+            //     console.log(element)
+            //     let ingJson = {
+            //         recipe_id:res.data.getRecipeID,
+            //         ing_id:element
+            //     }
+            //     axios.post('/insertRecipe_ing.do',ingJson , {
+            //         headers:{
+            //             // json으로 형식을 지정해줍니다.
+            //             "Content-type":"application/json"
+            //         },
+            //     })
+            //     // post 보내고 나서 실행
+            //     .then(res => {alert('글등록성공')})
+            //     .catch(err =>{console.log('실패')})
+            // });
             window.location.href='/myChannel'
 
         })
