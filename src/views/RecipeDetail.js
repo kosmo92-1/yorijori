@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
+import Reply from './Reply';
 
 
 function RecipeDetail(props) {
@@ -100,6 +101,9 @@ function RecipeDetail(props) {
                     <RecommendUp member_id={member_id} recipe_id={recipeDetail.recipe.RECIPE_ID} />
                 </div>
                 <br />
+                <div className="btn-wrap">
+                    <Reply props={recipe_id}></Reply>
+                </div>
                 <Button onClick={() => navigate(-1)}>Back</Button>
             </div>
         </main>
